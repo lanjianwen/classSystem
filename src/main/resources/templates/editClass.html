@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" th:href="@{bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/css/dashboard.css" th:href="@{css/dashboard.css}">
+
+    <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
+</head>
+
+<body>
+<!--引入头部-->
+<div th:replace="commons/bar::topbar"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <div th:replace="commons/bar::sidebar"></div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <form>
+                <div>
+                    添加<select id="classType">
+                        <option value ="1">1</option>
+                        <option value ="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>类班级
+                </div>
+                <div id="typeNum">
+                    第一类班级名称<input type="text">
+                    第一类班级个数<input type="text"><br>
+                </div>
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $("#classType").change(function(){
+        var typeNum = $("#classType option:selected").val();
+        var code = '';
+        for (var i = 1; i <= typeNum; i++) {
+            code += '第'+i+'类班级名称<input type="text">\n' +
+                '                    第'+i+'类班级个数<input type="text"><br><br>';
+        }
+        $("#typeNum").html(code);
+    });
+</script>
+</html>
