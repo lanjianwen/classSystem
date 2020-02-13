@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" th:href="@{bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/css/dashboard.css" th:href="@{css/dashboard.css}">
+
+    <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
+</head>
+
+<body>
+<!--引入头部-->
+<div th:replace="commons/bar::topbar"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <div th:replace="commons/bar::sidebar(activeUri='devideClass')"></div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <form th:action="@{/distribute}" method="post">
+                <input type="hidden" value="" name="classType" id="classType" th:value="${classes.get(0).type}">
+                请选择班级类型
+                <select>
+                    <option th:each="class:${classes}" th:text="${class.type}" th:value="${class.type}"></option>
+                </select><br><br>
+                请选择学生类型(可多选)
+                <br><input type="checkbox" th:each="student:${students}" th:text="${student.type}" name="studentType" th:value="${student.type}">
+                <br><input type="submit">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $("#classType").change(function(){
+        var classType = $("#classType option:selected").val();
+        $("#classType").val(classType);
+    });
+</script>
+</html>

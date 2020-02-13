@@ -27,7 +27,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void distribute(Integer classType, List<Integer> studentType) {
+    public void distribute(String classType, List<String> studentType) {
         List<Class> classes = classRepository.findByType(classType);
         //班级数量
         int classNum = classes.size();
@@ -42,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
 
         int index = 0;
         while (totalNum < classNum * maxNum && index < studentType.size()){
-            if (studentType.get(index) == 0 || studentType.get(index) == null){
+            if (studentType.get(index).isEmpty() || studentType.get(index) == null){
                 index++;
                 continue;
             }
@@ -142,6 +142,11 @@ public class StudentServiceImpl implements StudentService {
         Student s = studentRepository.findById(student.getId()).get();
         s.setClassId(student.getClassId());
         studentRepository.save(s);
+    }
+
+    @Override
+    public List<Student> findStudentType() {
+        return studentRepository.findStudentType();
     }
 
     //按总分排序  降序

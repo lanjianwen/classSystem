@@ -17,5 +17,7 @@ public class Class {
     @Column(name = "maxNum")
     private Integer maxMum;
     @Column(name = "type")
-    private Integer type;
+    private String type;
+    @Column(name = "priority")
+    private Integer priority;
 }

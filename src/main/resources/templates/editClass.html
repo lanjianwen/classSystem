@@ -17,21 +17,30 @@
 <div class="container-fluid">
     <div class="row">
         <!--引入侧边栏-->
-        <div th:replace="commons/bar::sidebar"></div>
+        <div th:replace="commons/bar::sidebar(activeUri='editClass')"></div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <form>
-                <div>
-                    添加<select id="classType">
-                        <option value ="1">1</option>
-                        <option value ="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>类班级
-                </div>
-                <div id="typeNum">
-                    第一类班级名称<input type="text">
-                    第一类班级个数<input type="text"><br>
+            <div>
+                添加<select id="classType">
+                <option value ="1">1</option>
+                <option value ="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>类班级
+            </div>
+            <form th:action="@{/editClass}" method="post">
+                <input type="hidden" value="1" name="typeNum" id="typeNum">
+                <div id="classNum">
+                    第一类班级类型<input type="text" name="className">
+                    第一类班级个数<input type="text" name="num">
+                    每个班最大人数<input type="text" name="maxNum">
+                    优先级别<select>
+                    <option value="1">一级</option>
+                    <option value="2">二级</option>
+                    <option value="3">三级</option>
+                    <option value="4">四级</option>
+                    <option value="5">五级</option>
+                </select>
                 </div>
                 <input type="submit">
             </form>
@@ -42,12 +51,21 @@
 <script>
     $("#classType").change(function(){
         var typeNum = $("#classType option:selected").val();
+        $("#typeNum").val(typeNum);
         var code = '';
         for (var i = 1; i <= typeNum; i++) {
-            code += '第'+i+'类班级名称<input type="text">\n' +
-                '                    第'+i+'类班级个数<input type="text"><br><br>';
+            code += '第'+i+'类班级名称<input type="text" name="className">\n' +
+                '                    第'+i+'类班级个数<input type="text" name="num">\n' +
+                '                    每个班最大人数<input type="text" name="maxNum">'+
+                '                    优先级别<select>\n' +
+                '                    <option value="1">一级</option>\n' +
+                '                    <option value="2">二级</option>\n' +
+                '                    <option value="3">三级</option>\n' +
+                '                    <option value="4">四级</option>\n' +
+                '                    <option value="5">五级</option>\n' +
+                '                </select><br><br>';
         }
-        $("#typeNum").html(code);
+        $("#classNum").html(code);
     });
 </script>
 </html>

@@ -23,6 +23,7 @@ public class Student {
     @Column(name = "class_id")
     private Integer classId;
     @Column(name = "type")
-    private Integer type;
-
+    private String type;
+    @Column(name = "priority")
+    private Integer priority;
 }

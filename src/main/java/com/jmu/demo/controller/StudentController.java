@@ -20,7 +20,7 @@ public class StudentController {
     }
 
     @PostMapping("/distribute")
-    public void distribute(Integer classType, @RequestParam(value = "studentType") List<Integer> studentType){
+    public void distribute(String classType, @RequestParam(value = "studentType") List<String> studentType){
         studentService.distribute(classType,studentType);
     }
 
