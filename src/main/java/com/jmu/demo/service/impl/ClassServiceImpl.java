@@ -35,4 +35,14 @@ public class ClassServiceImpl implements ClassService {
     public List<Class> findClassType() {
         return classRepository.findClassType();
     }
+
+    @Override
+    public List<Class> findClassByClassType(String classType) {
+        return classRepository.findByType(classType);
+    }
+
+    @Override
+    public List<Class> findAll() {
+        return classRepository.findAll();
+    }
 }

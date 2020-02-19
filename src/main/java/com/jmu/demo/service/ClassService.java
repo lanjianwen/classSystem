@@ -8,4 +8,8 @@ public interface ClassService {
     void editClass(Integer typeNum, List<String> classTypeName, List<Integer> num, List<Integer> maxNum);
 
     List<Class> findClassType();
+
+    List<Class> findClassByClassType(String classType);
+
+    List<Class> findAll();
 }

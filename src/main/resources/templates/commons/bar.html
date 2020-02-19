@@ -36,10 +36,10 @@
 
  <div class="col-sm-3 col-md-2 sidebar" th:fragment="sidebar">
      <ul class="nav nav-sidebar">
-         <li class="" th:class="${activeUri=='roster'?'active':''}"><a href="roster">花名册</a></li>
+         <li class="" th:class="${activeUri=='roster'?'active':''}"><a href="showStudents">花名册</a></li>
          <li class="" th:class="${activeUri=='editClass'?'active':''}"><a href="addClass">编辑班级<span class="sr-only">(current)</span></a></li>
          <li class="" th:class="${activeUri=='devideClass'?'active':''}"><a href="devideClass">分班</a></li>
-         <li><a href="#" class="active">班级列表</a></li>
+         <li class="" th:class="${activeUri=='showClass'?'active':''}"><a href="showClass">班级列表</a></li>
          <li><a href="#">Export</a></li>
      </ul>
      <ul class="nav nav-sidebar">

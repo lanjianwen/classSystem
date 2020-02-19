@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" th:href="@{bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/css/dashboard.css" th:href="@{css/dashboard.css}">
+
+    <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
+</head>
+
+<body>
+<!--引入头部-->
+<div th:replace="commons/bar::topbar"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <div th:replace="commons/bar::sidebar(activeUri='showClass')"></div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <ul>
+                <li th:each="class:${classes}"><a href="#" th:text="${class.name}"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+</script>
+</html>

@@ -7,6 +7,23 @@
     <link rel="stylesheet" href="../static/css/dashboard.css" th:href="@{css/dashboard.css}">
 
     <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
+
+    <style>
+        body{
+            background-color: #d9edf7;
+        }
+        .main{
+            padding: 50px 100px;
+        }
+        button{
+            margin: 20px;
+            margin-left: 34%;
+        }
+        .add{
+            padding-left: 1px;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -18,23 +35,27 @@
     <div class="row">
         <!--引入侧边栏-->
         <div th:replace="commons/bar::sidebar(activeUri='editClass')"></div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div>
-                添加<select id="classType">
-                <option value ="1">1</option>
-                <option value ="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>类班级
+        <div class="col-lg-12 col-lg-offset-2 main"><!--col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main -->
+            <div style="color: #2b669a"><!-- class="col-lg-1"-->
+                <ul class="add">
+                    <li>
+                        <h4><b>添加 &nbsp<select id="classType"><!-- class="form-control"-->
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>&nbsp 类班级</b></h4>
+                    </li>
+                </ul>
             </div>
             <form th:action="@{/editClass}" method="post">
                 <input type="hidden" value="1" name="typeNum" id="typeNum">
-                <div id="classNum">
-                    第一类班级类型<input type="text" name="className">
-                    第一类班级个数<input type="text" name="num">
-                    每个班最大人数<input type="text" name="maxNum">
-                    优先级别<select>
+                <div id="classNum" style="color: #2b669a">
+                    第一类班级名称： &nbsp<input type="text" name="className"> &nbsp
+                    第一类班级个数： &nbsp<input type="number" name="num"> &nbsp
+                    每个班最大人数： &nbsp<input type="number" name="maxNum"> &nbsp
+                    优先级别： &nbsp<select>
                     <option value="1">一级</option>
                     <option value="2">二级</option>
                     <option value="3">三级</option>
@@ -42,22 +63,25 @@
                     <option value="5">五级</option>
                 </select>
                 </div>
-                <input type="submit">
+                <!--input type="submit"-->
+                <button type="submit" name="button" class="btn btn-primary">提交</button>
             </form>
         </div>
     </div>
 </div>
+
 </body>
+
 <script>
     $("#classType").change(function(){
         var typeNum = $("#classType option:selected").val();
         $("#typeNum").val(typeNum);
         var code = '';
         for (var i = 1; i <= typeNum; i++) {
-            code += '第'+i+'类班级名称<input type="text" name="className">\n' +
-                '                    第'+i+'类班级个数<input type="text" name="num">\n' +
-                '                    每个班最大人数<input type="text" name="maxNum">'+
-                '                    优先级别<select>\n' +
+            code +='第'+i+'类班级名称： &nbsp<input type="text" name="className">\n' +
+                '                    &nbsp &nbsp第'+i+'类班级个数： &nbsp<input type="number" name="num">\n' +
+                '                    &nbsp &nbsp每个班最大人数： &nbsp<input type="number" name="maxNum">' +
+                '                    &nbsp &nbsp优先级别： &nbsp<select>\n' +
                 '                    <option value="1">一级</option>\n' +
                 '                    <option value="2">二级</option>\n' +
                 '                    <option value="3">三级</option>\n' +

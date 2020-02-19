@@ -22,4 +22,7 @@ public interface StudentRepository extends JpaRepository<Student,Integer>, JpaSp
 
     @Query(value = "select * from student group by type order by priority", nativeQuery = true)
     List<Student> findStudentType();
+
+    @Query(value = "select * from student group by class_id",nativeQuery = true)
+    List<Student> findClassType();
 }

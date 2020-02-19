@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="../static/css/dashboard.css" th:href="@{css/dashboard.css}">
 
     <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
+
+    <style>
+        body{
+            background-color: #d9edf7;
+        }
+        form{
+            padding: 50px 60px;
+        }
+        button{
+            margin-left: 3%;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -18,16 +31,35 @@
     <div class="row">
         <!--引入侧边栏-->
         <div th:replace="commons/bar::sidebar(activeUri='devideClass')"></div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="color: #2b669a">
             <form th:action="@{/distribute}" method="post">
-                <input type="hidden" value="" name="classType" id="classType" th:value="${classes.get(0).type}">
-                请选择班级类型
-                <select>
-                    <option th:each="class:${classes}" th:text="${class.type}" th:value="${class.type}"></option>
-                </select><br><br>
-                请选择学生类型(可多选)
-                <br><input type="checkbox" th:each="student:${students}" th:text="${student.type}" name="studentType" th:value="${student.type}">
-                <br><input type="submit">
+                <ul>
+                    <li>
+                        <input type="hidden" value="" name="classType" id="classType" th:value="${classes.get(0).type}">
+                            <h4><b>请选择班级类型 &nbsp</b>
+                        <select>
+                            <option th:each="class:${classes}" th:text="${class.type}" th:value="${class.type}"></option>
+                        </select><br></h4>
+                    </li>
+                    <li>
+                        <h4><b>请选择学生类型(可多选)</b>
+
+                            <!--input type="checkbox" th:each="student:${students}" th:text="${student.type}" name="studentType" th:value="${student.type}"-->
+                            <!--br><input type="submit"-->
+                            <br>
+                            <br>
+                            <div class="row col-lg-1 input-group">
+                                &nbsp &nbsp<span class="input-group-addon"  style="color: #2b669a">
+                        <input type="checkbox">保送
+                    </span>
+                                <span class="input-group-addon"  style="color: #2b669a">
+                        <input type="checkbox">统招
+                    </span>
+                            </div></h4>
+                    </li>
+
+                </ul>
+                <br><button type="submit" name="button" class="btn btn-primary">提交</button>
             </form>
         </div>
     </div>

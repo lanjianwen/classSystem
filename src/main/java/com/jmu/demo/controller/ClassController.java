@@ -35,4 +35,23 @@ public class ClassController {
         model.addAttribute("students", students);
         return "devideClass";
     }
+
+    @GetMapping("/showClass")
+    public String showClass(Model model){
+//        List<Class> classTypes = classService.findClassType();
+//        model.addAttribute("classTypes", classTypes);
+//        List<Class> classes = classService.findClassByClassType("实验");
+//        model.addAttribute("classes", classes);
+        List<Class> classes = classService.findAll();
+        model.addAttribute("classes", classes);
+        return "showClass";
+    }
+
+    @GetMapping("/findClassByClassType")
+    public String findClassByClassType(String classType, Model model){
+        List<Class> classes = classService.findClassByClassType("实验");
+        model.addAttribute("classes", classes);
+        return "redirect:/showClass";
+    }
+
 }

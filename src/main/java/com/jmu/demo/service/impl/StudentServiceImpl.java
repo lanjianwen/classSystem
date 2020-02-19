@@ -149,6 +149,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findStudentType();
     }
 
+
     //按总分排序  降序
     public void compare(List<Student> list){
         Collections.sort(list, new Comparator<Student>() {
