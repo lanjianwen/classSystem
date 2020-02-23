@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" th:href="@{bootstrap/css/bootstrap.css}">
+
+    <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
+    <script src="../static/bootstrap/js/bootstrap.js" th:src="@{bootstrap/js/bootstrap.js}"></script>
 </head>
 <body>
-    <form th:action="@{/distribute}" method="post">
-        <input name="studentType" type="text">
-        <input name="studentType" type="text">
-        <input name="classType" type="text">
-        <input type="submit" class="button "/>
+    <p th:text="${message}" class="danger"></p>
+    <form th:action="@{/login}" method="post">
+        账号<input name="username" type="text"><br><br>
+        密码<input name="password" type="password">
+        <br><br><button type="submit">登陆</button>
     </form>
+
 </body>
+<script>
+
+</script>
 </html>

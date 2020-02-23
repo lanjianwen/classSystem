@@ -18,15 +18,16 @@ public class ClassServiceImpl implements ClassService {
     @Transactional(rollbackOn = Exception.class)
     public void editClass(Integer typeNum, List<String> classTypeName, List<Integer> num, List<Integer> maxNum) {
         int n = 0;
-        Class c = new Class();
         for (int i = 0; i < typeNum; i++) {
             n = classRepository.findByType(classTypeName.get(i)).size();
             n++;
             for (int j = 0; j < num.get(i); j++) {
+                Class c = new Class();
                 c.setType(classTypeName.get(i));
                 c.setName(classTypeName.get(i)+n+"班");
                 c.setMaxMum(maxNum.get(i));
                 n++;
+                classRepository.save(c);
             }
         }
     }
@@ -44,5 +45,10 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public List<Class> findAll() {
         return classRepository.findAll();
+    }
+
+    @Override
+    public Class findClass(Integer classId) {
+        return classRepository.findById(classId).get();
     }
 }

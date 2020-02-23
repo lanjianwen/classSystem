@@ -13,4 +13,6 @@ public interface StudentService {
     void updateStudent(Student student);
 
     List<Student> findStudentType();
+
+    List<Student> findStudentByClassId(Integer classId);
 }

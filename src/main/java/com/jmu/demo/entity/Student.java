@@ -24,6 +24,16 @@ public class Student {
     private Integer classId;
     @Column(name = "type")
     private String type;
+    @Column(name = "nation")
+    private String nation;
+    @Column(name = "nativePlace")
+    private String nativePlace;
+    @Column(name = "patriarch")
+    private String patriarch;
+    @Column(name = "phone")
+    private String phone;
+    @Column(name = "address")
+    private String address;
     @Column(name = "priority")
     private Integer priority;
 }

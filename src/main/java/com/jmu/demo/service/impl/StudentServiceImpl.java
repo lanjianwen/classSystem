@@ -34,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
         //每个班最大人数
         int maxNum = classes.get(0).getMaxMum();
         //总人数
-        int totalNum = studentRepository.findByClassId(classType);
+        int totalNum = studentRepository.findByClassType(classType);
         //男生队列
         List<Student> boys = new ArrayList<Student>();
         List<Student> girls = new ArrayList<Student>();
@@ -147,6 +147,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> findStudentType() {
         return studentRepository.findStudentType();
+    }
+
+    @Override
+    public List<Student> findStudentByClassId(Integer classId) {
+        return studentRepository.findByClassId(classId);
     }
 
 

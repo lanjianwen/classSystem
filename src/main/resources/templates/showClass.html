@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="../static/css/dashboard.css" th:href="@{css/dashboard.css}">
 
     <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
+    <style>
+        body{
+            background-color: #d9edf7;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,9 +24,10 @@
         <!--引入侧边栏-->
         <div th:replace="commons/bar::sidebar(activeUri='showClass')"></div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <ul>
-                <li th:each="class:${classes}"><a href="#" th:text="${class.name}"></a></li>
-            </ul>
+            <div style="width:15%;height:100px;background-color:#00FF66;border-radius:90%;margin-right: 10%;
+             margin-top: 5%;text-align: center;padding: 40px 20px;" class="col-lg-3" th:each="class:${classes}">
+                <a th:href="@{'showStudent?classId='+${class.id}}"><div th:text="${class.name}"></div></a>
+            </div>
         </div>
     </div>
 </div>

@@ -18,11 +18,15 @@ public interface StudentRepository extends JpaRepository<Student,Integer>, JpaSp
     List<Student> findByTypeOrderByTotalGradeDesc(String type);
 
     @Query(value = "select count(*) from student where class_id in (select id from class where type= :classType)",nativeQuery = true)
-    int findByClassId(String classType);
+    int findByClassType(String classType);
 
     @Query(value = "select * from student group by type order by priority", nativeQuery = true)
     List<Student> findStudentType();
 
     @Query(value = "select * from student group by class_id",nativeQuery = true)
     List<Student> findClassType();
+
+    List<Student> findByClassId(Integer classId);
+
+    Student findByIdCard(String idCard);
 }

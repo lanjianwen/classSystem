@@ -24,7 +24,7 @@ public class ClassController {
     public String editClass(Integer typeNum, @RequestParam(name = "className")List<String> classTypeName,
                             @RequestParam(name = "num") List<Integer> num, @RequestParam(name = "maxNum") List<Integer> maxNum){
         classService.editClass(typeNum,classTypeName,num,maxNum);
-        return "";
+        return "redirect:/devideClass";
     }
 
     @GetMapping("/devideClass")

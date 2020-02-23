@@ -54,6 +54,19 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- POI依赖 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.16</version>
+        </dependency>
+        <!-- 解析Excel 2007及以上版本文件必须加上下面的 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.16</version>
+        </dependency>
     </dependencies>
 
     <build>
