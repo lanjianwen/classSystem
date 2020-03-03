@@ -14,4 +14,6 @@ public interface ClassRepository extends JpaRepository<Class,Integer>, JpaSpecif
 
     @Query(value = "SELECT * FROM class GROUP BY type order by priority",nativeQuery = true)
     List<Class> findClassType();
+
+    Class findByName(String className);
 }

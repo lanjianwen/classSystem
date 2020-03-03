@@ -138,9 +138,10 @@ public class StudentServiceImpl implements StudentService {
 
     //调整
     @Override
-    public void updateStudent(Student student) {
-        Student s = studentRepository.findById(student.getId()).get();
-        s.setClassId(student.getClassId());
+    public void updateStudent(Integer id, String className) {
+        Class c = classRepository.findByName(className);
+        Student s = studentRepository.findById(id).get();
+        s.setClassId(c.getId());
         studentRepository.save(s);
     }
 
@@ -152,6 +153,17 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> findStudentByClassId(Integer classId) {
         return studentRepository.findByClassId(classId);
+    }
+
+    @Override
+    @Transactional(rollbackOn = Exception.class)
+    public void deleteAll() {
+        studentRepository.deleteAll();
+    }
+
+    @Override
+    public Student findById(Integer id) {
+        return studentRepository.findById(id).get();
     }
 
 

@@ -19,11 +19,11 @@ public class UserController {
         String url = "roster";
         if (!user.getPassword().equals(password)){
             message = "账号或密码错误";
-            url = "index";
+            url = "login";
         }
         else if (user == null){
             message = "账号不存在";
-            url = "index";
+            url = "login";
         }
         model.addAttribute("message", message);
         return url;

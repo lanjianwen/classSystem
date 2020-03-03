@@ -10,9 +10,13 @@ public interface StudentService {
 
     void distribute(String classType, List<String> studentType);
 
-    void updateStudent(Student student);
+    void updateStudent(Integer id, String className);
 
     List<Student> findStudentType();
 
     List<Student> findStudentByClassId(Integer classId);
+
+    void deleteAll();
+
+    Student findById(Integer id);
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>login</title>
+    <link rel="stylesheet" href="../static/css/font-awesome.css" th:href="@{css/font-awesome.css}">
+
+    <style>
+        body{
+            background: #2b669a ;
+            background: url("img/class.jpg");
+            background-repeat: no-repeat;/*不让图片重复充满界面*/
+            background-size: 100% auto;
+        }
+        #login-box{
+            width: 30%;
+            height: auto;
+            margin: 0 auto;
+            margin-top: 15%;
+            text-align: center;
+            background: #00000070;
+            padding: 20px 50px;
+        }
+        #login-box h1{
+            color: #ffffff;
+        }
+
+        #login-box .item{
+            margin-top: 15px;
+            color: #ffffff;
+        }
+        #login-box .form .item input{
+            width: 180px;
+            font-size: 18px;
+            border: 0;
+            border-bottom: 2px solid #ffffff;
+            padding: 5px 10px;
+            background: #ffffff00;
+            color: #ffffff;
+        }
+        #login-box .form .checkbox{
+            padding-left: 1%;
+            padding-top: 15px;
+            color: white;
+        }
+        #login-box button{
+            margin-top: 15px;
+            width: 180px;
+            height: 30px;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+
+        </style>
+</head>
+<body>
+<div id="login-box">
+    <h1>欢迎登录分班系统</h1>
+    <form class="form" th:action="@{/login}" method="post">
+        <div class="item">
+            <!--<i class="fa fa-user-circle-o" aria-hidden="true"></i>&lt;!&ndash; 这是我找的图标，显示不了就用下面的“用户名”&ndash;&gt;-->
+            <p th:text="${message}" style="color: red" th:if="${not #strings.isEmpty(message)}"></p>
+            <b>账号: </b><input type="text" placeholder="username" name="username">
+        </div>
+        <div class="item">
+            <!--<i class="fa fa-key" aria-hidden="true"></i>&lt;!&ndash; 这个也是个图标，可以用就删掉“密码和用户名”&ndash;&gt;-->
+            <b>密码: </b><input type="password" placeholder="password" name="password">
+        </div>
+        <div class="checkbox">
+            <input type="checkbox">记住密码
+        </div>
+        <button type="submit">登录</button>
+    </form>
+</div>
+</body>
+
+</html>

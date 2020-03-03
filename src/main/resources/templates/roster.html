@@ -31,8 +31,13 @@
                     </form>
                     <button type="button" class="btn btn-info" onclick="importFile()">导入</button>
                     <button type="button" class="btn btn-info" onclick="downloadExcel()">导出</button>
+                    <a type="button" class="btn btn-info" href="/deleteAll">清空</a>
                 </div>
             </div><br>
+            <div class="col-lg-3">总人数 : <span id="sum"></span></div>
+            <div class="col-lg-3">男生 : <span id="boy"></span></div>
+            <div class="col-lg-3">女生 : <span id="girl"></span></div>
+            <div class="col-lg-3">平均分 : <span id="avg"></span></div>
             <table class="table table-striped table-bordered table-hover">
                 <thead style="background-color: skyblue">
                 <tr style="color: #2b669a">
@@ -73,6 +78,27 @@
     </div>
 </div>
 </body>
+<script th:inline="javascript">
+    var students = /*[[${students}]]*/ '';
+    var boyNum = 0;
+    var girlNum = 0;
+    var sum = 0;
+    for (var i = 0; i < students.length; i++) {
+        if (students[i].sex === "男"){
+            boyNum++;
+        }
+        else {
+            girlNum++;
+        }
+        sum+=students[i].totalGrade;
+    }
+
+    $("#sum").append(students.length);
+    $("#boy").append(boyNum);
+    $("#girl").append(girlNum);
+    $("#avg").append(Math.round(sum/students.length * 100) / 100);
+
+</script>
 <script>
     function importFile() {
         document.getElementById("importFile").click();

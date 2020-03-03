@@ -26,7 +26,7 @@
         <div th:replace="commons/bar::sidebar(activeUri='showStudent')"></div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <a class="btn btn-info" th:href="@{'/downloadExcel?id='+${c.id}}">导出</a>
-            <h3 style="text-align: center" th:text="${c.name}"></h3>
+            <h3 style="text-align: center" th:text="${c.name}" id="className"></h3>
             <div class="col-lg-3">总人数 : <span th:text="${students.size()}"></span></div>
             <div class="col-lg-3">男生 : <span id="boy"></span></div>
             <div class="col-lg-3">女生 : <span id="girl"></span></div>
@@ -65,8 +65,8 @@
                     <td th:text="${student.patriarch}"> </td>
                     <td th:text="${student.phone}"> </td>
                     <td th:text="${student.totalGrade}"></td>
-                    <input type="hidden" id="student" th:value="${student}">
-                    <td><button type="button"  class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">调整班级</button></td>
+                    <input type="hidden" id="studentID" th:value="${student.id}">
+                    <td><button type="button"  class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" th:onclick="'test('+${student.id}+')'">调整班级</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -80,11 +80,11 @@
                             <h4 class="modal-title" id="myModalLabel">调整班级</h4>
                         </div>
                         <div class="modal-body" id="model">
-
+                            <!--<div align="center">姓名 : <input value="123" style="border: 0px" disabled></div>-->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary">保存更改</button>
+                            <button type="button" class="btn btn-primary" onclick="updateStudent()">保存更改</button>
                         </div>
                     </div>
                 </div>
@@ -110,18 +110,36 @@
     $("#boy").append(boyNum);
     $("#girl").append(girlNum);
     $("#avg").append(Math.round(sum/students.length * 100) / 100);
-
-    function downloadExcel() {
-        location.href="/downloadExcel";
-    }
 </script>
-<script>
-    function test(student) {
-        // var student = $("#student").val();
-        // var p = "";
-        // p += "<p>"+student+"</p>";
-        // $("#model").html(p);
-        alert(student.name);
+<script type="text/javascript">
+    function test(id) {
+        $.post("findOneStudent", {id: id}, function (student) {
+            var model = '';
+            model += '<div align="center">姓名 : <input value="'+student.name+'" disabled></div>'
+                    +'<div align="center">性别 : <input value="'+student.sex+'" disabled></div>'
+                +'<div align="center">民族 : <input value="'+student.nation+'" disabled></div>'
+                +'<div align="center">身份证 : <input value="'+student.idCard+'" disabled></div>'
+                +'<div align="center">编班类型 : <input value="'+student.type+'" disabled></div>'
+                +'<div align="center">出生年月 : <input value="" disabled></div>'
+                +'<div align="center">籍贯 : <input value="'+student.nativePlace+'" disabled></div>'
+                +'<div align="center">家庭住址 : <input value="'+student.address+'" disabled></div>'
+                +'<div align="center">联系电话 : <input value="" disabled></div>'
+                +'<div align="center">监护人姓名 : <input value="'+student.patriarch+'" disabled></div>'
+                +'<div align="center">监护人电话 : <input value="'+student.phone+'" disabled></div>'
+                +'<div align="center">总分 : <input value="'+student.totalGrade+'" disabled></div>'
+                +'<div align="center">班级 : <input value="'+$("#className").text()+'" id="cName"></div>'
+                +'<input type="hidden" id="studentId" value="'+student.id+'">';
+            $("#model").html(model);
+        })
+
+    }
+
+    function updateStudent() {
+        var id = $("#studentId").val();
+        var className = $("#cName").val();
+        $.post("/updateStudent",{id:id,className:className},function (data) {
+
+        })
     }
 </script>
 </html>

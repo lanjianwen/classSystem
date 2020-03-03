@@ -31,8 +31,9 @@ public class StudentController {
     }
 
     @PostMapping("/updateStudent")
-    public void updateStudent(Student student){
-        studentService.updateStudent(student);
+    public String updateStudent(Integer id, String className){
+        studentService.updateStudent(id, className);
+        return "redirect:/showStudent";
     }
 
     @GetMapping("/showStudents")
@@ -51,4 +52,14 @@ public class StudentController {
         return "showStudent";
     }
 
+    @GetMapping("/deleteAll")
+    public String deleteAll(){
+        studentService.deleteAll();
+        return "redirect:/roster";
+    }
+
+    @PostMapping("/findOneStudent")
+    public @ResponseBody Student findById(Integer id){
+        return studentService.findById(id);
+    }
 }
