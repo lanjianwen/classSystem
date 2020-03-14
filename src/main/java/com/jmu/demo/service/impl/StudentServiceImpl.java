@@ -6,6 +6,9 @@ import com.jmu.demo.repository.ClassRepository;
 import com.jmu.demo.repository.StudentRepository;
 import com.jmu.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +27,14 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> findAll() {
         return studentRepository.findAll();
+    }
+
+    @Override
+    public Page<Student> findAll(Integer begin) {
+        Pageable pageable = PageRequest.of(begin,12);
+        Page<Student> page = studentRepository.findAll(pageable);
+        return page;
+//        return studentRepository.findAll(page);
     }
 
     @Override
@@ -77,56 +88,41 @@ public class StudentServiceImpl implements StudentService {
         }
 
         //男生 排序法则12344321
+        //i 学生  j 班级
         int j = 0;
-        int flag = 1;
         for (int i = 0; i < boys.size(); i++) {
-            if (j == 0){
-                if (i != 0){
-                    boys.get(i).setClassId(classes.get(j).getId());
-                    i++;
-                }
-                flag = 1;
-            }
-            else if (j == classNum - 1){
+            if ((i/classNum) % 2 == 0){
                 boys.get(i).setClassId(classes.get(j).getId());
-                i++;
-                flag = -1;
-            }
-            if (i < boys.size()){
-                boys.get(i).setClassId(classes.get(j).getId());
-            }
-            if (flag == 1){
                 j++;
             }
-            else {
+            else{
+                boys.get(i).setClassId(classes.get(j).getId());
                 j--;
+            }
+            if(j == classNum){
+                j--;
+            }
+            else if(j == -1){
+                j++;
             }
         }
 
         //女生+小部分男生 排序法则43211234
         j = classNum - 1;
-        flag = -1;
         for (int i = 0; i < girls.size(); i++) {
-            if (j == classNum - 1){
-                if (i != 0){
-                    girls.get(i).setClassId(classes.get(j).getId());
-                    i++;
-                }
-                flag = -1;
-            }
-            else if (j == 0){
+            if ((i/classNum) % 2 == 0){
                 girls.get(i).setClassId(classes.get(j).getId());
-                i++;
-                flag = 1;
+                j--;
             }
-            if (i < girls.size()){
+            else{
                 girls.get(i).setClassId(classes.get(j).getId());
-            }
-            if (flag == 1){
                 j++;
             }
-            else {
+            if(j == classNum){
                 j--;
+            }
+            else if(j == -1){
+                j++;
             }
         }
 
@@ -153,6 +149,14 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> findStudentByClassId(Integer classId) {
         return studentRepository.findByClassId(classId);
+    }
+
+    @Override
+    public Page<Student> findStudentByClassId(Integer classId, Integer begin) {
+        Pageable pageable = PageRequest.of(begin,10);
+        Page<Student> page = studentRepository.findByClassId(classId, pageable);
+        return page;
+//        return studentRepository.findByClassId(classId);
     }
 
     @Override

@@ -24,9 +24,9 @@
         <!--引入侧边栏-->
         <div th:replace="commons/bar::sidebar(activeUri='showClass')"></div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div style="width:15%;height:100px;background-color:#00FF66;border-radius:90%;margin-right: 10%;
+            <div style="width:15%;height:100px;background-color:#2E86C1;border-radius:90%;margin-right: 10%;
              margin-top: 5%;text-align: center;padding: 40px 20px;" class="col-lg-3" th:each="class:${classes}">
-                <a th:href="@{'showStudent?classId='+${class.id}}"><div th:text="${class.name}"></div></a>
+                <a th:href="@{'showStudent?classId='+${class.id}}"><div th:text="${class.name}" style="color: white"></div></a>
             </div>
         </div>
     </div>
