@@ -18,6 +18,12 @@ public class Class {
     private Integer maxMum;
     @Column(name = "type")
     private String type;
+    @Column(name = "boy_num")
+    private Integer boyNum;
+    @Column(name = "girl_num")
+    private Integer girlNum;
+    @Column(name = "average_score")
+    private Double averageScore;
     @Column(name = "priority")
     private Integer priority;
 }

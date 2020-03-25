@@ -14,4 +14,8 @@ public interface ClassService {
     List<Class> findAll();
 
     Class findClass(Integer classId);
+
+    void deleteAll();
+
+    void updateClass();
 }

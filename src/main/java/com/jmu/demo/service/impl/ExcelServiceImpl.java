@@ -35,11 +35,12 @@ public class ExcelServiceImpl implements ExcelService {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (student1 == null || student.getPriority() != 1){
+                if (student.getPriority() != 1 && student1 == null){
                     studentRepository.save(student);
                 }
-                else {
+                else if (student1 != null && student.getPriority() == 1){
                     student1.setPriority(1);
+                    student1.setType("跟踪生源");
                     studentRepository.save(student1);
                 }
             }

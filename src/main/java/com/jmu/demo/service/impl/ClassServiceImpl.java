@@ -1,7 +1,9 @@
 package com.jmu.demo.service.impl;
 
 import com.jmu.demo.entity.Class;
+import com.jmu.demo.po.ClassPO;
 import com.jmu.demo.repository.ClassRepository;
+import com.jmu.demo.repository.StudentRepository;
 import com.jmu.demo.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ import java.util.List;
 public class ClassServiceImpl implements ClassService {
     @Autowired
     private ClassRepository classRepository;
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Override
     @Transactional(rollbackOn = Exception.class)
@@ -50,5 +54,24 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Class findClass(Integer classId) {
         return classRepository.findById(classId).get();
+    }
+
+    @Override
+    public void deleteAll() {
+        classRepository.deleteAll();
+    }
+
+    @Override
+    public void updateClass() {
+        List<ClassPO> boys = studentRepository.findSexNum("男");
+        List<ClassPO> girls = studentRepository.findSexNum("女");
+
+        for (int i = 0; i < boys.size(); i++) {
+            Class c = classRepository.findById(boys.get(i).getId()).get();
+            c.setBoyNum(boys.get(i).getNum());
+            c.setGirlNum(girls.get(i).getNum());
+            c.setAverageScore((girls.get(i).getTotalGrade()+boys.get(i).getTotalGrade())/(boys.get(i).getNum()+girls.get(i).getNum()));
+            classRepository.save(c);
+        }
     }
 }

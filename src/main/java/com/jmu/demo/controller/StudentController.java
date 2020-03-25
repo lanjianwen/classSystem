@@ -36,8 +36,7 @@ public class StudentController {
     @PostMapping("/distribute")
     public String distribute(String classType, @RequestParam(value = "studentType") List<String> studentType, Model model){
         studentService.distribute(classType,studentType);
-        model.addAttribute("test","666");
-        return "redirect:/devideClass";
+        return "redirect:/showClass";
     }
 
     @PostMapping("/updateStudent")
