@@ -26,4 +26,6 @@ public class Class {
     private Double averageScore;
     @Column(name = "priority")
     private Integer priority;
+    @Column(name = "flag")
+    private Integer flag;
 }

@@ -1,7 +1,7 @@
 package com.jmu.demo.service.impl;
 
 import com.jmu.demo.entity.Class;
-import com.jmu.demo.po.ClassPO;
+import com.jmu.demo.entity.Student;
 import com.jmu.demo.repository.ClassRepository;
 import com.jmu.demo.repository.StudentRepository;
 import com.jmu.demo.service.ClassService;
@@ -63,15 +63,29 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public void updateClass() {
-        List<ClassPO> boys = studentRepository.findSexNum("男");
-        List<ClassPO> girls = studentRepository.findSexNum("女");
+        List<Class> classes = classRepository.findAll();
+        for (Class c : classes){
+            double totalGrade =0;
+            List<Student> boys = studentRepository.findByClassIdAndSex(c.getId(),"男");
+            List<Student> girls = studentRepository.findByClassIdAndSex(c.getId(),"女");
+            try {
+                totalGrade = studentRepository.findByClassIdAndGetCount(c.getId());
+            } catch (Exception e) {
 
-        for (int i = 0; i < boys.size(); i++) {
-            Class c = classRepository.findById(boys.get(i).getId()).get();
-            c.setBoyNum(boys.get(i).getNum());
-            c.setGirlNum(girls.get(i).getNum());
-            c.setAverageScore((girls.get(i).getTotalGrade()+boys.get(i).getTotalGrade())/(boys.get(i).getNum()+girls.get(i).getNum()));
-            classRepository.save(c);
+            }
+            Class c1 = classRepository.findById(c.getId()).get();
+            if (c1 != null){
+                c1.setBoyNum(boys.size());
+                c1.setGirlNum(girls.size());
+
+                //取小数点后两位
+                Double average = new Double(0);
+                if (totalGrade != 0){
+                    average = Double.parseDouble(String.format("%.2f", (totalGrade/(boys.size()+girls.size()))));
+                }
+                c1.setAverageScore(average);
+                classRepository.save(c1);
+            }
         }
     }
 }

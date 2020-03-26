@@ -46,6 +46,7 @@ public class StudentServiceImpl implements StudentService {
         int maxNum = classes.get(0).getMaxMum();
         //总人数
         int totalNum = studentRepository.findByClassType(classType);
+        int sum = totalNum;
         //男生队列
         List<Student> boys = new ArrayList<Student>();
         List<Student> girls = new ArrayList<Student>();
@@ -80,8 +81,13 @@ public class StudentServiceImpl implements StudentService {
 
         compare(boys);
         compare(girls);
-        //将男/女生人数变成班级的倍数
-        while (boys.size() % classNum != 0){
+        // 将男/女生人数变成班级的倍数
+        while (((boys.size()+ (sum % classNum)) % classNum) != 0){
+            if (boys.size() + girls.size() < classNum){
+                boys.addAll(girls);
+                girls.removeAll(girls);
+                break;
+            }
             int x = boys.size() - (boys.size() % classNum);
             girls.add(boys.get(x));
             boys.remove(x);
@@ -89,9 +95,9 @@ public class StudentServiceImpl implements StudentService {
 
         //男生 排序法则12344321
         //i 学生  j 班级
-        int j = 0;
+        int j = classes.get(0).getFlag();
         for (int i = 0; i < boys.size(); i++) {
-            if ((i/classNum) % 2 == 0){
+            if (((sum + i)/classNum) % 2 == 0){
                 boys.get(i).setClassId(classes.get(j).getId());
                 j++;
             }
@@ -108,9 +114,11 @@ public class StudentServiceImpl implements StudentService {
         }
 
         //女生+小部分男生 排序法则43211234
-        j = classNum - 1;
+        if (girls.size() > 0){
+            j = classNum - 1 - classes.get(0).getFlag();
+        }
         for (int i = 0; i < girls.size(); i++) {
-            if ((i/classNum) % 2 == 0){
+            if (((sum + i)/classNum) % 2 == 0){
                 girls.get(i).setClassId(classes.get(j).getId());
                 j--;
             }
@@ -128,6 +136,10 @@ public class StudentServiceImpl implements StudentService {
 
         //分班 入数据库
         //TODO
+        for (int i = 0; i < classes.size(); i++) {
+            classes.get(i).setFlag(j);
+        }
+        classRepository.saveAll(classes);
         boys.addAll(girls);
         updateClassId(boys);
     }

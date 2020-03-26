@@ -39,7 +39,7 @@ public class ClassController {
 
     @GetMapping("/showClass")
     public String showClass(Model model){
-//        classService.updateClass();
+        classService.updateClass();
         List<Class> classes = classService.findAll();
         model.addAttribute("classes", classes);
         return "showClass";

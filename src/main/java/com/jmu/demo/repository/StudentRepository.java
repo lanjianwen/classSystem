@@ -1,7 +1,6 @@
 package com.jmu.demo.repository;
 
 import com.jmu.demo.entity.Student;
-import com.jmu.demo.po.ClassPO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,6 +34,8 @@ public interface StudentRepository extends JpaRepository<Student,Integer>, JpaSp
 
     Page<Student> findByClassId(Integer classId, Pageable pageable);
 
-    @Query(value = "SELECT class_id id,COUNT(*) num, SUM(total_grade) totalGrade FROM student  WHERE sex= :sex AND class_id IS NOT NULL GROUP BY class_id", nativeQuery = true)
-    List<ClassPO> findSexNum(String sex);
+    List<Student> findByClassIdAndSex(Integer id, String sex);
+
+    @Query(value = "SELECT SUM(total_grade) FROM student WHERE class_id= :id", nativeQuery = true)
+    double findByClassIdAndGetCount(Integer id);
 }
