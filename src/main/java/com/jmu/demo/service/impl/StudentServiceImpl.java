@@ -82,20 +82,23 @@ public class StudentServiceImpl implements StudentService {
         compare(boys);
         compare(girls);
         // 将男/女生人数变成班级的倍数
-        while (((boys.size()+ (sum % classNum)) % classNum) != 0){
+        while (((boys.size() + (sum % classNum)) % classNum) != 0){
             if (boys.size() + girls.size() < classNum){
                 boys.addAll(girls);
                 girls.removeAll(girls);
                 break;
             }
-            int x = boys.size() - (boys.size() % classNum);
+            int x = boys.size() - (boys.size() % classNum) - (sum % classNum);
             girls.add(boys.get(x));
             boys.remove(x);
         }
 
         //男生 排序法则12344321
         //i 学生  j 班级
-        int j = classes.get(0).getFlag();
+        int j = Math.abs(classes.get(0).getFlag()) - 1;
+        if (classes.get(0).getFlag() < 0){
+            sum += classNum;
+        }
         for (int i = 0; i < boys.size(); i++) {
             if (((sum + i)/classNum) % 2 == 0){
                 boys.get(i).setClassId(classes.get(j).getId());
@@ -114,8 +117,14 @@ public class StudentServiceImpl implements StudentService {
         }
 
         //女生+小部分男生 排序法则43211234
-        if (girls.size() > 0){
-            j = classNum - 1 - classes.get(0).getFlag();
+        if (boys.size() == 0){
+            j = classNum - 2 - Math.abs(classes.get(0).getFlag());
+        }
+        else {
+            j = classNum - 1;
+        }
+        if (boys.size() > 0){
+            sum = 0;
         }
         for (int i = 0; i < girls.size(); i++) {
             if (((sum + i)/classNum) % 2 == 0){
@@ -137,7 +146,12 @@ public class StudentServiceImpl implements StudentService {
         //分班 入数据库
         //TODO
         for (int i = 0; i < classes.size(); i++) {
-            classes.get(i).setFlag(j);
+            if (girls.size() > 0){
+                classes.get(i).setFlag(-j-1);
+            }
+            else {
+                classes.get(i).setFlag(j+1);
+            }
         }
         classRepository.saveAll(classes);
         boys.addAll(girls);

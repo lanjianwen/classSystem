@@ -82,11 +82,11 @@
                             <span aria-hidden="true">上一页</span>
                         </a>
                     </li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
+                    <!--<li class="active"><a href="#">1</a></li>-->
+                    <!--<li><a href="#">2</a></li>-->
+                    <!--<li><a href="#">3</a></li>-->
+                    <!--<li><a href="#">4</a></li>-->
+                    <!--<li><a href="#">5</a></li>-->
                     <li>
                         <a href="#" aria-label="Next">
                             <span aria-hidden="true">下一页</span>
@@ -155,9 +155,10 @@
         })
     })
 
+    // 分页
     $(function () {
-        var currentPage = $("#currentPage").val();
-        var totalPages = $("#totalPages").val();
+        var currentPage = parseInt($("#currentPage").val());
+        var totalPages = parseInt($("#totalPages").val());
         var li = '';
         var beforePage = currentPage - 1;
         if (beforePage <= 0){
@@ -190,8 +191,8 @@
                 '    </li>';
         }
 
-        var begin;
-        var end;
+        var begin = 0;
+        var end = 0;
 
         if (totalPages < 10){
             begin = 1;
