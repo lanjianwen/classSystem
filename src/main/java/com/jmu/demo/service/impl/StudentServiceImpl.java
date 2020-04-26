@@ -189,6 +189,11 @@ public class StudentServiceImpl implements StudentService {
     @Transactional(rollbackOn = Exception.class)
     public void deleteAll() {
         studentRepository.deleteAll();
+        List<Class> cs = classRepository.findAll();
+        for (int i = 0; i < cs.size(); i++) {
+            cs.get(i).setFlag(1);
+        }
+        classRepository.saveAll(cs);
     }
 
     @Override

@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" th:href="@{bootstrap/css/bootstrap.css}">
-    <link rel="stylesheet" href="../static/css/dashboard.css" th:href="@{css/dashboard.css}">
+    <!--<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" th:href="@{bootstrap/css/bootstrap.css}">-->
+    <!--<link rel="stylesheet" href="../static/css/dashboard.css" th:href="@{css/dashboard.css}">-->
 
-    <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
-    <script src="../static/bootstrap/js/bootstrap.js" th:src="@{bootstrap/js/bootstrap.js}"></script>
+    <!--<script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>-->
+    <!--<script src="../static/bootstrap/js/bootstrap.js" th:src="@{bootstrap/js/bootstrap.js}"></script>-->
+
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{css/main.css}">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         body{
             background-color: #d9edf7;
@@ -15,113 +19,306 @@
     </style>
 </head>
 
-<body>
-<!--引入头部-->
-<div th:replace="commons/bar::topbar"></div>
+<!--<body>-->
+<!--&lt;!&ndash;引入头部&ndash;&gt;-->
+<!--<div th:replace="commons/bar::topbar"></div>-->
 
 
-<div class="container-fluid">
-    <div class="row">
-        <!--引入侧边栏-->
-        <div th:replace="commons/bar::sidebar(activeUri='showStudent')"></div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <a class="btn btn-info" th:href="@{'/downloadExcel?id='+${c.id}}">导出</a>
-            <input type="hidden" id="classId" th:value="${c.id}">
-            <h3 style="text-align: center" th:text="${c.name}" id="className"></h3>
-            <div class="col-lg-3">总人数 : <span id="sum"></span></div>
-            <div class="col-lg-3">男生 : <span id="boy"></span></div>
-            <div class="col-lg-3">女生 : <span id="girl"></span></div>
-            <div class="col-lg-3">平均分 : <span id="avg"></span></div>
-            <table class="table table-striped table-bordered table-hover">
-                <thead style="background-color: skyblue">
-                <tr style="color: #2b669a">
-                    <th>序号</th>
-                    <th>姓名</th>
-                    <th>性别</th>
-                    <th>民族</th>
-                    <th>身份证号</th>
-                    <th>编班类型</th>
-                    <th>出生年月</th>
-                    <th>籍贯</th>
-                    <th>家庭住址</th>
-                    <th>联系电话</th>
-                    <th>监护人姓名</th>
-                    <th>监护人电话</th>
-                    <th>总分</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="student:${students}" th:class="${student.priority==1?'danger':'success'}">
-                    <td th:text="${students.indexOf(student)+1}"></td>
-                    <td th:text="${student.name}"> </td>
-                    <td th:text="${student.sex}"> </td>
-                    <td th:text="${student.nation}"> </td>
-                    <td th:text="${student.idCard}"> </td>
-                    <td th:text="${student.type}"> </td>
-                    <td> </td>
-                    <td th:text="${student.nativePlace}"> </td>
-                    <td th:text="${student.address}"> </td>
-                    <td> </td>
-                    <td th:text="${student.patriarch}"> </td>
-                    <td th:text="${student.phone}"> </td>
-                    <td th:text="${student.totalGrade}"></td>
-                    <input type="hidden" id="studentID" th:value="${student.id}">
-                    <td><button type="button"  class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" th:onclick="'test('+${student.id}+')'">调整班级</button></td>
-                </tr>
-                </tbody>
-            </table>
+<!--<div class="container-fluid">-->
+    <!--<div class="row">-->
+        <!--&lt;!&ndash;引入侧边栏&ndash;&gt;-->
+        <!--<div th:replace="commons/bar::sidebar(activeUri='showStudent')"></div>-->
+        <!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">-->
+            <!--<a class="btn btn-info" th:href="@{'/downloadExcel?id='+${c.id}}">导出</a>-->
+            <!--<input type="hidden" id="classId" th:value="${c.id}">-->
+            <!--<h3 style="text-align: center" th:text="${c.name}" id="className"></h3>-->
+            <!--<div class="col-lg-3">总人数 : <span id="sum"></span></div>-->
+            <!--<div class="col-lg-3">男生 : <span id="boy"></span></div>-->
+            <!--<div class="col-lg-3">女生 : <span id="girl"></span></div>-->
+            <!--<div class="col-lg-3">平均分 : <span id="avg"></span></div>-->
+            <!--<table class="table table-striped table-bordered table-hover">-->
+                <!--<thead style="background-color: skyblue">-->
+                <!--<tr style="color: #2b669a">-->
+                    <!--<th>序号</th>-->
+                    <!--<th>姓名</th>-->
+                    <!--<th>性别</th>-->
+                    <!--<th>民族</th>-->
+                    <!--<th>身份证号</th>-->
+                    <!--<th>编班类型</th>-->
+                    <!--<th>出生年月</th>-->
+                    <!--<th>籍贯</th>-->
+                    <!--<th>家庭住址</th>-->
+                    <!--<th>联系电话</th>-->
+                    <!--<th>监护人姓名</th>-->
+                    <!--<th>监护人电话</th>-->
+                    <!--<th>总分</th>-->
+                    <!--<th>操作</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr th:each="student:${students}" th:class="${student.priority==1?'danger':'success'}">-->
+                    <!--<td th:text="${students.indexOf(student)+1}"></td>-->
+                    <!--<td th:text="${student.name}"> </td>-->
+                    <!--<td th:text="${student.sex}"> </td>-->
+                    <!--<td th:text="${student.nation}"> </td>-->
+                    <!--<td th:text="${student.idCard}"> </td>-->
+                    <!--<td th:text="${student.type}"> </td>-->
+                    <!--<td> </td>-->
+                    <!--<td th:text="${student.nativePlace}"> </td>-->
+                    <!--<td th:text="${student.address}"> </td>-->
+                    <!--<td> </td>-->
+                    <!--<td th:text="${student.patriarch}"> </td>-->
+                    <!--<td th:text="${student.phone}"> </td>-->
+                    <!--<td th:text="${student.totalGrade}"></td>-->
+                    <!--<input type="hidden" id="studentID" th:value="${student.id}">-->
+                    <!--<td><button type="button"  class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" th:onclick="'test('+${student.id}+')'">调整班级</button></td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+            <!--</table>-->
 
-            <footer class="footer">
-                <div th:text="'第 '+${currentPage}+' 页 , '+' 共 '+${totalPages}+' 页'">第 1 页 ， 共 10 页</div>
-                <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">上一页</span>
-                        </a>
-                    </li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">下一页</span>
-                        </a>
-                    </li>
-                </ul>
-                <input type="hidden" id="totalPages" th:value="${totalPages}">
-                <input type="hidden" id="currentPage" th:value="${currentPage}">
-            </footer>
+            <!--<footer class="footer">-->
+                <!--<div th:text="'第 '+${currentPage}+' 页 , '+' 共 '+${totalPages}+' 页'">第 1 页 ， 共 10 页</div>-->
+                <!--<ul class="pagination">-->
+                    <!--<li>-->
+                        <!--<a href="#" aria-label="Previous">-->
+                            <!--<span aria-hidden="true">上一页</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="active"><a href="#">1</a></li>-->
+                    <!--<li><a href="#">2</a></li>-->
+                    <!--<li><a href="#">3</a></li>-->
+                    <!--<li><a href="#">4</a></li>-->
+                    <!--<li><a href="#">5</a></li>-->
+                    <!--<li>-->
+                        <!--<a href="#" aria-label="Next">-->
+                            <!--<span aria-hidden="true">下一页</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <!--<input type="hidden" id="totalPages" th:value="${totalPages}">-->
+                <!--<input type="hidden" id="currentPage" th:value="${currentPage}">-->
+            <!--</footer>-->
 
-            <!--Model-->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">调整班级</h4>
-                        </div>
-                        <div class="modal-body" id="model">
-                            <!--<div align="center">姓名 : <input value="123" style="border: 0px" disabled></div>-->
-                        </div>
-                        <div align="center"> <div class="col-lg-4" align="right">班级 : </div>
-                            <div class="col-lg-8" align="left">
-                                &nbsp;<select style="width: 180px" id="cName"><option th:each="class:${classes}" th:value="${class.name}" th:text="${class.name}"></option></select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateStudent()">保存更改</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+            <!--&lt;!&ndash;Model&ndash;&gt;-->
+            <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+                <!--<div class="modal-dialog" role="document">-->
+                    <!--<div class="modal-content">-->
+                        <!--<div class="modal-header">-->
+                            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                            <!--<h4 class="modal-title" id="myModalLabel">调整班级</h4>-->
+                        <!--</div>-->
+                        <!--<div class="modal-body" id="model">-->
+                            <!--&lt;!&ndash;<div align="center">姓名 : <input value="123" style="border: 0px" disabled></div>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--<div align="center"> <div class="col-lg-4" align="right">班级 : </div>-->
+                            <!--<div class="col-lg-8" align="left">-->
+                                <!--&nbsp;<select style="width: 180px" id="cName"><option th:each="class:${classes}" th:value="${class.name}" th:text="${class.name}"></option></select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="modal-footer">-->
+                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                            <!--<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateStudent()">保存更改</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--</body>-->
+
+<body class="app sidebar-mini">
+    <!-- Navbar-->
+    <div th:replace="commons/header::header"></div>
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <div th:replace="commons/aside::aside(activeUri='roster')"></div>
+    <main class="app-content">
+       <div class="tile">
+           <div class="row">
+               <a class="btn btn-info" th:href="@{'/downloadExcel?id='+${c.id}}">导出</a>
+           </div>
+
+           <div class="row">
+               <div class="col-md-12">
+                   <div class="row">
+                       <input type="hidden" id="classId" th:value="${c.id}">
+                       <h3 style="text-align: center" th:text="${c.name}" id="className"></h3>
+                   </div>
+                   <div class="row">
+                       <div class="col-md-3">总人数 : <span id="sum"></span></div>
+                       <div class="col-md-3">男生 : <span id="boy"></span></div>
+                       <div class="col-md-3">女生 : <span id="girl"></span></div>
+                       <div class="col-md-3">平均分 : <span id="avg"></span></div>
+                   </div>
+               </div>
+           </div>
+
+           <div class="row">
+               <table class="table table-striped table-bordered table-hover">
+                   <thead style="background-color: skyblue">
+                   <tr style="color: #2b669a">
+                       <th>序号</th>
+                       <th>姓名</th>
+                       <th>性别</th>
+                       <th>民族</th>
+                       <th>身份证号</th>
+                       <th>编班类型</th>
+                       <th>出生年月</th>
+                       <th>籍贯</th>
+                       <th>家庭住址</th>
+                       <th>联系电话</th>
+                       <th>监护人姓名</th>
+                       <th>监护人电话</th>
+                       <th>总分</th>
+                       <th>操作</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr th:each="student:${students}" th:class="${student.priority==1?'danger':'success'}">
+                       <td th:text="${students.indexOf(student)+1}"></td>
+                       <td th:text="${student.name}"> </td>
+                       <td th:text="${student.sex}"> </td>
+                       <td th:text="${student.nation}"> </td>
+                       <td th:text="${student.idCard}"> </td>
+                       <td th:text="${student.type}"> </td>
+                       <td> </td>
+                       <td th:text="${student.nativePlace}"> </td>
+                       <td th:text="${student.address}"> </td>
+                       <td> </td>
+                       <td th:text="${student.patriarch}"> </td>
+                       <td th:text="${student.phone}"> </td>
+                       <td th:text="${student.totalGrade}"></td>
+                       <input type="hidden" id="studentID" th:value="${student.id}">
+                       <td><button type="button"  class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" th:onclick="'test('+${student.id}+')'">调整班级</button></td>
+                   </tr>
+                   </tbody>
+               </table>
+           </div>
+
+           <footer class="footer">
+               <div th:text="'第 '+${currentPage}+' 页 , '+' 共 '+${totalPages}+' 页'">第 1 页 ， 共 10 页</div>
+               <ul class="pagination">
+                   <!--<li>-->
+                   <!--<a href="#" aria-label="Previous">-->
+                   <!--<span aria-hidden="true">上一页</span>-->
+                   <!--</a>-->
+                   <!--</li>-->
+                   <!--<li class="active"><a href="#">1</a></li>-->
+                   <!--<li><a href="#">2</a></li>-->
+                   <!--<li><a href="#">3</a></li>-->
+                   <!--<li><a href="#">4</a></li>-->
+                   <!--<li><a href="#">5</a></li>-->
+                   <!--<li>-->
+                   <!--<a href="#" aria-label="Next">-->
+                   <!--<span aria-hidden="true">下一页</span>-->
+                   <!--</a>-->
+                   <!--</li>-->
+               </ul>
+               <input type="hidden" id="totalPages" th:value="${totalPages}">
+               <input type="hidden" id="currentPage" th:value="${currentPage}">
+           </footer>
+
+           <!--Model-->
+           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+               <div class="modal-dialog" role="document">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                           <h4 class="modal-title" id="myModalLabel">调整班级</h4>
+                       </div>
+                       <div class="modal-body" id="model">
+                           <!--<div align="center">姓名 : <input value="123" style="border: 0px" disabled></div>-->
+                       </div>
+                       <div align="center"> <div class="col-lg-4" align="right">班级 : </div>
+                           <div class="col-lg-8" align="left">
+                               &nbsp;<select style="width: 180px" id="cName"><option th:each="class:${classes}" th:value="${class.name}" th:text="${class.name}"></option></select>
+                           </div>
+                       </div>
+                       <div class="modal-footer">
+                           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                           <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateStudent()">保存更改</button>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </main>
+
+    <!-- Essential javascripts for application to work-->
+    <script src="../static/js/jquery-3.3.1.min.js" th:src="@{js/jquery-3.3.1.min.js}"></script>
+    <script src="../static/js/popper.min.js" th:src="@{js/popper.min.js}"></script>
+    <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+    <script src="../static/js/main.js" th:src="@{js/main.js}"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="../static/js/plugins/pace.min.js" th:src="@{js/plugins/pace.min.js}"></script>
+    <!-- Page specific javascripts-->
+    <script type="text/javascript" src="../static/js/plugins/chart.js" th:src="@{js/plugins/chart.js}"></script>
+
+    <script type="text/javascript" src="../static/js/plugins/jquery.dataTables.min.js" th:src="@{js/plugins/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" src="../static/js/plugins/dataTables.bootstrap.min.js" th:src="@{js/plugins/dataTables.bootstrap.min.js}"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script type="text/javascript">
+        var data = {
+            labels: ["January", "February", "March", "April", "May"],
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [65, 59, 80, 81, 56]
+                },
+                {
+                    label: "My Second dataset",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: [28, 48, 40, 19, 86]
+                }
+            ]
+        };
+        var pdata = [
+            {
+                value: 300,
+                color: "#46BFBD",
+                highlight: "#5AD3D1",
+                label: "Complete"
+            },
+            {
+                value: 50,
+                color:"#F7464A",
+                highlight: "#FF5A5E",
+                label: "In-Progress"
+            }
+        ]
+
+        var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+        var lineChart = new Chart(ctxl).Line(data);
+
+        var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+        var pieChart = new Chart(ctxp).Pie(pdata);
+    </script>
+    <!-- Google analytics script-->
+    <script type="text/javascript">
+        if(document.location.hostname == 'pratikborsadiya.in') {
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-72504830-1', 'auto');
+            ga('send', 'pageview');
+        }
+    </script>
+
 </body>
+
 <script th:inline="javascript">
     // var students = /*[[${students}]]*/ '';
     // var boyNum = 0;
@@ -204,25 +401,25 @@
         }
         if (currentPage != 1){
             li += '<li>\n' +
-                '                        <a href="/showStudent?page=1&classId='+classId+'" aria-label="Previous">\n' +
+                '                        <a class="page-link" href="/showStudent?page=1&classId='+classId+'" aria-label="Previous">\n' +
                 '                            <span aria-hidden="true">首页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
 
             li += '<li>\n' +
-                '                        <a href="/showStudent?page='+beforePage+'&classId='+classId+'" aria-label="Previous">\n' +
+                '                        <a class="page-link" href="/showStudent?page='+beforePage+'&classId='+classId+'" aria-label="Previous">\n' +
                 '                            <span aria-hidden="true">上一页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
         }
         else {
-            li += '<li class="disabled">\n' +
+            li += '<li class="page-link">\n' +
                 '      <span>\n' +
                 '        <span aria-hidden="true">首页</span>\n' +
                 '      </span>\n' +
                 '    </li>';
 
-            li += '<li class="disabled">\n' +
+            li += '<li class="page-link">\n' +
                 '      <span>\n' +
                 '        <span aria-hidden="true">上一页</span>\n' +
                 '      </span>\n' +
@@ -252,12 +449,12 @@
         }
         for (var i = begin; i <= end; i++) {
             if (currentPage == i){
-                li += '<li class="active">\n' +
-                    '      <span>'+i+' <span class="sr-only">(current)</span></span>\n' +
+                li += '<li style="background: #66fff3" class="page-link" aria-controls="sampleTable">\n' +
+                    '      <span>'+i+'</span>\n' +
                     '    </li>';
             }
             else {
-                li += '<li><a href="/showStudent?page='+i+'&classId='+classId+'">'+i+'</a></li>';
+                li += '<li><a class="page-link" href="/showStudent?page='+i+'&classId='+classId+'">'+i+'</a></li>';
             }
 
         }
@@ -266,13 +463,13 @@
             nextPage = nextPage - 1;
         }
         if (currentPage == totalPages){
-            li += '<li class="disabled">\n' +
+            li += '<li class="page-link">\n' +
                 '      <span>\n' +
                 '        <span aria-hidden="true">下一页</span>\n' +
                 '      </span>\n' +
                 '    </li>';
 
-            li += '<li class="disabled">\n' +
+            li += '<li class="page-link">\n' +
                 '      <span>\n' +
                 '        <span aria-hidden="true">尾页</span>\n' +
                 '      </span>\n' +
@@ -280,12 +477,12 @@
         }
         else {
             li += '<li>\n' +
-                '                        <a href="/showStudent?page='+nextPage+'&classId='+classId+'" aria-label="Next">\n' +
+                '                        <a class="page-link" href="/showStudent?page='+nextPage+'&classId='+classId+'" aria-label="Next">\n' +
                 '                            <span aria-hidden="true">下一页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
             li += '<li>\n' +
-                '                        <a href="/showStudent?page='+totalPages+'&classId='+classId+'" aria-label="Next">\n' +
+                '                        <a class="page-link" href="/showStudent?page='+totalPages+'&classId='+classId+'" aria-label="Next">\n' +
                 '                            <span aria-hidden="true">尾页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';

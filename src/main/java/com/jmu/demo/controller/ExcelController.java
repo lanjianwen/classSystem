@@ -1,6 +1,7 @@
 package com.jmu.demo.controller;
 
 import com.jmu.demo.entity.Student;
+import com.jmu.demo.service.ClassService;
 import com.jmu.demo.service.ExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ExcelController {
     @Autowired
     private ExcelService excelService;
+    @Autowired
+    private ClassService classService;
 
     @PostMapping("/importFile")
     public String importFile(@RequestParam(value = "file") MultipartFile file){
@@ -30,7 +33,7 @@ public class ExcelController {
      */
     @GetMapping("/downloadExcel")
     public void downloadExcel(Integer id, HttpServletResponse response){
-        String fileName="学生名单";
+        String fileName = classService.findClass(id).getName();
         try {
             response.setHeader("Content-type","application/vnd.ms-excel");
             // 解决导出文件名中文乱码

@@ -30,6 +30,7 @@ public class ClassServiceImpl implements ClassService {
                 c.setType(classTypeName.get(i));
                 c.setName(classTypeName.get(i)+n+"班");
                 c.setMaxMum(maxNum.get(i));
+                c.setFlag(1);
                 n++;
                 classRepository.save(c);
             }
@@ -59,6 +60,7 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public void deleteAll() {
         classRepository.deleteAll();
+        studentRepository.resetClassId();
     }
 
     @Override

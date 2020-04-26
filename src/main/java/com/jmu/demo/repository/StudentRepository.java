@@ -5,9 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -38,4 +40,9 @@ public interface StudentRepository extends JpaRepository<Student,Integer>, JpaSp
 
     @Query(value = "SELECT SUM(total_grade) FROM student WHERE class_id= :id", nativeQuery = true)
     double findByClassIdAndGetCount(Integer id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE student SET class_id = NULL", nativeQuery = true)
+    void resetClassId();
 }
