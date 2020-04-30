@@ -16,8 +16,8 @@
         <li><a class="app-menu__item" href="dashboard.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         <li class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">系统管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item active" href="#"><i class="icon fa fa-circle-o"></i> 用户管理</a></li>
-                <li><a class="treeview-item" href="#" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> 权限管理</a></li>
+                <li><a class="treeview-item" href="/findAllUsers"><i class="icon fa fa-circle-o"></i> 用户管理</a></li>
+                <li><a class="treeview-item" href="findAllRoles"><i class="icon fa fa-circle-o"></i> 权限管理</a></li>
                 <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 角色管理</a></li>
             </ul>
         </li>
@@ -28,6 +28,7 @@
                 <li th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
                 <li class="" th:class="${activeUri=='showClass'?'active':''}"><a class="treeview-item" href="/showClass"><i class="icon fa fa-circle-o"></i>班级列表</a></li>
                 <li th:class="${activeUri=='devideClass'?'active':''}"><a class="treeview-item" href="/devideClass"><i class="icon fa fa-circle-o"></i>分班</a></li>
+                <li><a class="treeview-item" href="/showQualityStudents"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
             </ul>
         </li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Tables</span><i class="treeview-indicator fa fa-angle-right"></i></a>

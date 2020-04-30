@@ -45,4 +45,7 @@ public interface StudentRepository extends JpaRepository<Student,Integer>, JpaSp
     @Modifying
     @Query(value = "UPDATE student SET class_id = NULL", nativeQuery = true)
     void resetClassId();
+
+    @Query(value = "SELECT * FROM student WHERE priority=1", nativeQuery = true)
+    Page<Student> findAllQualityStudents(Pageable pageable);
 }

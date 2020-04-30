@@ -84,4 +84,27 @@ public class StudentController {
     public @ResponseBody Student findById(Integer id){
         return studentService.findById(id);
     }
+
+    @GetMapping("/showQualityStudents")
+    public String showQualityStudents(Integer page, Model model){
+        if (page == null || page.intValue() == 0){
+            page = 1;
+        }
+        Page<Student> students = studentService.findAllQualityStudents(page - 1);
+        model.addAttribute("students", students.getContent());
+        model.addAttribute("totalPages", students.getTotalPages());
+        model.addAttribute("currentPage", students.getNumber()+1);
+        return "/qualityStudents";
+    }
+
+    @PostMapping("/addQualityStudent")
+    public @ResponseBody String addQualityStudent(Student student, String user){
+        Student s = studentService.addQualityStudent(student);
+        if (s == null){
+            return "该生未报考我校";
+        }
+        else {
+            return "添加成功";
+        }
+    }
 }

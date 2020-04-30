@@ -27,92 +27,6 @@
     </style>
 </head>
 
-<!--<body>-->
-<!--&lt;!&ndash;引入头部&ndash;&gt;-->
-<!--<div th:replace="commons/bar::topbar"></div>-->
-
-
-<!--<div class="container-fluid">-->
-    <!--<div class="row">-->
-        <!--&lt;!&ndash;引入侧边栏&ndash;&gt;-->
-        <!--<div th:replace="commons/bar::sidebar(activeUri='roster')"></div>-->
-        <!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">-->
-            <!--<div>-->
-                <!--<div>-->
-                    <!--<form th:action="@{/importFile}" method="post" enctype="multipart/form-data" id="form">-->
-                        <!--<input type="file" style="display: none" name="file" id="importFile" onchange="submitFile()">-->
-                    <!--</form>-->
-                    <!--<button type="button" class="btn btn-info" onclick="importFile()">导入</button>-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-info" onclick="downloadExcel()">导出</button>&ndash;&gt;-->
-                    <!--<a type="button" class="btn btn-info" href="/deleteAll">清空</a>-->
-                <!--</div>-->
-            <!--</div><br>-->
-            <!--<div class="col-lg-3">总人数 : <span id="sum"></span></div>-->
-            <!--<div class="col-lg-3">男生 : <span id="boy"></span></div>-->
-            <!--<div class="col-lg-3">女生 : <span id="girl"></span></div>-->
-            <!--<div class="col-lg-3">平均分 : <span id="avg"></span></div>-->
-            <!--<table class="table table-striped table-bordered table-hover">-->
-                <!--<thead style="background-color: skyblue">-->
-                <!--<tr style="color: #2b669a">-->
-                    <!--<th>序号</th>-->
-                    <!--<th>姓名</th>-->
-                    <!--<th>性别</th>-->
-                    <!--<th>民族</th>-->
-                    <!--<th>身份证号</th>-->
-                    <!--<th>编班类型</th>-->
-                    <!--<th>出生年月</th>-->
-                    <!--<th>籍贯</th>-->
-                    <!--<th>家庭住址</th>-->
-                    <!--<th>联系电话</th>-->
-                    <!--<th>监护人姓名</th>-->
-                    <!--<th>监护人电话</th>-->
-                    <!--<th>总分</th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <!--<tbody>-->
-                <!--<tr th:each="student:${students}" th:class="${student.priority==1?'danger':'success'}">-->
-                    <!--<td th:text="${students.indexOf(student)+1}"></td>-->
-                    <!--<td th:text="${student.name}"> </td>-->
-                    <!--<td th:text="${student.sex}"> </td>-->
-                    <!--<td th:text="${student.nation}"> </td>-->
-                    <!--<td th:text="${student.idCard}"> </td>-->
-                    <!--<td th:text="${student.type}"> </td>-->
-                    <!--<td> </td>-->
-                    <!--<td th:text="${student.nativePlace}"> </td>-->
-                    <!--<td th:text="${student.address}"> </td>-->
-                    <!--<td> </td>-->
-                    <!--<td th:text="${student.patriarch}"> </td>-->
-                    <!--<td th:text="${student.phone}"> </td>-->
-                    <!--<td th:text="${student.totalGrade}"></td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-            <!--</table>-->
-            <!--<footer class="footer">-->
-                <!--<div th:text="'第 '+${currentPage}+' 页 , '+' 共 '+${totalPages}+' 页'">第 1 页 ， 共 10 页</div>-->
-                <!--<ul class="pagination">-->
-                    <!--<li>-->
-                        <!--<a href="#" aria-label="Previous">-->
-                            <!--<span aria-hidden="true">上一页</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--&lt;!&ndash;<li class="active"><a href="#">1</a></li>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li><a href="#">2</a></li>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li><a href="#">3</a></li>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li><a href="#">4</a></li>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li><a href="#">5</a></li>&ndash;&gt;-->
-                    <!--<li>-->
-                        <!--<a href="#" aria-label="Next">-->
-                            <!--<span aria-hidden="true">下一页</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                <!--</ul>-->
-                <!--<input type="hidden" id="totalPages" th:value="${totalPages}">-->
-                <!--<input type="hidden" id="currentPage" th:value="${currentPage}">-->
-            <!--</footer>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-<!--</body>-->
 
 <body class="app sidebar-mini">
     <!-- Navbar-->
@@ -121,25 +35,97 @@
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <div th:replace="commons/aside::aside(activeUri='roster')"></div>
     <main class="app-content">
-        <div class="tile">
-            <div class="row">
-                <div>
-                    <form th:action="@{/importFile}" method="post" enctype="multipart/form-data" id="form">
-                        <input type="file" style="display: none" name="file" id="importFile" onchange="submitFile()">
-                        <input type="hidden" name="isQualityStudents" value="0">
-                    </form>
-                     <button type="button" class="btn btn-info" onclick="importFile()">导入</button>
-                    <!--<button type="button" class="btn btn-info" onclick="downloadExcel()">导出</button>-->
-                     <a type="button" class="btn btn-info" href="/deleteAll">清空</a>
+        <div class="row">
+            <div>
+                <form th:action="@{/importFile}" method="post" enctype="multipart/form-data" id="form">
+                    <input type="file" style="display: none" name="file" id="importFile" onchange="submitFile()">
+                    <input type="hidden" name="isQualityStudents" value="1">
+                </form>
+                <button type="button" class="btn btn-info" onclick="importFile()">批量导入</button>
+                <button type="button" class="btn btn-info" onclick="" data-toggle="modal" data-target="#myModal">手动添加</button>
+                <!--<a type="button" class="btn btn-info" href="#">清空</a>-->
+            </div>
+        </div>
+        <div class="tile row">
+
+            <!--Model-->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">添加优质生</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body" id="model">
+                            <!--<div align="center">姓名 : <input value="123" style="border: 0px" disabled></div>-->
+                        </div>
+                        <div align="center">
+                            <form id="formData" method="post" action="/addQualityStudent">
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="name">姓名</label>
+                                    <input class="form-control form-control-sm" id="name" type="text" name="name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="sex">性别</label>
+                                    <input class="form-control form-control-sm" id="sex" type="text" name="sex">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="nation">民族</label>
+                                    <input class="form-control form-control-sm" id="nation" type="text" name="nation">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="idCard">身份证</label>
+                                    <input class="form-control form-control-sm" id="idCard" type="text" name="idCard">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="type">编班类型</label>
+                                    <input class="form-control form-control-sm" id="type" type="text" name="type">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="birthday">出生年月</label>
+                                    <input class="form-control form-control-sm" id="birthday" type="text" name="birthday">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="nativePlace">籍贯</label>
+                                    <input class="form-control form-control-sm" id="nativePlace" type="text" name="nativePlace">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="address">家庭住址</label>
+                                    <input class="form-control form-control-sm" id="address" type="text" name="address">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="tel">联系电话</label>
+                                    <input class="form-control form-control-sm" id="tel" type="text" name="tel">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="patriarch">监护人姓名</label>
+                                    <input class="form-control form-control-sm" id="patriarch" type="text" name="patriarch">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="phone">监护人电话</label>
+                                    <input class="form-control form-control-sm" id="phone" type="text" name="phone">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm" for="totalGrade">总分</label>
+                                    <input class="form-control form-control-sm" id="totalGrade" type="text" name="totalGrade">
+                                </div>
+                                <input type="hidden" name="user" value="122">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="submitFormData()">提交</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-3">总人数 : <span id="sum"></span></div>
-                <div class="col-lg-3">男生 : <span id="boy"></span></div>
-                <div class="col-lg-3">女生 : <span id="girl"></span></div>
-                <div class="col-lg-3">平均分 : <span id="avg"></span></div>
-            </div>
+            <!--<div class="row">-->
+                <!--<div class="col-lg-3">总人数 : <span id="sum"></span></div>-->
+                <!--<div class="col-lg-3">男生 : <span id="boy"></span></div>-->
+                <!--<div class="col-lg-3">女生 : <span id="girl"></span></div>-->
+                <!--<div class="col-lg-3">平均分 : <span id="avg"></span></div>-->
+            <!--</div>-->
             <div class="row">
                 <table class="table table-striped table-bordered table-hover">
                     <thead style="background-color: skyblue">
@@ -277,27 +263,6 @@
 
 </body>
 
-<script th:inline="javascript">
-    var students = /*[[${students}]]*/ '';
-    // var boyNum = 0;
-    // var girlNum = 0;
-    // var sum = 0;
-    // for (var i = 0; i < students.length; i++) {
-    //     if (students[i].sex === "男"){
-    //         boyNum++;
-    //     }
-    //     else {
-    //         girlNum++;
-    //     }
-    //     sum+=students[i].totalGrade;
-    // }
-    //
-    // $("#sum").append(students.length);
-    // $("#boy").append(boyNum);
-    // $("#girl").append(girlNum);
-    // $("#avg").append(Math.round(sum/students.length * 100) / 100);
-
-</script>
 <script>
     function importFile() {
         document.getElementById("importFile").click();
@@ -310,27 +275,13 @@
         location.href="/downloadExcel";
     }
 
-    $(function () {
-        $.get("/findAll",function (students) {
-            var boyNum = 0;
-            var girlNum = 0;
-            var sum = 0;
-            for (var i = 0; i < students.length; i++) {
-                if (students[i].sex === "男"){
-                    boyNum++;
-                }
-                else {
-                    girlNum++;
-                }
-                sum+=students[i].totalGrade;
-            }
+    function submitFormData(){
 
-            $("#sum").append(students.length);
-            $("#boy").append(boyNum);
-            $("#girl").append(girlNum);
-            $("#avg").append(Math.round(sum/students.length * 100) / 100);
+        $.post($("#formData").attr('action'), $("#formData").serialize(),function (msg) {
+            alert(msg);
+            window.location.href="showQualityStudents";
         })
-    })
+    }
 
     // 分页
     $(function () {
@@ -343,13 +294,13 @@
         }
         if (currentPage != 1){
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudents?page=1" aria-label="Previous">\n' +
+                '                        <a class="page-link" href="/showQualityStudents?page=1" aria-label="Previous">\n' +
                 '                            <span aria-hidden="true">首页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
 
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudents?page='+beforePage+'" aria-label="Previous">\n' +
+                '                        <a class="page-link" href="/showQualityStudents?page='+beforePage+'" aria-label="Previous">\n' +
                 '                            <span aria-hidden="true">上一页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
@@ -396,7 +347,7 @@
                     '    </li>';
             }
             else {
-                li += '<li><a class="page-link" href="/showStudents?page='+i+'">'+i+'</a></li>';
+                li += '<li><a class="page-link" href="/showQualityStudents?page='+i+'">'+i+'</a></li>';
             }
 
         }
@@ -419,12 +370,12 @@
         }
         else {
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudents?page='+nextPage+'" aria-label="Next">\n' +
+                '                        <a class="page-link" href="/showQualityStudents?page='+nextPage+'" aria-label="Next">\n' +
                 '                            <span aria-hidden="true">下一页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudents?page='+totalPages+'" aria-label="Next">\n' +
+                '                        <a class="page-link" href="/showQualityStudents?page='+totalPages+'" aria-label="Next">\n' +
                 '                            <span aria-hidden="true">尾页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';

@@ -36,9 +36,14 @@ public class UserController {
         return url;
     }
 
-    @GetMapping("/test")
-    public String test(){
-        return "dashboard";
+    @GetMapping("/findAllUsers")
+    public String findAllUsers(){
+        return "user";
+    }
+
+    @GetMapping("/findAllRoles")
+    public String findAllRoles(){
+        return "role";
     }
 
 }

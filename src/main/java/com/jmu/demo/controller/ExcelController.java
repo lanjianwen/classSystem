@@ -22,8 +22,8 @@ public class ExcelController {
     private ClassService classService;
 
     @PostMapping("/importFile")
-    public String importFile(@RequestParam(value = "file") MultipartFile file){
-        Boolean result = excelService.readExcelFile(file);
+    public String importFile(@RequestParam(value = "file") MultipartFile file, Integer isQualityStudents){
+        Boolean result = excelService.readExcelFile(file, isQualityStudents);
         return "redirect:/showStudents";
     }
 

@@ -201,6 +201,23 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findById(id).get();
     }
 
+    @Override
+    public Page<Student> findAllQualityStudents(Integer begin) {
+        Pageable pageable = PageRequest.of(begin,10);
+        Page<Student> page = studentRepository.findAllQualityStudents(pageable);
+        return page;
+    }
+
+    @Override
+    public Student addQualityStudent(Student student) {
+        Student s = studentRepository.findByIdCard(student.getIdCard());
+        if (s != null){
+            s.setPriority(1);
+            return studentRepository.save(s);
+        }
+        return s;
+    }
+
 
     //按总分排序  降序
     public void compare(List<Student> list){

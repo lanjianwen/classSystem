@@ -7,7 +7,7 @@ import javax.servlet.ServletOutputStream;
 import java.util.List;
 
 public interface ExcelService {
-    Boolean readExcelFile(MultipartFile file);
+    Boolean readExcelFile(MultipartFile file, Integer isQualityStudents);
 
     void downloadExcel(ServletOutputStream outputStream, Integer id);
 }

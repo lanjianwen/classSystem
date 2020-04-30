@@ -21,7 +21,7 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public Boolean readExcelFile(MultipartFile file) {
+    public Boolean readExcelFile(MultipartFile file, Integer isQualityStudents) {
         Boolean result;
         ExcelUtil excel = new ExcelUtil();
         List<Student> studentList = excel.getExcelInfo(file);
@@ -35,10 +35,10 @@ public class ExcelServiceImpl implements ExcelService {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (student.getPriority() != 1 && student1 == null){
+                if (isQualityStudents == 0 && student1 == null){
                     studentRepository.save(student);
                 }
-                else if (student1 != null && student.getPriority() == 1){
+                else if (student1 != null && isQualityStudents == 1){
                     student1.setPriority(1);
                     student1.setType("跟踪生源");
                     studentRepository.save(student1);

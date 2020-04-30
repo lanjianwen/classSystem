@@ -23,4 +23,8 @@ public interface StudentService {
     void deleteAll();
 
     Student findById(Integer id);
+
+    Page<Student> findAllQualityStudents(Integer begin);
+
+    Student addQualityStudent(Student student);
 }
