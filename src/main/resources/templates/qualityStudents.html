@@ -49,72 +49,73 @@
         <div class="tile row">
 
             <!--Model-->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel">添加优质生</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <div class="modal-header" >
+                            <h5 class="modal-title" id="staticBackdropLabel" >添加优质生</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="modal-body" id="model">
-                            <!--<div align="center">姓名 : <input value="123" style="border: 0px" disabled></div>-->
-                        </div>
-                        <div align="center">
+                        <div class="modal-body">
                             <form id="formData" method="post" action="/addQualityStudent">
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="name">姓名</label>
-                                    <input class="form-control form-control-sm" id="name" type="text" name="name">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="sex">性别</label>
-                                    <input class="form-control form-control-sm" id="sex" type="text" name="sex">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="nation">民族</label>
-                                    <input class="form-control form-control-sm" id="nation" type="text" name="nation">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="idCard">身份证</label>
-                                    <input class="form-control form-control-sm" id="idCard" type="text" name="idCard">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="type">编班类型</label>
-                                    <input class="form-control form-control-sm" id="type" type="text" name="type">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="birthday">出生年月</label>
-                                    <input class="form-control form-control-sm" id="birthday" type="text" name="birthday">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="nativePlace">籍贯</label>
-                                    <input class="form-control form-control-sm" id="nativePlace" type="text" name="nativePlace">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="address">家庭住址</label>
-                                    <input class="form-control form-control-sm" id="address" type="text" name="address">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="tel">联系电话</label>
-                                    <input class="form-control form-control-sm" id="tel" type="text" name="tel">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="patriarch">监护人姓名</label>
-                                    <input class="form-control form-control-sm" id="patriarch" type="text" name="patriarch">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="phone">监护人电话</label>
-                                    <input class="form-control form-control-sm" id="phone" type="text" name="phone">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label col-form-label-sm" for="totalGrade">总分</label>
-                                    <input class="form-control form-control-sm" id="totalGrade" type="text" name="totalGrade">
-                                </div>
-                                <input type="hidden" name="user" value="122">
+                                <input type="hidden" value="1" name="priority">
+                                <table class="table">
+                                    <tr>
+                                        <th style="width:100px">姓 &nbsp &nbsp &nbsp &nbsp &nbsp名: </th>
+                                        <th><input type="text" name="name" class="form-control " placeholder="Name" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                    <tr >
+                                        <th>性 &nbsp &nbsp &nbsp &nbsp &nbsp别: </th>
+                                        <th><input type="radio" name="sex" value="男" checked>男  &nbsp &nbsp &nbsp<input type="radio" name="sex" value="女" checked>女</th>
+                                    </tr>
+                                    <tr>
+                                        <th>民 &nbsp &nbsp &nbsp &nbsp &nbsp族: </th>
+                                        <th><input type="text" name="nation" class="form-control" placeholder="National" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>身 &nbsp份 &nbsp证: </th>
+                                        <th><input type="text" name="idCard" class="form-control" placeholder="IdCard" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>编班类型: </th>
+                                        <th><input type="text" name="type" class="form-control" placeholder="ClassType" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>出生年月: </th>
+                                        <th><input type="text" name="birthday" class="form-control" placeholder="Birthday" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>籍 &nbsp &nbsp &nbsp &nbsp &nbsp贯: </th>
+                                        <th><input type="text" name="nativePlace" class="form-control" placeholder="Native" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>家庭住址: </th>
+                                        <th><input type="text" name="address" class="form-control" placeholder="Address" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>联系电话: </th>
+                                        <th><input type="number" name="tel" class="form-control" placeholder="Tel" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>监护人姓名: </th>
+                                        <th><input type="text" name="patriarch" class="form-control" placeholder="Patriarch" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>监护人电话: </th>
+                                        <th><input type="text" name="phone" class="form-control" placeholder="Phone" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>总&nbsp &nbsp &nbsp &nbsp &nbsp分: </th>
+                                        <th><input type="text" name="totalGrade" class="form-control" placeholder="TotalGrade" aria-describedby="basic-addon1"></th>
+                                    </tr>
+                                </table>
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="submitFormData()">提交</button>
+                        <div class="modal-footer" >
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" >取消</button>
+                            <button type="button" class="btn btn-info" data-dismiss="modal" onclick="submitFormData()">提交</button>
                         </div>
                     </div>
                 </div>

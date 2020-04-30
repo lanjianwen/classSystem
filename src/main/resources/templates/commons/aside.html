@@ -13,15 +13,15 @@
         </div>
     </div>
     <ul class="app-menu">
-        <li><a class="app-menu__item" href="dashboard.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+        <!--<li><a class="app-menu__item" href="dashboard.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>-->
         <li class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">系统管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item" href="/findAllUsers"><i class="icon fa fa-circle-o"></i> 用户管理</a></li>
-                <li><a class="treeview-item" href="findAllRoles"><i class="icon fa fa-circle-o"></i> 权限管理</a></li>
-                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 角色管理</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 权限管理</a></li>
+                <li><a class="treeview-item" href="/findAllRoles"><i class="icon fa fa-circle-o"></i> 角色管理</a></li>
             </ul>
         </li>
-        <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>
+        <!--<li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>-->
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">分班管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents"><i class="icon fa fa-circle-o"></i>花名册</a></li>

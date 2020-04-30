@@ -46,4 +46,9 @@ public class UserController {
         return "role";
     }
 
+    @GetMapping("/findAllPermissions")
+    public String findAllPermissions(){
+        return "permission";
+    }
+
 }
