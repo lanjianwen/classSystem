@@ -94,7 +94,7 @@ public class StudentController {
         model.addAttribute("students", students.getContent());
         model.addAttribute("totalPages", students.getTotalPages());
         model.addAttribute("currentPage", students.getNumber()+1);
-        return "/qualityStudents";
+        return "qualityStudents";
     }
 
     @PostMapping("/addQualityStudent")

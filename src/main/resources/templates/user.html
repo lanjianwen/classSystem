@@ -6,6 +6,8 @@
 
     <link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{css/main.css}">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="../static/js/jquery-3.3.1.min.js" th:src="@{js/jquery-3.3.1.min.js}"></script>
 </head>
 <body>
 <!-- Navbar-->
@@ -34,11 +36,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td><button type="button" class="btn btn-info" onclick="">修改</button> <button type="button" class="btn btn-info" onclick="">删除</button></td>
+                    <tr th:each="user:${users}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.username}">2</td>
+                        <td th:text="${user.roles[0].name}">2</td>
+                        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#updateUser" th:onclick="setValue([[${user}]])">修改</button>
+                            <button type="button" class="btn btn-info" th:onclick="deleteUser([[${user.id}]])">删除</button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -46,9 +50,49 @@
         </div>
     </div>
 
+    <div class="modal fade" id="updateUser" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="updateUserLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form th:action="@{/updateUser}" method="post">
+                    <div class="modal-header" >
+                        <h5 class="modal-title" id="updateUserLabel" >修改用户</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <table class="table">
+                            <tr>
+                                <th style="width:100px">用 &nbsp 户 &nbsp名: </th>
+                                <th><input readonly type="text" name="username" id="update_username" class="form-control " aria-describedby="basic-addon1"></th>
+                            </tr>
+                            <tr>
+                                <input hidden id="update_roleName">
+                                <th>角 &nbsp色 &nbsp名: </th>
+                                <th>
+                                    <div class="form-group roles_select" id="roles_select1">
+                                        <select id="update_inputChara" class="form-control inputChara" name="roleName">
+
+                                        </select>
+                                    </div>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer" >
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" >取消</button>
+                        <button type="submit" class="btn btn-info">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <form th:action="@{/addUser}" method="post">
                 <div class="modal-header" >
                     <h5 class="modal-title" id="staticBackdropLabel" >添加用户</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -56,22 +100,18 @@
                     </button>
                 </div>
                 <div class="modal-body">
+
                     <table class="table">
                         <tr>
-                            <th style="width:100px">姓 &nbsp &nbsp &nbsp &nbsp &nbsp名: </th>
-                            <th><input type="text" class="form-control " placeholder="Name" aria-describedby="basic-addon1"></th>
+                            <th style="width:100px">用 &nbsp 户 &nbsp名: </th>
+                            <th><input type="text" name="username" class="form-control " placeholder="username" aria-describedby="basic-addon1"></th>
                         </tr>
                         <tr>
                             <th>角 &nbsp色 &nbsp名: </th>
                             <th>
-                                <div class="form-group">
-                                    <select id="inputChara" class="form-control">
-                                        <option selected>校长</option>
-                                        <option> 副校长</option>
-                                        <option> 主任</option>
-                                        <option> 副主任</option>
-                                        <option> 操作员</option>
-                                        <option> 管理员</option>
+                                <div class="form-group" id="roles_select">
+                                    <select id="inputChara" class="form-control" name="roleName">
+
                                     </select>
                                 </div>
                             </th>
@@ -80,8 +120,9 @@
                 </div>
                 <div class="modal-footer" >
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" >取消</button>
-                    <button type="button" class="btn btn-info">提交</button>
+                    <button type="submit" class="btn btn-info">提交</button>
                 </div>
+            </form>
             </div>
         </div>
     </div>
@@ -161,4 +202,43 @@
 </script>
 
 </body>
+
+<script>
+    $(function () {
+        $.get("/getAllRoles",function (roles) {
+            var html = '';
+            for (var i=0;i<roles.length;i++){
+                html += '<option>'+roles[i].name+'</option>'
+            }
+            $("#inputChara").html(html);
+        })
+
+
+        // $("#updateUser").modal("")
+    })
+
+    function setValue(user) {
+        $("#update_username").val(user.username);
+        $.get("/getAllRoles",function (roles) {
+            var html = '';
+            for (var i=0;i<roles.length;i++){
+                if (roles[i].name == user.roles[0].name){
+                    html += '<option selected>'+roles[i].name+'</option>'
+                }
+                else {
+                    html += '<option>'+roles[i].name+'</option>'
+                }
+            }
+            $("#update_inputChara").html(html);
+        })
+    }
+
+    function deleteUser(id) {
+        $.post("/deleteUser/"+id+"",function (msg) {
+            alert(msg);
+            location.href="findAllUsers";
+        })
+    }
+</script>
+
 </html>

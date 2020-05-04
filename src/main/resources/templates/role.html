@@ -15,7 +15,7 @@
 <div th:replace="commons/aside::aside(activeUri='roster')"></div>
 <main class="app-content">
     <div class="app-title">
-        <h3>用户管理</h3>
+        <h3>角色管理</h3>
     </div>
 
     <div class="row">
@@ -35,9 +35,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>2</td>
-                        <td>2</td>
+                    <tr th:each="role:${roles}">
+                        <td th:text="${role.id}">2</td>
+                        <td th:text="${role.name}">2</td>
                         <td>2</td>
                         <td><button type="button" class="btn btn-info" onclick="">修改</button> <button type="button" class="btn btn-info" onclick="">删除</button></td>
                     </tr>
