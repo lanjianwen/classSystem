@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,10 +25,14 @@ public class Permission {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String text;
+
     @Column(name = "pid")
     private Integer pid;
 
+
     @JsonIgnore
-    @ManyToMany(mappedBy = "permissions")
+    @ManyToMany(mappedBy = "permissions", fetch = FetchType.LAZY)
     private Set<Role> roles = new HashSet<>();
 }

@@ -6,25 +6,25 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface StudentService {
-    List<Student> findAll();
+    List<Student> findAll(String belonging);
 
-    Page<Student> findAll(Integer page);
+    Page<Student> findAll(String belonging, Integer page);
 
-    void distribute(String classType, List<String> studentType);
+    void distribute(String classType, List<String> studentType, String belonging);
 
-    void updateStudent(Integer id, String className);
+    void updateStudent(Integer id, String className, String belonging);
 
     List<Student> findStudentType();
 
-    List<Student> findStudentByClassId(Integer classId);
+    List<Student> findStudentByClassId(Integer classId, String belonging);
 
-    Page<Student> findStudentByClassId(Integer classId, Integer page);
+    Page<Student> findStudentByClassId(Integer classId, String belonging, Integer page);
 
-    void deleteAll();
+    void deleteAll(String belonging);
 
     Student findById(Integer id);
 
-    Page<Student> findAllQualityStudents(Integer begin);
+    Page<Student> findAllQualityStudents(String belonging, Integer begin);
 
     Student addQualityStudent(Student student);
 }

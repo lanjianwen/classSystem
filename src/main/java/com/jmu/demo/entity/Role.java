@@ -26,10 +26,10 @@ public class Role {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_permission",
                 joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
                 inverseJoinColumns = {@JoinColumn(name = "permission_id", referencedColumnName = "id")})

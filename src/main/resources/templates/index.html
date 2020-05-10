@@ -4,22 +4,275 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" th:href="@{bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-select.min.css" th:href="@{bootstrap/css/bootstrap-select.min.css}">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-treeview.min.css" th:href="@{bootstrap/css/bootstrap-treeview.min.css}">
 
     <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
     <script src="../static/bootstrap/js/bootstrap.js" th:src="@{bootstrap/js/bootstrap.js}"></script>
+    <script src="../static/bootstrap/js/bootstrap-select.min.js" th:src="@{bootstrap/js/bootstrap-select.min.js}"></script>
+    <script src="../static/bootstrap/js/bootstrap-treeview.min.js" th:src="@{bootstrap/js/bootstrap-treeview.min.js}"></script>
+
+
 </head>
 <body>
-    <p th:text="${message}" class="danger"></p>
-    <form th:action="@{/login}" method="post">
-        账号<input name="username" type="text"><br><br>
-        密码<input name="password" type="password">
-        <br><br><button type="submit">登陆</button>
-    </form>
 
+<div id="tree" style="overflow: auto; margin-left: 0; margin-top: 0;padding-left:170px;">
 
+</div>
 
 </body>
 <script>
 
+    var nodeCheckedSilent = false;
+    var nodeUncheckedSilent = false;
+
+    $(function () {
+        loadMenuTree();//加载树结构
+    });
+
+    function loadMenuTree(){
+        $("#tree").treeview({
+            data : getTree(), // 实现树形结构的展示树形规则，后续展示实体类属性内容
+            levels : 2,
+            expandIcon : "glyphicon glyphicon-chevron-right",//图案可以自己选择
+            collapseIcon : "glyphicon glyphicon-chevron-down",
+            emptyIcon:"glyphicon glyphicon-th-large",//设置没有子节点的菜单前的图标
+            showBorder : false,
+            showTags : true,
+            highlightSelected : false,
+            highlightSearchResults : true,
+            selectedBackColor : false,
+            showIcon : true,
+            multiSelect : 1,
+            showCheckbox: 1,//复选框设置，也可以是true
+            onNodeChecked: function(event, data) {
+                if(nodeCheckedSilent){
+                    return;
+                }
+                nodeCheckedSilent = true;//开始父子节点级联全选全不选
+                checkAllParent(data);
+                checkAllSon(data);
+                nodeCheckedSilent = false;
+            },
+            onNodeUnchecked : function(event, data) {
+                if(nodeUncheckedSilent){
+                    return;
+                }
+                nodeUncheckedSilent = true;//开始父子节点级联全选全不选
+                uncheckAllParent(data);
+                uncheckAllSon(data);
+                nodeUncheckedSilent = false;
+
+            }
+
+        });
+    }
+
+
+    function getTree() {
+    //     var menus;
+    //     $.ajax({
+    //         async : false,
+    //         url : "/findAllPermissions",//自己定义的接口
+    //         type : "get",
+    //         contentType : "application/json;charset=UTF-8",
+    //         dataType : "json",
+    //         data : null,
+    //         error : function(data) {
+    //         alert(data.toString());
+    //     },
+    //     success : function(data) {
+    //         menus = data;
+    //     },
+    //     error:function(data){
+    //         alert("加载失败");
+    //     }
+    // });
+    //     return menus;
+
+        var tree = [{
+            text: "Node 1", //节点显示的文本值  string
+            icon: "glyphicon glyphicon-play-circle", //节点上显示的图标，支持bootstrap的图标  string
+            selectedIcon: "glyphicon glyphicon-ok", //节点被选中时显示的图标       string
+            color: "#ff0000", //节点的前景色      string
+            backColor: "#1606ec", //节点的背景色      string
+            href: "#http://www.baidu.com", //节点上的超链接
+            selectable: true, //标记节点是否可以选择。false表示节点应该作为扩展标题，不会触发选择事件。  string
+            state: { //描述节点的初始状态    Object
+                checked: true, //是否选中节点
+                /*disabled: true,*/ //是否禁用节点
+                expanded: true, //是否展开节点
+                selected: true //是否选中节点
+            },
+            tags: ['标签信息1', '标签信息2'], //向节点的右侧添加附加信息（类似与boostrap的徽章）    Array of Strings
+            nodes: [{
+                text: "Child 1",
+                nodes: [{
+                    text: "Grandchild 1"
+                }, {
+                    text: "Grandchild 2"
+                }]
+            }, {
+                text: "Child 2"
+            }]
+        }, {
+            text: "Parent 2",
+            nodes: [{
+                text: "Child 2",
+                nodes: [{
+                    text: "Grandchild 3"
+                }, {
+                    text: "Grandchild 4"
+                }]
+            }, {
+                text: "Child 2"
+            }]
+        }, {
+            text: "Parent 3"
+        }, {
+            text: "Parent 4"
+        }, {
+            text: "Parent 5"
+        }];
+
+        return tree;
+    }
+
+
+    //选中全部父节点
+    function checkAllParent(data){
+        $("#tree").treeview("checkNode",data.nodeId,{silent:true});
+        var parentNode = $("#tree").treeview("getParent",data.nodeId);
+        if(!("nodeId" in parentNode)){
+            return;
+        }else{
+            checkAllParent(parentNode);
+        }
+    }
+    //取消全部父节点
+    function uncheckAllParent(data){
+        $('#tree').treeview('uncheckNode',data.nodeId,{silent:true});
+        var siblings = $('#tree').treeview('getSiblings', data.nodeId);
+        var parentNode = $('#tree').treeview('getParent',data.nodeId);
+        if(!("nodeId" in parentNode)) {
+            return;
+        }
+        var isAllUnchecked = true;  //是否全部没选中
+        for(var i in siblings){
+            if(siblings[i].state.checked){
+                isAllUnchecked=false;
+                break;
+            }
+        }
+        if(isAllUnchecked){
+            uncheckAllParent(parentNode);
+        }
+
+    }
+
+    //级联选中所有子节点
+    function checkAllSon(data){
+        $('#tree').treeview('checkNode',data.nodeId,{silent:true});
+        if(data.nodes!=null&&data.nodes.length>0){
+            for(var i in data.nodes){
+                checkAllSon(data.nodes[i]);
+            }
+        }
+    }
+    //级联取消所有子节点
+    function uncheckAllSon(data){
+        $('#tree').treeview('uncheckNode',data.nodeId,{silent:true});
+        if(data.nodes!=null&&data.nodes.length>0){
+            for(var i in data.nodes){
+                uncheckAllSon(data.nodes[i]);
+            }
+        }
+    }
+
+
+
 </script>
+
+
+ <!--<script type="text/javascript">-->
+ <!--//选中/取消父节点时选中/取消所有子节点-->
+ <!--function getChildNodeIdArr(node) {-->
+     <!--var ts = [];-->
+     <!--if (node.nodes) {-->
+         <!--for (x in node.nodes) {-->
+             <!--ts.push(node.nodes[x].nodeId);-->
+             <!--if (node.nodes[x].nodes) {-->
+                 <!--var getNodeDieDai = getChildNodeIdArr(node.nodes[x]);-->
+                 <!--for (j in getNodeDieDai) {-->
+                     <!--ts.push(getNodeDieDai[j]);-->
+                 <!--}-->
+             <!--}-->
+         <!--}-->
+     <!--} else {-->
+         <!--ts.push(node.nodeId);-->
+     <!--}-->
+     <!--return ts;-->
+ <!--}-->
+ <!--//选中所有子节点时选中父节点-->
+ <!--function setParentNodeCheck(node) {-->
+     <!--var parentNode = $("#tree").treeview("getNode", node.parentId);-->
+     <!--if (parentNode.nodes) {-->
+         <!--var checkedCount = 0;-->
+         <!--for (x in parentNode.nodes) {-->
+             <!--if (parentNode.nodes[x].state.checked) {-->
+                 <!--checkedCount ++;-->
+             <!--} else {-->
+                 <!--break;-->
+             <!--}-->
+         <!--}-->
+         <!--if (checkedCount === parentNode.nodes.length) {-->
+             <!--$("#tree").treeview("checkNode", parentNode.nodeId);-->
+             <!--setParentNodeCheck(parentNode);-->
+         <!--}-->
+     <!--}-->
+ <!--}-->
+
+ <!--$(function () {-->
+     <!--$.ajax({-->
+         <!--type: "get",-->
+         <!--url: '/findAllPermissions',-->
+         <!--dataType: "json",-->
+         <!--success: function (result) {-->
+             <!--$('#tree').treeview({-->
+                 <!--data: result.list,         // 数据源-->
+                 <!--showCheckbox: true,   //是否显示复选框-->
+                 <!--highlightSelected: true,    //是否高亮选中-->
+                 <!--multiSelect: true,    //多选-->
+                 <!--levels : 2,-->
+                 <!--enableLinks : true,//必须在节点属性给出href属性-->
+                 <!--color: "#010A0E",-->
+                 <!--onNodeChecked : function (event,node) {-->
+                    <!--var selectNodes = getChildNodeIdArr(node); //获取所有子节点-->
+                     <!--if (selectNodes) { //子节点不为空，则选中所有子节点-->
+                         <!--$('#tree').treeview('checkNode', [selectNodes, { silent: true }]);-->
+                     <!--}-->
+                 <!--},-->
+                 <!--onNodeUnchecked : function(event, node) { //取消选中节点-->
+                     <!--var selectNodes = getChildNodeIdArr(node); //获取所有子节点-->
+                     <!--if (selectNodes) { //子节点不为空，则取消选中所有子节点-->
+                         <!--$('#tree').treeview('uncheckNode', [selectNodes, { silent: true }]);-->
+                     <!--}-->
+                 <!--},-->
+
+                 <!--onNodeExpanded : function(event, data) {-->
+
+                 <!--},-->
+
+                <!--onNodeSelected: function (event, data) {-->
+                     <!--//alert(data.nodeId);-->
+                 <!--}-->
+
+             <!--});-->
+         <!--},-->
+        <!--error: function () {-->
+            <!--alert("菜单加载失败！")-->
+         <!--}-->
+ <!--});-->
+<!--})-->
+<!-- </script>-->
 </html>

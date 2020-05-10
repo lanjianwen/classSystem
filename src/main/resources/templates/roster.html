@@ -8,9 +8,6 @@
     <link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{css/main.css}">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
-
-    <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
     <style>
         body{
             background-color: #d9edf7;
@@ -115,8 +112,9 @@
 <!--</body>-->
 
 <body class="app sidebar-mini">
+
     <!-- Navbar-->
-    <div th:replace="commons/header::header"></div>
+    <div th:replace="commons/header::header(activeUri='simingG')"></div>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <div th:replace="commons/aside::aside(activeUri='roster')"></div>
@@ -126,11 +124,12 @@
                 <div>
                     <form th:action="@{/importFile}" method="post" enctype="multipart/form-data" id="form">
                         <input type="file" style="display: none" name="file" id="importFile" onchange="submitFile()">
+                        <input hidden id="belonging" name="belonging" th:value="${belonging}">
                         <input type="hidden" name="isQualityStudents" value="0">
                     </form>
                      <button type="button" class="btn btn-info" onclick="importFile()">导入</button>
                     <!--<button type="button" class="btn btn-info" onclick="downloadExcel()">导出</button>-->
-                     <a type="button" class="btn btn-info" href="/deleteAll">清空</a>
+                     <a type="button" class="btn btn-info" th:href="'/deleteAll?belonging='+${belonging}">清空</a>
                 </div>
             </div>
 
@@ -311,7 +310,8 @@
     }
 
     $(function () {
-        $.get("/findAll",function (students) {
+        var url = $("#belonging").val();
+        $.get("/findAll?belonging="+url,function (students) {
             var boyNum = 0;
             var girlNum = 0;
             var sum = 0;
@@ -334,6 +334,7 @@
 
     // 分页
     $(function () {
+        var belonging = $("#belonging").val();
         var currentPage = parseInt($("#currentPage").val());
         var totalPages = parseInt($("#totalPages").val());
         var li = '';
@@ -343,13 +344,13 @@
         }
         if (currentPage != 1){
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudents?page=1" aria-label="Previous">\n' +
+                '                        <a class="page-link" href="/showStudents?page=1&belonging='+belonging+'" aria-label="Previous">\n' +
                 '                            <span aria-hidden="true">首页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
 
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudents?page='+beforePage+'" aria-label="Previous">\n' +
+                '                        <a class="page-link" href="/showStudents?page='+beforePage+'&belonging='+belonging+'" aria-label="Previous">\n' +
                 '                            <span aria-hidden="true">上一页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
@@ -396,7 +397,7 @@
                     '    </li>';
             }
             else {
-                li += '<li><a class="page-link" href="/showStudents?page='+i+'">'+i+'</a></li>';
+                li += '<li><a class="page-link" href="/showStudents?page='+i+'&belonging='+belonging+'">'+i+'</a></li>';
             }
 
         }
@@ -419,12 +420,12 @@
         }
         else {
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudents?page='+nextPage+'" aria-label="Next">\n' +
+                '                        <a class="page-link" href="/showStudents?page='+nextPage+'&belonging='+belonging+'" aria-label="Next">\n' +
                 '                            <span aria-hidden="true">下一页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudents?page='+totalPages+'" aria-label="Next">\n' +
+                '                        <a class="page-link" href="/showStudents?page='+totalPages+'&belonging='+belonging+'" aria-label="Next">\n' +
                 '                            <span aria-hidden="true">尾页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
@@ -432,4 +433,7 @@
         $(".pagination").html(li);
     })
 </script>
+
+
+<script src="../static/js/belonging.js" th:src="@{js/belonging.js}"></script>
 </html>

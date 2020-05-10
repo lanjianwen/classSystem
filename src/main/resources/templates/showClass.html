@@ -46,6 +46,7 @@
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <div th:replace="commons/aside::aside(activeUri='showClass')"></div>
     <main class="app-content">
+        <input hidden th:value="${belonging}" name="belonging" id="belonging">
         <div class="row">
             <div class="col-md-12 tile">
                 <button type="button" class="btn btn-info" onclick="deleteAll()">清空班级列表</button>
@@ -55,7 +56,7 @@
             <div class="col-md-3" th:each="class:${classes}">
                 <div class="tile">
                     <div class="tile-title">
-                        <a th:href="@{'showStudent?classId='+${class.id}}"><div th:text="${class.name}" style="color: black"></div></a>
+                        <a th:href="@{'showStudent?classId='+${class.id}+'&belonging='+${belonging}}"><div th:text="${class.name}" style="color: black"></div></a>
                     </div>
                     <div class="tile-footer">平均分<span th:text="${class.averageScore}"></span><br>男<span th:text="${class.boyNum}"></span>女<span th:text="${class.girlNum}"></span></div>
                 </div>
@@ -140,9 +141,10 @@
 
 <script>
     function deleteAll() {
-        $.get("/deleteClass",function (data) {
+        var belonging = $("#belonging").val();
+        $.get("/deleteClass?belonging="+belonging,function (data) {
             if (data == 1){
-                location.href="showClass"
+                location.href="showClass?belonging="+belonging
             }
         })
     }

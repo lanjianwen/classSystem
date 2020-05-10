@@ -21,49 +21,50 @@ public class StudentController {
     private ClassService classService;
 
     @GetMapping("/findAll")
-    public @ResponseBody List<Student> findAll(Integer classId){
+    public @ResponseBody List<Student> findAll(Integer classId, String belonging){
         List<Student> list = new ArrayList<Student>();
         if (classId == null){
-            list= studentService.findAll();
+            list= studentService.findAll(belonging);
         }
         else {
-            list= studentService.findStudentByClassId(classId);
+            list= studentService.findStudentByClassId(classId, belonging);
         }
 
         return list;
     }
 
     @PostMapping("/distribute")
-    public String distribute(String classType, @RequestParam(value = "studentType") List<String> studentType, Model model){
-        studentService.distribute(classType,studentType);
-        return "redirect:/showClass";
+    public String distribute(String classType, @RequestParam(value = "studentType") List<String> studentType, String belonging, Model model){
+        studentService.distribute(classType,studentType, belonging);
+        return "redirect:/showClass?belonging="+belonging;
     }
 
     @PostMapping("/updateStudent")
-    public String updateStudent(Integer id, String className){
-        studentService.updateStudent(id, className);
-        return "redirect:/showStudent";
+    public String updateStudent(Integer id, String className, String belonging){
+        studentService.updateStudent(id, className, belonging);
+        return "redirect:/showStudent?belonging="+belonging;
     }
 
     @GetMapping("/showStudents")
-    public String showStudents(Integer page, Model model){
+    public String showStudents(Integer page, String belonging, Model model){
         if (page == null || page.intValue() == 0){
             page = 1;
         }
-        Page<Student> students = studentService.findAll(page-1);
+        Page<Student> students = studentService.findAll(belonging,page-1);
         model.addAttribute("students",students.getContent());
         model.addAttribute("total", students.getTotalElements());
         model.addAttribute("totalPages", students.getTotalPages());
         model.addAttribute("currentPage", students.getNumber()+1);
+        model.addAttribute("belonging", belonging);
         return "roster";
     }
 
     @GetMapping("/showStudent")
-    public String findStudentByClassId(Integer classId, Integer page, Model model){
+    public String findStudentByClassId(Integer classId, Integer page, Model model, String belonging){
         if (page == null || page.intValue() == 0){
             page = 1;
         }
-        Page<Student> students = studentService.findStudentByClassId(classId, page-1);
+        Page<Student> students = studentService.findStudentByClassId(classId, belonging, page-1);
         model.addAttribute("students", students.getContent());
         model.addAttribute("totalPages", students.getTotalPages());
         model.addAttribute("currentPage", students.getNumber()+1);
@@ -71,13 +72,14 @@ public class StudentController {
         List<Class> classes = classService.findAll();
         model.addAttribute("classes", classes);
         model.addAttribute("c", c);
+        model.addAttribute("belonging", belonging);
         return "showStudent";
     }
 
     @GetMapping("/deleteAll")
-    public String deleteAll(){
-        studentService.deleteAll();
-        return "redirect:/roster";
+    public String deleteAll(String belonging){
+        studentService.deleteAll(belonging);
+        return "redirect:/showStudents?belonging="+belonging;
     }
 
     @PostMapping("/findOneStudent")
@@ -86,14 +88,15 @@ public class StudentController {
     }
 
     @GetMapping("/showQualityStudents")
-    public String showQualityStudents(Integer page, Model model){
+    public String showQualityStudents(Integer page, String belonging, Model model){
         if (page == null || page.intValue() == 0){
             page = 1;
         }
-        Page<Student> students = studentService.findAllQualityStudents(page - 1);
+        Page<Student> students = studentService.findAllQualityStudents(belonging, page - 1);
         model.addAttribute("students", students.getContent());
         model.addAttribute("totalPages", students.getTotalPages());
         model.addAttribute("currentPage", students.getNumber()+1);
+        model.addAttribute("belonging", belonging);
         return "qualityStudents";
     }
 
@@ -106,5 +109,10 @@ public class StudentController {
         else {
             return "添加成功";
         }
+    }
+
+    @GetMapping("/main")
+    public String toMain(){
+        return "main";
     }
 }

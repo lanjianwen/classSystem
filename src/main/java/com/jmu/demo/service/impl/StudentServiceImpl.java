@@ -25,27 +25,28 @@ public class StudentServiceImpl implements StudentService {
     private ClassRepository classRepository;
 
     @Override
-    public List<Student> findAll() {
-        return studentRepository.findAll();
+    public List<Student> findAll(String belonging) {
+        return studentRepository.findByBelonging(belonging);
     }
 
     @Override
-    public Page<Student> findAll(Integer begin) {
+    public Page<Student> findAll(String belonging,Integer begin) {
         Pageable pageable = PageRequest.of(begin,12);
-        Page<Student> page = studentRepository.findAll(pageable);
+//        Page<Student> page = studentRepository.findAll(pageable);
+        Page<Student> page = studentRepository.findByBelonging(belonging,pageable);
         return page;
 //        return studentRepository.findAll(page);
     }
 
     @Override
-    public void distribute(String classType, List<String> studentType) {
-        List<Class> classes = classRepository.findByType(classType);
+    public void distribute(String classType, List<String> studentType, String belonging) {
+        List<Class> classes = classRepository.findByTypeAndBelonging(classType,belonging);
         //班级数量
         int classNum = classes.size();
         //每个班最大人数
         int maxNum = classes.get(0).getMaxMum();
         //总人数
-        int totalNum = studentRepository.findByClassType(classType);
+        int totalNum = studentRepository.findByClassTypeAndBelonging(classType, belonging);
         int sum = totalNum;
         //男生队列
         List<Student> boys = new ArrayList<Student>();
@@ -58,7 +59,7 @@ public class StudentServiceImpl implements StudentService {
                 index++;
                 continue;
             }
-            List<Student> list = studentRepository.findByTypeOrderByTotalGradeDesc(studentType.get(index));
+            List<Student> list = studentRepository.findByTypeAndBelongingOrderByTotalGradeDesc(studentType.get(index), belonging);
             index++;
             int count = 0;
             if (classNum * maxNum - totalNum > list.size()){
@@ -160,8 +161,8 @@ public class StudentServiceImpl implements StudentService {
 
     //调整
     @Override
-    public void updateStudent(Integer id, String className) {
-        Class c = classRepository.findByName(className);
+    public void updateStudent(Integer id, String className, String belonging) {
+        Class c = classRepository.findByNameAndBelonging(className, belonging);
         Student s = studentRepository.findById(id).get();
         s.setClassId(c.getId());
         studentRepository.save(s);
@@ -173,22 +174,22 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> findStudentByClassId(Integer classId) {
-        return studentRepository.findByClassId(classId);
+    public List<Student> findStudentByClassId(Integer classId, String belonging) {
+        return studentRepository.findByClassIdAndBelonging(classId, belonging);
     }
 
     @Override
-    public Page<Student> findStudentByClassId(Integer classId, Integer begin) {
+    public Page<Student> findStudentByClassId(Integer classId, String belonging, Integer begin) {
         Pageable pageable = PageRequest.of(begin,10);
-        Page<Student> page = studentRepository.findByClassId(classId, pageable);
+        Page<Student> page = studentRepository.findByClassIdAndBelonging(classId, belonging,pageable);
         return page;
 //        return studentRepository.findByClassId(classId);
     }
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public void deleteAll() {
-        studentRepository.deleteAll();
+    public void deleteAll(String belonging) {
+        studentRepository.deleteAllByBelonging(belonging);
         List<Class> cs = classRepository.findAll();
         for (int i = 0; i < cs.size(); i++) {
             cs.get(i).setFlag(1);
@@ -202,9 +203,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Page<Student> findAllQualityStudents(Integer begin) {
+    public Page<Student> findAllQualityStudents(String belonging, Integer begin) {
         Pageable pageable = PageRequest.of(begin,10);
-        Page<Student> page = studentRepository.findAllQualityStudents(pageable);
+        Page<Student> page = studentRepository.findAllQualityStudentsByBelonging(belonging, pageable);
         return page;
     }
 

@@ -1,0 +1,79 @@
+{
+  "data": {
+		"allMenus": [ {
+			"id": 1,
+			"name": "角色",
+			"ename": "character",
+			"path": "/character",
+			"pid": 0,
+			"children": [{
+				"id": 2,
+				"name": "校长",
+				"path": "president",
+				"pid": 3,
+				"children": []
+			}, {
+				"id": 4,
+				"name": "副校长",
+				"path": "vice_president",
+				"pid": 3,
+				"children": []
+			}, {
+				"id": 5,
+				"name": "主任",
+				"path": "director",
+				"pid": 3,
+				"children": []
+			},{
+				"id": 6,
+				"name": "副主任",
+				"path": "vice_director",
+				"pid": 3,
+				"children": []
+			},{
+				"id": 7,
+				"name": "操作员",
+				"path": "operator",
+				"pid": 3,
+				"children": []
+			},{
+				"id": 8,
+				"name": "管理员",
+				"path": "administrator",
+				"pid": 3,
+				"children": []
+			}]
+		}, {
+			"id": 9,
+			"name": "权限",
+			"ename": "permissions",
+			"path": "/permissions",
+			"pid": 0,
+			"children": [{
+				"id": 10,
+				"name": "查询",
+				"path": "query",
+				"pid": 11,
+				"children": []
+			}, {
+				"id": 12,
+				"name": "新增",
+				"path": "add",
+				"pid": 11,
+				"children": []
+			}, {
+				"id": 13,
+				"name": "修改",
+				"path": "alter",
+				"pid": 11,
+				"children": []
+			},{
+				"id": 14,
+				"name": "删除",
+				"path": "delete",
+				"pid": 11,
+				"children": []
+			}]
+		}]
+	}
+}

@@ -3,8 +3,12 @@ package com.jmu.demo.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +17,7 @@ import java.util.Set;
 @Table(name = "user")
 @EqualsAndHashCode(exclude = "roles")
 @ToString(exclude = "roles")
-public class User {
+public class User implements UserDetails {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +27,44 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
+    /**
+     * 急加载，会查询role表
+     */
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Role> roles  = new HashSet<>();
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> auths = new HashSet<>();
+        Set<Role> roles = this.getRoles();
+        for (Role role : roles){
+            for (Permission permission : role.getPermissions()){
+                auths.add(new SimpleGrantedAuthority(permission.getName()));
+            }
+        }
+        return auths;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

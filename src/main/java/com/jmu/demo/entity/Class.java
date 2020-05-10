@@ -28,4 +28,6 @@ public class Class {
     private Integer priority;
     @Column(name = "flag")
     private Integer flag;
+    @Column(name = "belonging")
+    private String belonging;
 }

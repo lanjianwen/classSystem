@@ -21,7 +21,7 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public Boolean readExcelFile(MultipartFile file, Integer isQualityStudents) {
+    public Boolean readExcelFile(MultipartFile file, Integer isQualityStudents, String belonging) {
         Boolean result;
         ExcelUtil excel = new ExcelUtil();
         List<Student> studentList = excel.getExcelInfo(file);
@@ -36,6 +36,7 @@ public class ExcelServiceImpl implements ExcelService {
                     e.printStackTrace();
                 }
                 if (isQualityStudents == 0 && student1 == null){
+                    student.setBelonging(belonging);
                     studentRepository.save(student);
                 }
                 else if (student1 != null && isQualityStudents == 1){
@@ -52,13 +53,13 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public void downloadExcel(ServletOutputStream outputStream, Integer id) {
+    public void downloadExcel(ServletOutputStream outputStream, Integer id, String belonging) {
         List<Student> students = new ArrayList<Student>();
         if (id == null || id == 0){
-            students = studentRepository.findAll();
+            students = studentRepository.findByBelonging(belonging);
         }
         else {
-            students = studentRepository.findByClassId(id);
+            students = studentRepository.findByClassIdAndBelonging(id, belonging);
         }
         ExcelUtil excel = new ExcelUtil();
         excel.downloadExcel(outputStream, students);

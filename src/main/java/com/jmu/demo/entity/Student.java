@@ -36,4 +36,6 @@ public class Student {
     private String address;
     @Column(name = "priority")
     private Integer priority;
+    @Column(name = "belonging")
+    private String belonging;
 }

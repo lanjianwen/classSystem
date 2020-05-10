@@ -22,17 +22,23 @@ public class ExcelController {
     private ClassService classService;
 
     @PostMapping("/importFile")
-    public String importFile(@RequestParam(value = "file") MultipartFile file, Integer isQualityStudents){
-        Boolean result = excelService.readExcelFile(file, isQualityStudents);
-        return "redirect:/showStudents";
+    public String importFile(@RequestParam(value = "file") MultipartFile file, Integer isQualityStudents, String belonging){
+        Boolean result = excelService.readExcelFile(file, isQualityStudents, belonging);
+        if (isQualityStudents == 1){
+            return "redirect:/showQualityStudents?belonging="+belonging;
+        }
+        else {
+            return "redirect:/showStudents?belonging="+belonging;
+        }
     }
 
     /**
      * 导出Excel
      * @param response
+     * @param id 班级id
      */
     @GetMapping("/downloadExcel")
-    public void downloadExcel(Integer id, HttpServletResponse response){
+    public void downloadExcel(Integer id, String belonging, HttpServletResponse response){
         String fileName = classService.findClass(id).getName();
         try {
             response.setHeader("Content-type","application/vnd.ms-excel");
@@ -40,7 +46,7 @@ public class ExcelController {
             response.setCharacterEncoding("UTF-8");
             response.setHeader("Content-Disposition","attachment;filename="+new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+".xls");
             // 模板导出Excel
-            excelService.downloadExcel(response.getOutputStream(), id);
+            excelService.downloadExcel(response.getOutputStream(), id, belonging);
         } catch (IOException e) {
             e.printStackTrace();
         }

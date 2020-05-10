@@ -40,6 +40,7 @@
                 <form th:action="@{/importFile}" method="post" enctype="multipart/form-data" id="form">
                     <input type="file" style="display: none" name="file" id="importFile" onchange="submitFile()">
                     <input type="hidden" name="isQualityStudents" value="1">
+                    <input hidden name="belonging" id="belonging" th:value="${belonging}">
                 </form>
                 <button type="button" class="btn btn-info" onclick="importFile()">批量导入</button>
                 <button type="button" class="btn btn-info" onclick="" data-toggle="modal" data-target="#myModal">手动添加</button>
@@ -60,6 +61,7 @@
                     <div class="modal-body">
                         <form id="formData" method="post" action="/addQualityStudent">
                             <input type="hidden" value="1" name="priority">
+                            <input hidden name="belonging" th:value="${belonging}">
                             <table class="table">
                                 <tr>
                                     <th style="width:100px">姓 &nbsp &nbsp &nbsp &nbsp &nbsp名: </th>
@@ -268,6 +270,7 @@
 </body>
 
 <script>
+    var belonging = $("#belonging").val();
     function importFile() {
         document.getElementById("importFile").click();
     }
@@ -276,14 +279,14 @@
         document.getElementById("form").submit();
     }
     function downloadExcel() {
-        location.href="/downloadExcel";
+        location.href="/downloadExcel?belonging="+belonging;
     }
 
     function submitFormData(){
 
         $.post($("#formData").attr('action'), $("#formData").serialize(),function (msg) {
             alert(msg);
-            window.location.href="showQualityStudents";
+            window.location.href="showQualityStudents?belonging="+belonging;
         })
     }
 
@@ -298,13 +301,13 @@
         }
         if (currentPage != 1){
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showQualityStudents?page=1" aria-label="Previous">\n' +
+                '                        <a class="page-link" href="/showQualityStudents?page=1&belonging='+belonging+'" aria-label="Previous">\n' +
                 '                            <span aria-hidden="true">首页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
 
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showQualityStudents?page='+beforePage+'" aria-label="Previous">\n' +
+                '                        <a class="page-link" href="/showQualityStudents?page='+beforePage+'&belonging='+belonging+'" aria-label="Previous">\n' +
                 '                            <span aria-hidden="true">上一页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
@@ -351,7 +354,7 @@
                     '    </li>';
             }
             else {
-                li += '<li><a class="page-link" href="/showQualityStudents?page='+i+'">'+i+'</a></li>';
+                li += '<li><a class="page-link" href="/showQualityStudents?page='+i+'&belonging='+belonging+'">'+i+'</a></li>';
             }
 
         }
@@ -374,12 +377,12 @@
         }
         else {
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showQualityStudents?page='+nextPage+'" aria-label="Next">\n' +
+                '                        <a class="page-link" href="/showQualityStudents?page='+nextPage+'&belonging='+belonging+'" aria-label="Next">\n' +
                 '                            <span aria-hidden="true">下一页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showQualityStudents?page='+totalPages+'" aria-label="Next">\n' +
+                '                        <a class="page-link" href="/showQualityStudents?page='+totalPages+'&belonging='+belonging+'" aria-label="Next">\n' +
                 '                            <span aria-hidden="true">尾页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';

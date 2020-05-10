@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -14,7 +15,7 @@
     </div>
     <ul class="app-menu">
         <!--<li><a class="app-menu__item" href="dashboard.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>-->
-        <li class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">系统管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('manage')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">系统管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item" href="/findAllUsers"><i class="icon fa fa-circle-o"></i> 用户管理</a></li>
                 <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 权限管理</a></li>
@@ -22,34 +23,61 @@
             </ul>
         </li>
         <!--<li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>-->
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">分班管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('simingG')" class="" th:class="${activeUri=='simingG'?'treeview is-expanded':'treeview'}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">思明校区高中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents"><i class="icon fa fa-circle-o"></i>花名册</a></li>
-                <li th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
-                <li class="" th:class="${activeUri=='showClass'?'active':''}"><a class="treeview-item" href="/showClass"><i class="icon fa fa-circle-o"></i>班级列表</a></li>
-                <li th:class="${activeUri=='devideClass'?'active':''}"><a class="treeview-item" href="/devideClass"><i class="icon fa fa-circle-o"></i>分班</a></li>
-                <li><a class="treeview-item" href="/showQualityStudents"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
+                <li class="" th:class="${activeUri=='simingG'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=simingG" onclick="say('simingG')"><i class="icon fa fa-circle-o"></i>花名册</a></li>
+                <li class="" th:class="${activeUri=='simingG'?'active':''}"><a class="treeview-item" href="/addClass?belonging=simingG"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
+                <li class="" th:class="${activeUri=='simingG'?'active':''}"><a class="treeview-item" href="/showClass?belonging=simingG"><i class="icon fa fa-circle-o"></i>班级列表</a></li>
+                <li class="" th:class="${activeUri=='simingG'?'active':''}"><a class="treeview-item" href="/devideClass?belonging=simingG"><i class="icon fa fa-circle-o"></i>分班</a></li>
+                <li><a class="treeview-item" href="/showQualityStudents?belonging=simingG"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
             </ul>
         </li>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Tables</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('simingC')" class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">思明校区初中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i> Basic Tables</a></li>
-                <li><a class="treeview-item" href="table-data-table.html"><i class="icon fa fa-circle-o"></i> Data Tables</a></li>
+                <li th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=simingC"><i class="icon fa fa-circle-o"></i>花名册</a></li>
+                <li th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass?belonging=simingC"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
+                <li class="" th:class="${activeUri=='showClass'?'active':''}"><a class="treeview-item" href="/showClass?belonging=simingC"><i class="icon fa fa-circle-o"></i>班级列表</a></li>
+                <li th:class="${activeUri=='devideClass'?'active':''}"><a class="treeview-item" href="/devideClass?belonging=simingC"><i class="icon fa fa-circle-o"></i>分班</a></li>
+                <li><a class="treeview-item" href="/showQualityStudents?belonging=simingC"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
             </ul>
         </li>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Pages</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('xianganG')" class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">翔安校区高中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="blank-page.html"><i class="icon fa fa-circle-o"></i> Blank Page</a></li>
-                <li><a class="treeview-item" href="page-login.html"><i class="icon fa fa-circle-o"></i> Login Page</a></li>
-                <li><a class="treeview-item" href="page-lockscreen.html"><i class="icon fa fa-circle-o"></i> Lockscreen Page</a></li>
-                <li><a class="treeview-item" href="page-user.html"><i class="icon fa fa-circle-o"></i> User Page</a></li>
-                <li><a class="treeview-item" href="page-invoice.html"><i class="icon fa fa-circle-o"></i> Invoice Page</a></li>
-                <li><a class="treeview-item" href="page-calendar.html"><i class="icon fa fa-circle-o"></i> Calendar Page</a></li>
-                <li><a class="treeview-item" href="page-mailbox.html"><i class="icon fa fa-circle-o"></i> Mailbox</a></li>
-                <li><a class="treeview-item" href="page-error.html"><i class="icon fa fa-circle-o"></i> Error Page</a></li>
+                <li th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=xianganG"><i class="icon fa fa-circle-o"></i>花名册</a></li>
+                <li th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass?belonging=xianganG"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
+                <li class="" th:class="${activeUri=='showClass'?'active':''}"><a class="treeview-item" href="/showClass?belonging=xianganG"><i class="icon fa fa-circle-o"></i>班级列表</a></li>
+                <li th:class="${activeUri=='devideClass'?'active':''}"><a class="treeview-item" href="/devideClass?belonging=xianganG"><i class="icon fa fa-circle-o"></i>分班</a></li>
+                <li><a class="treeview-item" href="/showQualityStudents?belonging=xianganG"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
             </ul>
         </li>
-        <li><a class="app-menu__item" href="docs.html"><i class="app-menu__icon fa fa-file-code-o"></i><span class="app-menu__label">Docs</span></a></li>
+        <li sec:authorize="hasAnyAuthority('xianganC')" class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">翔安校区初中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <li th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=xianganC"><i class="icon fa fa-circle-o"></i>花名册</a></li>
+                <li th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass?belonging=xianganC"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
+                <li class="" th:class="${activeUri=='showClass'?'active':''}"><a class="treeview-item" href="/showClass?belonging=xianganC"><i class="icon fa fa-circle-o"></i>班级列表</a></li>
+                <li th:class="${activeUri=='devideClass'?'active':''}"><a class="treeview-item" href="/devideClass?belonging=xianganC"><i class="icon fa fa-circle-o"></i>分班</a></li>
+                <li><a class="treeview-item" href="/showQualityStudents?belonging=xianganC"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
+            </ul>
+        </li>
+        <!--<li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Tables</span><i class="treeview-indicator fa fa-angle-right"></i></a>-->
+            <!--<ul class="treeview-menu">-->
+                <!--<li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i> Basic Tables</a></li>-->
+                <!--<li><a class="treeview-item" href="table-data-table.html"><i class="icon fa fa-circle-o"></i> Data Tables</a></li>-->
+            <!--</ul>-->
+        <!--</li>-->
+        <!--<li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Pages</span><i class="treeview-indicator fa fa-angle-right"></i></a>-->
+            <!--<ul class="treeview-menu">-->
+                <!--<li><a class="treeview-item" href="blank-page.html"><i class="icon fa fa-circle-o"></i> Blank Page</a></li>-->
+                <!--<li><a class="treeview-item" href="page-login.html"><i class="icon fa fa-circle-o"></i> Login Page</a></li>-->
+                <!--<li><a class="treeview-item" href="page-lockscreen.html"><i class="icon fa fa-circle-o"></i> Lockscreen Page</a></li>-->
+                <!--<li><a class="treeview-item" href="page-user.html"><i class="icon fa fa-circle-o"></i> User Page</a></li>-->
+                <!--<li><a class="treeview-item" href="page-invoice.html"><i class="icon fa fa-circle-o"></i> Invoice Page</a></li>-->
+                <!--<li><a class="treeview-item" href="page-calendar.html"><i class="icon fa fa-circle-o"></i> Calendar Page</a></li>-->
+                <!--<li><a class="treeview-item" href="page-mailbox.html"><i class="icon fa fa-circle-o"></i> Mailbox</a></li>-->
+                <!--<li><a class="treeview-item" href="page-error.html"><i class="icon fa fa-circle-o"></i> Error Page</a></li>-->
+            <!--</ul>-->
+        <!--</li>-->
+        <!--<li><a class="app-menu__item" href="docs.html"><i class="app-menu__icon fa fa-file-code-o"></i><span class="app-menu__label">Docs</span></a></li>-->
     </ul>
 </aside>
 </body>

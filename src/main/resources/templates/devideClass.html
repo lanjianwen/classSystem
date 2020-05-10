@@ -76,6 +76,7 @@
     <div th:replace="commons/aside::aside(activeUri='roster')"></div>
     <main class="app-content">
         <form th:action="@{/distribute}" method="post" th:unless="${classes.size() == 0}">
+            <input hidden id="belonging" name="belonging" th:value="${belonging}">
             <div class="row tile">
                 <input type="hidden" value="" name="classType" id="classType" th:value="${classes.get(0).type}" th:if="${classes.size() != 0}">
                 <h4><b>请选择班级类型 &nbsp</b>

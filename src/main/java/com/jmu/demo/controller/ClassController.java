@@ -22,40 +22,51 @@ public class ClassController {
     private StudentService studentService;
 
     @PostMapping("/editClass")
-    public String editClass(Integer typeNum, @RequestParam(name = "className")List<String> classTypeName,
-                            @RequestParam(name = "num") List<Integer> num, @RequestParam(name = "maxNum") List<Integer> maxNum){
-        classService.editClass(typeNum,classTypeName,num,maxNum);
-        return "redirect:/devideClass";
+    public String editClass(Integer typeNum,
+                            @RequestParam(name = "className")List<String> classTypeName,
+                            @RequestParam(name = "num") List<Integer> num,
+                            @RequestParam(name = "maxNum") List<Integer> maxNum,
+                            String belonging){
+        classService.editClass(typeNum,classTypeName,num,maxNum,belonging);
+        return "redirect:/devideClass?belonging="+belonging;
     }
 
     @GetMapping("/devideClass")
-    public String findClassType(Model model){
-        List<Class> classes = classService.findClassType();
+    public String findClassType(String belonging, Model model){
+        List<Class> classes = classService.findClassType(belonging);
         model.addAttribute("classes", classes);
         List<Student> students = studentService.findStudentType();
         model.addAttribute("students", students);
+        model.addAttribute("belonging", belonging);
         return "devideClass";
     }
 
     @GetMapping("/showClass")
-    public String showClass(Model model){
-        classService.updateClass();
+    public String showClass(String belonging, Model model){
+        classService.updateClass(belonging);
         List<Class> classes = classService.findAll();
         model.addAttribute("classes", classes);
+        model.addAttribute("belonging", belonging);
         return "showClass";
     }
 
     @GetMapping("/findClassByClassType")
-    public String findClassByClassType(String classType, Model model){
-        List<Class> classes = classService.findClassByClassType("实验");
+    public String findClassByClassType(String classType, String belonging, Model model){
+        List<Class> classes = classService.findClassByClassType("实验", belonging);
         model.addAttribute("classes", classes);
-        return "redirect:/showClass";
+        return "redirect:/showClass?belonging="+belonging;
     }
 
     @GetMapping("/deleteClass")
-    public @ResponseBody String deleteAll(){
-        classService.deleteAll();
+    public @ResponseBody String deleteAll(String belonging){
+        classService.deleteAll(belonging);
         return "1";
+    }
+
+    @GetMapping("/addClass")
+    public String editClass(String belonging, Model model){
+        model.addAttribute("belonging", belonging);
+        return "editClass";
     }
 
 }

@@ -6,6 +6,7 @@ import com.jmu.demo.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,7 +16,8 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public List<Permission> findAllPermission() {
-        return permissionRepository.findAll();
+        List<Permission> permissions =  permissionRepository.findAll();
+        return permissions;
     }
 
     @Override

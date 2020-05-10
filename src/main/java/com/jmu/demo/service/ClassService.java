@@ -5,17 +5,17 @@ import com.jmu.demo.entity.Class;
 import java.util.List;
 
 public interface ClassService {
-    void editClass(Integer typeNum, List<String> classTypeName, List<Integer> num, List<Integer> maxNum);
+    void editClass(Integer typeNum, List<String> classTypeName, List<Integer> num, List<Integer> maxNum,String belonging);
 
-    List<Class> findClassType();
+    List<Class> findClassType(String belonging);
 
-    List<Class> findClassByClassType(String classType);
+    List<Class> findClassByClassType(String classType, String belonging);
 
     List<Class> findAll();
 
     Class findClass(Integer classId);
 
-    void deleteAll();
+    void deleteAll(String belonging);
 
-    void updateClass();
+    void updateClass(String belonging);
 }

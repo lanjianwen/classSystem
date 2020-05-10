@@ -136,8 +136,10 @@
     <main class="app-content">
        <div class="tile">
            <div class="row">
-               <a class="btn btn-info" th:href="@{'/downloadExcel?id='+${c.id}}">导出</a>
+               <a class="btn btn-info" th:href="@{'/downloadExcel?id='+${c.id}+'&belonging='+${belonging}}">导出</a>
            </div>
+
+           <input hidden id="belonging" name="belonging" th:value="${belonging}">
 
            <div class="row">
                <div class="col-md-12">
@@ -338,8 +340,10 @@
     // $("#avg").append(Math.round(sum/students.length * 100) / 100);
 </script>
 <script th:inline="javascript">
+    var belonging = $("#belonging").val();
+
     function test(id) {
-        $.post("findOneStudent", {id: id}, function (student) {
+        $.post("findOneStudent?belonging="+belonging, {id: id}, function (student) {
             var model = '';
             model += '<div><div class="col-lg-4" align="right">姓名 : </div><div class="col-lg-8" align="left"><input value="'+student.name+'" disabled></div></div>'
                     +'<div><div class="col-lg-4" align="right">性别 : </div><div class="col-lg-8" align="left"><input value="'+student.sex+'" disabled></div></div>'
@@ -362,7 +366,7 @@
     function updateStudent() {
         var id = $("#studentId").val();
         var className = $("#cName option:selected").val();
-        $.post("/updateStudent",{id:id,className:className},function (data) {
+        $.post("/updateStudent?belonging="+belonging,{id:id,className:className},function (data) {
 
         });
         location.replace(document.referrer);
@@ -370,7 +374,7 @@
 
     var classId = $("#classId").val();
     $(function () {
-        $.get("/findAll", {classId:classId}, function (students) {
+        $.get("/findAll?belonging="+belonging, {classId:classId}, function (students) {
             var boyNum = 0;
             var girlNum = 0;
             var sum = 0;
@@ -401,13 +405,13 @@
         }
         if (currentPage != 1){
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudent?page=1&classId='+classId+'" aria-label="Previous">\n' +
+                '                        <a class="page-link" href="/showStudent?page=1&classId='+classId+'&belonging='+belonging+'" aria-label="Previous">\n' +
                 '                            <span aria-hidden="true">首页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
 
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudent?page='+beforePage+'&classId='+classId+'" aria-label="Previous">\n' +
+                '                        <a class="page-link" href="/showStudent?page='+beforePage+'&classId='+classId+'&belonging='+belonging+'" aria-label="Previous">\n' +
                 '                            <span aria-hidden="true">上一页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
@@ -454,7 +458,7 @@
                     '    </li>';
             }
             else {
-                li += '<li><a class="page-link" href="/showStudent?page='+i+'&classId='+classId+'">'+i+'</a></li>';
+                li += '<li><a class="page-link" href="/showStudent?page='+i+'&classId='+classId+'&belonging='+belonging+'">'+i+'</a></li>';
             }
 
         }
@@ -477,12 +481,12 @@
         }
         else {
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudent?page='+nextPage+'&classId='+classId+'" aria-label="Next">\n' +
+                '                        <a class="page-link" href="/showStudent?page='+nextPage+'&classId='+classId+'&belonging='+belonging+'" aria-label="Next">\n' +
                 '                            <span aria-hidden="true">下一页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';
             li += '<li>\n' +
-                '                        <a class="page-link" href="/showStudent?page='+totalPages+'&classId='+classId+'" aria-label="Next">\n' +
+                '                        <a class="page-link" href="/showStudent?page='+totalPages+'&classId='+classId+'&belonging='+belonging+'" aria-label="Next">\n' +
                 '                            <span aria-hidden="true">尾页</span>\n' +
                 '                        </a>\n' +
                 '                    </li>';

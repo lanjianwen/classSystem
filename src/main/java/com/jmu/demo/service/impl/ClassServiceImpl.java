@@ -20,7 +20,7 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public void editClass(Integer typeNum, List<String> classTypeName, List<Integer> num, List<Integer> maxNum) {
+    public void editClass(Integer typeNum, List<String> classTypeName, List<Integer> num, List<Integer> maxNum,String belonging) {
         int n = 0;
         for (int i = 0; i < typeNum; i++) {
             n = classRepository.findByType(classTypeName.get(i)).size();
@@ -31,6 +31,7 @@ public class ClassServiceImpl implements ClassService {
                 c.setName(classTypeName.get(i)+n+"班");
                 c.setMaxMum(maxNum.get(i));
                 c.setFlag(1);
+                c.setBelonging(belonging);
                 n++;
                 classRepository.save(c);
             }
@@ -38,13 +39,13 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public List<Class> findClassType() {
-        return classRepository.findClassType();
+    public List<Class> findClassType(String belonging) {
+        return classRepository.findClassTypeAndBelonging(belonging);
     }
 
     @Override
-    public List<Class> findClassByClassType(String classType) {
-        return classRepository.findByType(classType);
+    public List<Class> findClassByClassType(String classType, String belonging) {
+        return classRepository.findByTypeAndBelonging(classType, belonging);
     }
 
     @Override
@@ -58,14 +59,14 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public void deleteAll() {
-        classRepository.deleteAll();
-        studentRepository.resetClassId();
+    public void deleteAll(String belonging) {
+        classRepository.deleteAllByBelonging(belonging);
+        studentRepository.resetClassId(belonging);
     }
 
     @Override
-    public void updateClass() {
-        List<Class> classes = classRepository.findAll();
+    public void updateClass(String belonging) {
+        List<Class> classes = classRepository.findByBelonging(belonging);
         for (Class c : classes){
             double totalGrade =0;
             List<Student> boys = studentRepository.findByClassIdAndSex(c.getId(),"男");

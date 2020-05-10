@@ -30,7 +30,7 @@ public interface StudentRepository extends JpaRepository<Student,Integer>, JpaSp
     @Query(value = "select * from student group by class_id",nativeQuery = true)
     List<Student> findClassType();
 
-    List<Student> findByClassId(Integer classId);
+    List<Student> findByClassIdAndBelonging(Integer classId, String belonging);
 
     Student findByIdCard(String idCard);
 
@@ -43,9 +43,28 @@ public interface StudentRepository extends JpaRepository<Student,Integer>, JpaSp
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE student SET class_id = NULL", nativeQuery = true)
-    void resetClassId();
+    @Query(value = "UPDATE student SET class_id = NULL where belonging= :belonging", nativeQuery = true)
+    void resetClassId(String belonging);
 
     @Query(value = "SELECT * FROM student WHERE priority=1", nativeQuery = true)
     Page<Student> findAllQualityStudents(Pageable pageable);
+
+    Page<Student> findByBelonging(String belonging, Pageable pageable);
+
+    List<Student> findByBelonging(String belonging);
+
+    @Query(value = "select count(*) from student where class_id in (select id from class where type= :classType and belonging= :belonging)",nativeQuery = true)
+    int findByClassTypeAndBelonging(String classType, String belonging);
+
+    @Query(value = "select * from student where type= :type and belonging= :belonging and class_id is null order by total_grade desc",nativeQuery = true)
+    List<Student> findByTypeAndBelongingOrderByTotalGradeDesc(String type, String belonging);
+
+    Page<Student> findByClassIdAndBelonging(Integer classId, String belonging, Pageable pageable);
+
+    @Modifying
+    @Query(value = "delete from student where belonging= :belonging",nativeQuery = true)
+    void deleteAllByBelonging(String belonging);
+
+    @Query(value = "SELECT * FROM student WHERE priority=1 and belonging= :belonging", nativeQuery = true)
+    Page<Student> findAllQualityStudentsByBelonging(String belonging, Pageable pageable);
 }

@@ -28,53 +28,6 @@
 
 </head>
 
-<!--<body>-->
-<!--&lt;!&ndash;引入头部&ndash;&gt;-->
-<!--<div th:replace="commons/bar::topbar"></div>-->
-
-
-<!--<div class="container-fluid">-->
-    <!--<div class="row">-->
-        <!--&lt;!&ndash;引入侧边栏&ndash;&gt;-->
-        <!--<div th:replace="commons/bar::sidebar(activeUri='editClass')"></div>-->
-        <!--<div class="col-lg-12 col-lg-offset-2 main">&lt;!&ndash;col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main &ndash;&gt;-->
-            <!--<div style="color: #2b669a">&lt;!&ndash; class="col-lg-1"&ndash;&gt;-->
-                <!--<ul class="add">-->
-                    <!--<li>-->
-                        <!--<h4><b>添加 &nbsp<select id="classType">&lt;!&ndash; class="form-control"&ndash;&gt;-->
-                            <!--<option value="1">1</option>-->
-                            <!--<option value="2">2</option>-->
-                            <!--<option value="3">3</option>-->
-                            <!--<option value="4">4</option>-->
-                            <!--<option value="5">5</option>-->
-                        <!--</select>&nbsp 类班级</b></h4>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</div>-->
-            <!--<form th:action="@{/editClass}" method="post">-->
-                <!--<input type="hidden" value="1" name="typeNum" id="typeNum">-->
-                <!--<div id="classNum" style="color: #2b669a">-->
-                    <!--第一类班级类型： &nbsp<input type="text" name="className"> &nbsp-->
-                    <!--第一类班级个数： &nbsp<input type="number" name="num"> &nbsp-->
-                    <!--每个班最大人数： &nbsp<input type="number" name="maxNum"> &nbsp-->
-                    <!--优先级别： &nbsp<select>-->
-                    <!--<option value="1">一级</option>-->
-                    <!--<option value="2">二级</option>-->
-                    <!--<option value="3">三级</option>-->
-                    <!--<option value="4">四级</option>-->
-                    <!--<option value="5">五级</option>-->
-                <!--</select>-->
-                <!--</div>-->
-                <!--&lt;!&ndash;input type="submit"&ndash;&gt;-->
-                <!--<button type="submit" name="button" class="btn btn-primary">提交</button>-->
-            <!--</form>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-<!--</body>-->
-
-
 <body class="app sidebar-mini">
 <!-- Navbar-->
 <div th:replace="commons/header::header"></div>
@@ -99,6 +52,7 @@
         <div>
             <form th:action="@{/editClass}" method="post">
                 <input type="hidden" value="1" name="typeNum" id="typeNum">
+                <input hidden th:value="${belonging}" name="belonging" id="belonging">
                 <div id="classNum" style="color: #2b669a" class="row">
                     <div class="col-md-3">
                         <div class="tile" style="min-width: 240px">
