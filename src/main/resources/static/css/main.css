@@ -16742,3 +16742,10 @@ be a descendant of the grid when it is being dragged.
 .user .user-settings label {
   color: #666;
 }
+
+.table>tbody>tr.success>td {
+  background-color: #dff0d8;
+}
+.table>tbody>tr.danger>td {
+  background-color: #f2dede;
+}

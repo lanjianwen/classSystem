@@ -28,4 +28,6 @@ public interface ClassRepository extends JpaRepository<Class,Integer>, JpaSpecif
 
     @Query(value = "delete from class where belonging= :belonging",nativeQuery = true)
     void deleteAllByBelonging(String belonging);
+
+    List<Class> findAll();
 }

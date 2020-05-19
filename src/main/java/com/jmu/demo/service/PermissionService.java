@@ -10,4 +10,6 @@ public interface PermissionService {
     Permission findByName(String name);
 
     Permission findById(Integer id);
+
+
 }

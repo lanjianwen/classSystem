@@ -11,7 +11,7 @@ public interface ClassService {
 
     List<Class> findClassByClassType(String classType, String belonging);
 
-    List<Class> findAll();
+    List<Class> findAll(String belonging);
 
     Class findClass(Integer classId);
 

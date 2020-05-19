@@ -44,7 +44,7 @@ public class ClassController {
     @GetMapping("/showClass")
     public String showClass(String belonging, Model model){
         classService.updateClass(belonging);
-        List<Class> classes = classService.findAll();
+        List<Class> classes = classService.findAll(belonging);
         model.addAttribute("classes", classes);
         model.addAttribute("belonging", belonging);
         return "showClass";

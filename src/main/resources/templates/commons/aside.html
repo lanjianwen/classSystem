@@ -18,8 +18,16 @@
         <li sec:authorize="hasAnyAuthority('manage')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">系统管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item" href="/findAllUsers"><i class="icon fa fa-circle-o"></i> 用户管理</a></li>
-                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 权限管理</a></li>
+                <!--<li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 权限管理</a></li>-->
                 <li><a class="treeview-item" href="/findAllRoles"><i class="icon fa fa-circle-o"></i> 角色管理</a></li>
+            </ul>
+        </li>
+        <li sec:authorize="hasAnyAuthority('manage')" class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">日志管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a class="treeview-item" href="/operaRecords?belonging=simingG"><i class="icon fa fa-circle-o"></i> 日志（思明高中）</a></li>
+                <li><a class="treeview-item" href="/operaRecords?belonging=simingC"><i class="icon fa fa-circle-o"></i> 日志（思明初中）</a></li>
+                <li><a class="treeview-item" href="/operaRecords?belonging=xianganG"><i class="icon fa fa-circle-o"></i> 日志（翔安高中）</a></li>
+                <li><a class="treeview-item" href="/operaRecords?belonging=xianganC"><i class="icon fa fa-circle-o"></i> 日志（翔安初中）</a></li>
             </ul>
         </li>
         <!--<li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>-->

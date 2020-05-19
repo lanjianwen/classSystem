@@ -10,4 +10,8 @@ public interface RoleService {
     Role findByName(String name);
 
     Role findById(Integer id);
+
+    void addRole(Role role, List<String> permissionId);
+
+    void updateRole(Role role, List<String> permission);
 }

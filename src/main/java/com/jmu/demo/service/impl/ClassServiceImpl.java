@@ -49,8 +49,8 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public List<Class> findAll() {
-        return classRepository.findAll();
+    public List<Class> findAll(String belonging) {
+        return classRepository.findByBelonging(belonging);
     }
 
     @Override

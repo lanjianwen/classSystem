@@ -69,7 +69,7 @@ public class StudentController {
         model.addAttribute("totalPages", students.getTotalPages());
         model.addAttribute("currentPage", students.getNumber()+1);
         Class c = classService.findClass(classId);
-        List<Class> classes = classService.findAll();
+        List<Class> classes = classService.findAll(belonging);
         model.addAttribute("classes", classes);
         model.addAttribute("c", c);
         model.addAttribute("belonging", belonging);

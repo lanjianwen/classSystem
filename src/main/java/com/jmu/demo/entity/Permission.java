@@ -28,8 +28,8 @@ public class Permission {
     @Column(name = "description")
     private String text;
 
-    @Column(name = "pid")
-    private Integer pid;
+    @Column(name = "p_id")
+    private Integer pId;
 
 
     @JsonIgnore
