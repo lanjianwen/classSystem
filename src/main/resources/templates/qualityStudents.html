@@ -208,6 +208,7 @@
     <script type="text/javascript" src="../static/js/plugins/jquery.dataTables.min.js" th:src="@{js/plugins/jquery.dataTables.min.js}"></script>
     <script type="text/javascript" src="../static/js/plugins/dataTables.bootstrap.min.js" th:src="@{js/plugins/dataTables.bootstrap.min.js}"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script type="text/javascript" src="../static/js/updatePassword.js" th:src="@{js/updatePassword.js}"></script>
     <script type="text/javascript">
         var data = {
             labels: ["January", "February", "March", "April", "May"],
@@ -267,6 +268,7 @@
         }
     </script>
 
+    <div th:replace="commons/aside::modal"></div>
 </body>
 
 <script>

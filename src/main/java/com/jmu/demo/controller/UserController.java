@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class UserController {
+public class UserController extends  BaseController {
     @Autowired
     private UserService userService;
 
@@ -70,5 +70,14 @@ public class UserController {
     @GetMapping("/index")
     public String toIndex(){
         return "index";
+    }
+
+    @PostMapping("/updatePassword")
+    public @ResponseBody String updatePassword(User user, String lastPassword){
+        if (user.getPassword().equals(lastPassword) && user.getPassword() != null && lastPassword != null){
+            userService.updatePassword(user);
+            return "修改成功";
+        }
+        return "两次密码不一致";
     }
 }

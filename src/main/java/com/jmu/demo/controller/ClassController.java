@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-public class ClassController {
+public class ClassController extends  BaseController {
     @Autowired
     private ClassService classService;
     @Autowired
@@ -28,6 +28,7 @@ public class ClassController {
                             @RequestParam(name = "maxNum") List<Integer> maxNum,
                             String belonging){
         classService.editClass(typeNum,classTypeName,num,maxNum,belonging);
+        this.saveOperaRecord("班级","创建班级",belonging);
         return "redirect:/devideClass?belonging="+belonging;
     }
 
@@ -60,6 +61,7 @@ public class ClassController {
     @GetMapping("/deleteClass")
     public @ResponseBody String deleteAll(String belonging){
         classService.deleteAll(belonging);
+        this.saveOperaRecord("班级","清空班级列表",belonging);
         return "1";
     }
 

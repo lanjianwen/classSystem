@@ -65,7 +65,8 @@
                         <table class="table">
                             <tr>
                                 <th style="width:100px">用 &nbsp 户 &nbsp名: </th>
-                                <th><input readonly type="text" name="username" id="update_username" class="form-control " aria-describedby="basic-addon1"></th>
+                                <th><input readonly type="text" name="username" id="update_username"
+                                           class="form-control " aria-describedby="basic-addon1"></th>
                             </tr>
                             <tr>
                                 <input hidden id="update_roleName">
@@ -142,6 +143,7 @@
 <script type="text/javascript" src="../static/js/plugins/jquery.dataTables.min.js" th:src="@{js/plugins/jquery.dataTables.min.js}"></script>
 <script type="text/javascript" src="../static/js/plugins/dataTables.bootstrap.min.js" th:src="@{js/plugins/dataTables.bootstrap.min.js}"></script>
 <script type="text/javascript">$('#sampleTable').DataTable();</script>
+<script type="text/javascript" src="../static/js/updatePassword.js" th:src="@{js/updatePassword.js}"></script>
 <script type="text/javascript">
     var data = {
         labels: ["January", "February", "March", "April", "May"],
@@ -201,6 +203,8 @@
     }
 </script>
 
+<div th:replace="commons/aside::modal"></div>
+
 </body>
 
 <script>
@@ -238,6 +242,10 @@
             alert(msg);
             location.href="findAllUsers";
         })
+    }
+
+    function fc() {
+        alert("aaa");
     }
 </script>
 

@@ -16,4 +16,6 @@ public interface UserService {
     void updateUser(User user, String roleName);
 
     void deleteUser(Integer id);
+
+    void updatePassword(User user);
 }

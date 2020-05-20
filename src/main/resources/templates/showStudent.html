@@ -319,6 +319,8 @@
         }
     </script>
 
+    <div th:replace="commons/aside::modal"></div>
+
 </body>
 
 <script th:inline="javascript">
@@ -494,4 +496,5 @@
         $(".pagination").html(li);
     })
 </script>
+<script type="text/javascript" src="../static/js/updatePassword.js" th:src="@{js/updatePassword.js}"></script>
 </html>

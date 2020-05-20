@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-public class ExcelController {
+public class ExcelController extends  BaseController {
     @Autowired
     private ExcelService excelService;
     @Autowired
@@ -25,9 +25,11 @@ public class ExcelController {
     public String importFile(@RequestParam(value = "file") MultipartFile file, Integer isQualityStudents, String belonging){
         Boolean result = excelService.readExcelFile(file, isQualityStudents, belonging);
         if (isQualityStudents == 1){
+            this.saveOperaRecord("优质生源","导入跟踪表",belonging);
             return "redirect:/showQualityStudents?belonging="+belonging;
         }
         else {
+            this.saveOperaRecord("花名册","导入名单",belonging);
             return "redirect:/showStudents?belonging="+belonging;
         }
     }
@@ -41,6 +43,7 @@ public class ExcelController {
     public void downloadExcel(Integer id, String belonging, HttpServletResponse response){
         String fileName = classService.findClass(id).getName();
         try {
+            this.saveOperaRecord("花名册","下载excel",belonging);
             response.setHeader("Content-type","application/vnd.ms-excel");
             // 解决导出文件名中文乱码
             response.setCharacterEncoding("UTF-8");

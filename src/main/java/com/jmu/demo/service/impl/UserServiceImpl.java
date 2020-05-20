@@ -63,4 +63,11 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public void updatePassword(User user) {
+        User u = userRepository.findById(user.getId()).get();
+        u.setPassword(user.getPassword());
+        userRepository.save(u);
+    }
+
 }

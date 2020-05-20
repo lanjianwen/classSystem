@@ -159,6 +159,129 @@ public class StudentServiceImpl implements StudentService {
         updateClassId(boys);
     }
 
+    @Override
+    public void distributeAtRand(String classType, List<String> studentType, String belonging) {
+
+        List<Class> classes = classRepository.findByTypeAndBelonging(classType,belonging);
+        //班级数量
+        int classNum = classes.size();
+        //每个班最大人数
+        int maxNum = classes.get(0).getMaxMum();
+        //总人数
+        int totalNum = studentRepository.findByClassTypeAndBelonging(classType, belonging);
+        int sum = totalNum;
+        //男生队列
+        List<Student> boys = new ArrayList<Student>();
+        List<Student> girls = new ArrayList<Student>();
+
+
+        int index = 0;
+        while (totalNum < classNum * maxNum && index < studentType.size()){
+            if (studentType.get(index).isEmpty() || studentType.get(index) == null){
+                index++;
+                continue;
+            }
+            List<Student> list = studentRepository.findByTypeAndBelongingOrderByTotalGradeDesc(studentType.get(index), belonging);
+            index++;
+            int count = 0;
+            if (classNum * maxNum - totalNum > list.size()){
+                count = list.size();
+            }
+            else {
+                count = classNum * maxNum - totalNum;
+            }
+            totalNum += count;
+            for (int i = 0; i < count; i++) {
+                if (list.get(i).getSex().equals("男")){
+                    boys.add(list.get(i));
+                }
+                else {
+                    girls.add(list.get(i));
+                }
+            }
+
+        }
+        Collections.shuffle(boys);
+        Collections.shuffle(girls);
+//        compare(boys);
+//        compare(girls);
+        // 将男/女生人数变成班级的倍数
+        while (((boys.size() + (sum % classNum)) % classNum) != 0){
+            if (boys.size() + girls.size() < classNum){
+                boys.addAll(girls);
+                girls.removeAll(girls);
+                break;
+            }
+            int x = boys.size() - (boys.size() % classNum) - (sum % classNum);
+            girls.add(boys.get(x));
+            boys.remove(x);
+        }
+
+        //男生 排序法则12344321
+        //i 学生  j 班级
+        int j = Math.abs(classes.get(0).getFlag()) - 1;
+        if (classes.get(0).getFlag() < 0){
+            sum += classNum;
+        }
+        for (int i = 0; i < boys.size(); i++) {
+            if (((sum + i)/classNum) % 2 == 0){
+                boys.get(i).setClassId(classes.get(j).getId());
+                j++;
+            }
+            else{
+                boys.get(i).setClassId(classes.get(j).getId());
+                j--;
+            }
+            if(j == classNum){
+                j--;
+            }
+            else if(j == -1){
+                j++;
+            }
+        }
+
+        //女生+小部分男生 排序法则43211234
+        if (boys.size() == 0){
+            j = classNum - 2 - Math.abs(classes.get(0).getFlag());
+        }
+        else {
+            j = classNum - 1;
+        }
+        if (boys.size() > 0){
+            sum = 0;
+        }
+        for (int i = 0; i < girls.size(); i++) {
+            if (((sum + i)/classNum) % 2 == 0){
+                girls.get(i).setClassId(classes.get(j).getId());
+                j--;
+            }
+            else{
+                girls.get(i).setClassId(classes.get(j).getId());
+                j++;
+            }
+            if(j == classNum){
+                j--;
+            }
+            else if(j == -1){
+                j++;
+            }
+        }
+
+        //分班 入数据库
+        //TODO
+        for (int i = 0; i < classes.size(); i++) {
+            if (girls.size() > 0){
+                classes.get(i).setFlag(-j-1);
+            }
+            else {
+                classes.get(i).setFlag(j+1);
+            }
+        }
+        classRepository.saveAll(classes);
+        boys.addAll(girls);
+        updateClassId(boys);
+    }
+
     //调整
     @Override
     public void updateStudent(Integer id, String className, String belonging) {
@@ -217,6 +340,17 @@ public class StudentServiceImpl implements StudentService {
             return studentRepository.save(s);
         }
         return s;
+    }
+
+    @Override
+    public void distribute(String classType, List<String> studentType, String belonging, String type) {
+        if("rand".equals(type)){
+            distributeAtRand( classType, studentType,  belonging);
+        }else if ("score".equalsIgnoreCase(type)){
+            distribute( classType, studentType,  belonging);
+        }else{
+            distribute( classType, studentType,  belonging);
+        }
     }
 
 

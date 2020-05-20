@@ -59,15 +59,15 @@
                             <div>第一类班级类型：<br><input type="text" name="className" style="min-width: 200px"></div>
                             <div>第一类班级个数：<br><input type="number" name="num" style="min-width: 200px"></div>
                             <div>每个班最大人数：<br><input type="number" name="maxNum" style="min-width: 200px"></div>
-                            <div>优先级别：<br>
-                                <select style="min-width: 200px">
-                                    <option value="1">一级</option>
-                                    <option value="2">二级</option>
-                                    <option value="3">三级</option>
-                                    <option value="4">四级</option>
-                                    <option value="5">五级</option>
-                                </select>
-                            </div>
+                            <!--<div>优先级别：<br>-->
+                                <!--<select style="min-width: 200px">-->
+                                    <!--<option value="1">一级</option>-->
+                                    <!--<option value="2">二级</option>-->
+                                    <!--<option value="3">三级</option>-->
+                                    <!--<option value="4">四级</option>-->
+                                    <!--<option value="5">五级</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
@@ -147,6 +147,8 @@
     }
 </script>
 
+
+<div th:replace="commons/aside::modal"></div>
 </body>
 
 <script>
@@ -160,15 +162,15 @@
                 '                            <div>第'+i+'类班级类型：<br><input type="text" name="className" style="min-width: 200px"></div>\n' +
                 '                            <div>第'+i+'类班级个数：<br><input type="number" name="num" style="min-width: 200px"></div>\n' +
                 '                            <div>每个班最大人数：<br><input type="number" name="maxNum" style="min-width: 200px"></div>\n' +
-                '                            <div>优先级别：<br>\n' +
-                '                                <select style="min-width: 200px">\n' +
-                '                                    <option value="1">一级</option>\n' +
-                '                                    <option value="2">二级</option>\n' +
-                '                                    <option value="3">三级</option>\n' +
-                '                                    <option value="4">四级</option>\n' +
-                '                                    <option value="5">五级</option>\n' +
-                '                                </select>\n' +
-                '                            </div>\n' +
+                // '                            <div>优先级别：<br>\n' +
+                // '                                <select style="min-width: 200px">\n' +
+                // '                                    <option value="1">一级</option>\n' +
+                // '                                    <option value="2">二级</option>\n' +
+                // '                                    <option value="3">三级</option>\n' +
+                // '                                    <option value="4">四级</option>\n' +
+                // '                                    <option value="5">五级</option>\n' +
+                // '                                </select>\n' +
+                // '                            </div>\n' +
                 '                        </div>\n' +
                 '                    </div>';
 
@@ -187,4 +189,5 @@
         $("#classNum").html(code);
     });
 </script>
+<script type="text/javascript" src="../static/js/updatePassword.js" th:src="@{js/updatePassword.js}"></script>
 </html>

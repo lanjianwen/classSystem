@@ -27,4 +27,8 @@ public interface StudentService {
     Page<Student> findAllQualityStudents(String belonging, Integer begin);
 
     Student addQualityStudent(Student student);
+
+    void distribute(String classType, List<String> studentType, String belonging, String type);
+
+    void distributeAtRand(String classType, List<String> studentType, String belonging);
 }

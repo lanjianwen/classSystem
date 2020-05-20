@@ -98,7 +98,9 @@
                     <table class="table">
                         <tr>
                             <th style="width:100px">角&nbsp &nbsp 色 &nbsp &nbsp名: </th>
-                            <th><input hidden id="roleId" name="id"><input type="text" class="form-control " placeholder="Name" aria-describedby="basic-addon1" name="name" id="updateName"></th>
+                            <th><input hidden id="roleId" name="id">
+                                <input type="text" class="form-control " placeholder="Name" aria-describedby="basic-addon1" name="name" id="updateName">
+                            </th>
                         </tr>
                         <tr>
                             <th style="width:100px">权&nbsp &nbsp &nbsp &nbsp &nbsp限: </th>
@@ -134,6 +136,7 @@
 <script src="../static/js/testdata.js" th:src="@{js/testdata.js}"></script>
 <script src="../static/js/uuid.js" th:src="@{js/uuid.js}"></script>
 <script src="../static/js/combtree.js" th:src="@{js/combtree.js}"></script>
+<script type="text/javascript" src="../static/js/updatePassword.js" th:src="@{js/updatePassword.js}"></script>
 
 <script type="text/javascript">
     var data = {
@@ -269,6 +272,7 @@
     }
 </script>
 
+<div th:replace="commons/aside::modal"></div>
 
 </body>
 </html>

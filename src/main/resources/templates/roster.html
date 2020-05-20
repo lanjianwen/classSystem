@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -127,9 +128,9 @@
                         <input hidden id="belonging" name="belonging" th:value="${belonging}">
                         <input type="hidden" name="isQualityStudents" value="0">
                     </form>
-                     <button type="button" class="btn btn-info" onclick="importFile()">导入</button>
+                     <button sec:authorize="hasAnyAuthority('importFile')" type="button" class="btn btn-info" onclick="importFile()">导入</button>
                     <!--<button type="button" class="btn btn-info" onclick="downloadExcel()">导出</button>-->
-                     <a type="button" class="btn btn-info" th:href="'/deleteAll?belonging='+${belonging}">清空</a>
+                     <a sec:authorize="hasAnyAuthority('deleteAll')" type="button" class="btn btn-info" th:href="'/deleteAll?belonging='+${belonging}">清空</a>
                 </div>
             </div>
 
@@ -215,6 +216,7 @@
     <script type="text/javascript" src="../static/js/plugins/jquery.dataTables.min.js" th:src="@{js/plugins/jquery.dataTables.min.js}"></script>
     <script type="text/javascript" src="../static/js/plugins/dataTables.bootstrap.min.js" th:src="@{js/plugins/dataTables.bootstrap.min.js}"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script type="text/javascript" src="../static/js/updatePassword.js" th:src="@{js/updatePassword.js}"></script>
     <script type="text/javascript">
         var data = {
             labels: ["January", "February", "March", "April", "May"],
@@ -273,7 +275,7 @@
             ga('send', 'pageview');
         }
     </script>
-
+    <div th:replace="commons/aside::modal"></div>
 </body>
 
 <script th:inline="javascript">
@@ -432,6 +434,8 @@
         }
         $(".pagination").html(li);
     })
+
+
 </script>
 
 

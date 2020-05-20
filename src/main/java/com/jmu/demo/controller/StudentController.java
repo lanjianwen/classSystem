@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class StudentController {
+public class StudentController extends  BaseController {
     @Autowired
     private StudentService studentService;
     @Autowired
@@ -34,14 +34,16 @@ public class StudentController {
     }
 
     @PostMapping("/distribute")
-    public String distribute(String classType, @RequestParam(value = "studentType") List<String> studentType, String belonging, Model model){
-        studentService.distribute(classType,studentType, belonging);
+    public String distribute(String classType, String type, @RequestParam(value = "studentType") List<String> studentType, String belonging, Model model){
+        studentService.distribute(classType,studentType, belonging, type);
+        this.saveOperaRecord("班级","分班",belonging);
         return "redirect:/showClass?belonging="+belonging;
     }
 
     @PostMapping("/updateStudent")
     public String updateStudent(Integer id, String className, String belonging){
         studentService.updateStudent(id, className, belonging);
+        this.saveOperaRecord("班级","编辑班级学生信息",belonging);
         return "redirect:/showStudent?belonging="+belonging;
     }
 
@@ -79,6 +81,7 @@ public class StudentController {
     @GetMapping("/deleteAll")
     public String deleteAll(String belonging){
         studentService.deleteAll(belonging);
+        this.saveOperaRecord("班级","清空班级学生名单",belonging);
         return "redirect:/showStudents?belonging="+belonging;
     }
 
@@ -101,9 +104,10 @@ public class StudentController {
     }
 
     @PostMapping("/addQualityStudent")
-    public @ResponseBody String addQualityStudent(Student student, String user){
+    public @ResponseBody String addQualityStudent(Student student, String user, String belonging){
         Student s = studentService.addQualityStudent(student);
         if (s == null){
+            this.saveOperaRecord("优质生源","添加优质生源",belonging,"添加未成功");
             return "该生未报考我校";
         }
         else {

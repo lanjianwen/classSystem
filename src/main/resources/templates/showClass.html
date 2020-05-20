@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" src="../static/js/updatePassword.js" th:src="@{js/updatePassword.js}"></script>
     <style>
         body{
             background-color: #d9edf7;
@@ -136,6 +137,8 @@
             ga('send', 'pageview');
         }
     </script>
+
+    <div th:replace="commons/aside::modal"></div>
 
 </body>
 

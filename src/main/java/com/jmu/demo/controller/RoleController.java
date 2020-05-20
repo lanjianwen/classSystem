@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-public class RoleController {
+public class RoleController extends  BaseController {
     @Autowired
     private RoleService roleService;
 

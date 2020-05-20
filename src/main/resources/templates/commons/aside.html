@@ -4,25 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
 <aside class="app-sidebar" th:fragment="aside">
-    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
-        <div>
-            <p class="app-sidebar__user-name">John Doe</p>
-            <p class="app-sidebar__user-designation">Frontend Developer</p>
+    <button style="background-color: transparent; border-width: 0px"  data-toggle="modal" data-target="#updatePassword"
+            th:onclick="updatePassword([[${session.SPRING_SECURITY_CONTEXT.authentication.principal}]])">
+
+        <div class="app-sidebar__user">
+            <img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+            <div th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
+                <p class="app-sidebar__user-name">John Doe</p>
+                <p class="app-sidebar__user-designation">Frontend Developer</p>
+            </div>
         </div>
-    </div>
+    </button>
+
     <ul class="app-menu">
         <!--<li><a class="app-menu__item" href="dashboard.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>-->
         <li sec:authorize="hasAnyAuthority('manage')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">系统管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="/findAllUsers"><i class="icon fa fa-circle-o"></i> 用户管理</a></li>
+                <li sec:authorize="hasAnyAuthority('findAllUsers')"><a class="treeview-item" href="/findAllUsers"><i class="icon fa fa-circle-o"></i> 用户管理</a></li>
                 <!--<li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 权限管理</a></li>-->
-                <li><a class="treeview-item" href="/findAllRoles"><i class="icon fa fa-circle-o"></i> 角色管理</a></li>
+                <li sec:authorize="hasAnyAuthority('findAllRoles')"><a class="treeview-item" href="/findAllRoles"><i class="icon fa fa-circle-o"></i> 角色管理</a></li>
             </ul>
         </li>
-        <li sec:authorize="hasAnyAuthority('manage')" class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">日志管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('log')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">日志管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item" href="/operaRecords?belonging=simingG"><i class="icon fa fa-circle-o"></i> 日志（思明高中）</a></li>
                 <li><a class="treeview-item" href="/operaRecords?belonging=simingC"><i class="icon fa fa-circle-o"></i> 日志（思明初中）</a></li>
@@ -31,16 +38,16 @@
             </ul>
         </li>
         <!--<li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>-->
-        <li sec:authorize="hasAnyAuthority('simingG')" class="" th:class="${activeUri=='simingG'?'treeview is-expanded':'treeview'}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">思明校区高中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('simingG')" class="treeview is-expanded" ><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">思明校区高中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li class="" th:class="${activeUri=='simingG'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=simingG" onclick="say('simingG')"><i class="icon fa fa-circle-o"></i>花名册</a></li>
+                <li ><a class="treeview-item" href="/showStudents?belonging=simingG" onclick="say('simingG')"><i class="icon fa fa-circle-o"></i>花名册</a></li>
                 <li class="" th:class="${activeUri=='simingG'?'active':''}"><a class="treeview-item" href="/addClass?belonging=simingG"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
                 <li class="" th:class="${activeUri=='simingG'?'active':''}"><a class="treeview-item" href="/showClass?belonging=simingG"><i class="icon fa fa-circle-o"></i>班级列表</a></li>
                 <li class="" th:class="${activeUri=='simingG'?'active':''}"><a class="treeview-item" href="/devideClass?belonging=simingG"><i class="icon fa fa-circle-o"></i>分班</a></li>
                 <li><a class="treeview-item" href="/showQualityStudents?belonging=simingG"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
             </ul>
         </li>
-        <li sec:authorize="hasAnyAuthority('simingC')" class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">思明校区初中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('simingC')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">思明校区初中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=simingC"><i class="icon fa fa-circle-o"></i>花名册</a></li>
                 <li th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass?belonging=simingC"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
@@ -49,7 +56,7 @@
                 <li><a class="treeview-item" href="/showQualityStudents?belonging=simingC"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
             </ul>
         </li>
-        <li sec:authorize="hasAnyAuthority('xianganG')" class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">翔安校区高中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('xianganG')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">翔安校区高中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=xianganG"><i class="icon fa fa-circle-o"></i>花名册</a></li>
                 <li th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass?belonging=xianganG"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
@@ -58,7 +65,7 @@
                 <li><a class="treeview-item" href="/showQualityStudents?belonging=xianganG"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
             </ul>
         </li>
-        <li sec:authorize="hasAnyAuthority('xianganC')" class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">翔安校区初中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('xianganC')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">翔安校区初中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=xianganC"><i class="icon fa fa-circle-o"></i>花名册</a></li>
                 <li th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass?belonging=xianganC"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
@@ -88,5 +95,48 @@
         <!--<li><a class="app-menu__item" href="docs.html"><i class="app-menu__icon fa fa-file-code-o"></i><span class="app-menu__label">Docs</span></a></li>-->
     </ul>
 </aside>
+
+<!--updatePassword-->
+<div class="modal fade" id="updatePassword" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true" th:fragment="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/updatePassword" method="post">
+                <div class="modal-header" >
+                    <h5 class="modal-title" id="updatePasswordLabel" >修改密码</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input hidden id="ud_id" name="id">
+                    <table class="table">
+                        <tr>
+                            <th style="width:100px">用 &nbsp 户 &nbsp名: </th>
+                            <th><input readonly id="ud_username" type="text" name="username" class="form-control " placeholder="username" aria-describedby="basic-addon1"></th>
+                        </tr>
+                        <tr>
+                            <th>角 &nbsp色 &nbsp名: </th>
+                            <th><input readonly id="ud_rolename" type="text" name="rolename" class="form-control " placeholder="rolename" aria-describedby="basic-addon1"></th>
+                        </tr>
+                        <tr>
+                            <th style="width:100px">密 &nbsp &nbsp &nbsp &nbsp码: </th>
+                            <th><input id="ud_password" type="password" name="password" class="form-control " placeholder="password" aria-describedby="basic-addon1"></th>
+                        </tr>
+                        <tr>
+                            <th>确 认 密 码: </th>
+                            <th><input id="ud_lastPassword" type="password" name="lastPassword" class="form-control " placeholder="lastPassword" aria-describedby="basic-addon1"></th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer" >
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >取消</button>
+                    <button type="button" class="btn btn-info" onclick="subData()">修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
