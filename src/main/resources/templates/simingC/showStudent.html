@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{css/main.css}">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body{
+            background-color: #d9edf7;
+        }
+    </style>
+</head>
+
+<body class="app sidebar-mini">
+    <!-- Navbar-->
+    <div th:replace="commons/header::header"></div>
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <div th:replace="commons/aside::aside(activeUri='roster')"></div>
+    <main class="app-content">
+       <div class="tile">
+           <div class="row">
+               <a class="btn btn-info" th:href="@{'/downloadExcel?id='+${c.id}+'&belonging='+${belonging}}">导出</a>
+           </div>
+
+           <input hidden id="belonging" name="belonging" th:value="${belonging}">
+
+           <div class="row">
+               <div class="col-md-12">
+                   <div class="row">
+                       <input type="hidden" id="classId" th:value="${c.id}">
+                       <h3 style="text-align: center" th:text="${c.name}" id="className"></h3>
+                   </div>
+                   <div class="row">
+                       <div class="col-md-3">总人数 : <span id="sum"></span></div>
+                       <div class="col-md-3">男生 : <span id="boy"></span></div>
+                       <div class="col-md-3">女生 : <span id="girl"></span></div>
+                       <div class="col-md-3">平均分 : <span id="avg"></span></div>
+                   </div>
+               </div>
+           </div>
+
+           <div class="row">
+               <table class="table table-striped table-bordered table-hover">
+                   <thead style="background-color: skyblue">
+                   <tr style="color: #2b669a">
+                       <th>序号</th>
+                       <th>姓名</th>
+                       <th>性别</th>
+                       <th>民族</th>
+                       <th>身份证号</th>
+                       <th>编班类型</th>
+                       <th>出生年月</th>
+                       <th>籍贯</th>
+                       <th>家庭住址</th>
+                       <th>联系电话</th>
+                       <th>监护人姓名</th>
+                       <th>监护人电话</th>
+                       <th>总分</th>
+                       <th sec:authorize="hasAnyAuthority('updateStudent-simingC')" >操作</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr th:each="student:${students}" th:class="${student.priority==1?'danger':'success'}">
+                       <td th:text="${students.indexOf(student)+1}"></td>
+                       <td th:text="${student.name}"> </td>
+                       <td th:text="${student.sex}"> </td>
+                       <td th:text="${student.nation}"> </td>
+                       <td th:text="${student.idCard}"> </td>
+                       <td th:text="${student.type}"> </td>
+                       <td> </td>
+                       <td th:text="${student.nativePlace}"> </td>
+                       <td th:text="${student.address}"> </td>
+                       <td> </td>
+                       <td th:text="${student.patriarch}"> </td>
+                       <td th:text="${student.phone}"> </td>
+                       <td th:text="${student.totalGrade}"></td>
+                       <input type="hidden" id="studentID" th:value="${student.id}">
+                       <td sec:authorize="hasAnyAuthority('updateStudent-simingC')" ><button type="button"  class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" th:onclick="'test('+${student.id}+')'">调整班级</button></td>
+                   </tr>
+                   </tbody>
+               </table>
+           </div>
+
+           <footer class="footer">
+               <div th:text="'第 '+${currentPage}+' 页 , '+' 共 '+${totalPages}+' 页'">第 1 页 ， 共 10 页</div>
+               <ul class="pagination">
+
+               </ul>
+               <input type="hidden" id="totalPages" th:value="${totalPages}">
+               <input type="hidden" id="currentPage" th:value="${currentPage}">
+           </footer>
+
+           <!--Model-->
+           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+               <div class="modal-dialog" role="document">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                           <h4 class="modal-title" id="myModalLabel">调整班级</h4>
+                       </div>
+                       <div class="modal-body" id="model">
+                           <!--<div align="center">姓名 : <input value="123" style="border: 0px" disabled></div>-->
+                       </div>
+                       <div align="center"> <div class="col-lg-4" align="right">班级 : </div>
+                           <div class="col-lg-8" align="left">
+                               &nbsp;<select style="width: 180px" id="cName"><option th:each="class:${classes}" th:value="${class.name}" th:text="${class.name}"></option></select>
+                           </div>
+                       </div>
+                       <div class="modal-footer">
+                           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                           <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateStudent()">保存更改</button>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </main>
+
+    <!-- Essential javascripts for application to work-->
+    <script src="../static/js/jquery-3.3.1.min.js" th:src="@{js/jquery-3.3.1.min.js}"></script>
+    <script src="../static/js/popper.min.js" th:src="@{js/popper.min.js}"></script>
+    <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+    <script src="../static/js/main.js" th:src="@{js/main.js}"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="../static/js/plugins/pace.min.js" th:src="@{js/plugins/pace.min.js}"></script>
+    <!-- Page specific javascripts-->
+    <script type="text/javascript" src="../static/js/plugins/chart.js" th:src="@{js/plugins/chart.js}"></script>
+
+    <script type="text/javascript" src="../static/js/plugins/jquery.dataTables.min.js" th:src="@{js/plugins/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" src="../static/js/plugins/dataTables.bootstrap.min.js" th:src="@{js/plugins/dataTables.bootstrap.min.js}"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script type="text/javascript">
+        var data = {
+            labels: ["January", "February", "March", "April", "May"],
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [65, 59, 80, 81, 56]
+                },
+                {
+                    label: "My Second dataset",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: [28, 48, 40, 19, 86]
+                }
+            ]
+        };
+        var pdata = [
+            {
+                value: 300,
+                color: "#46BFBD",
+                highlight: "#5AD3D1",
+                label: "Complete"
+            },
+            {
+                value: 50,
+                color:"#F7464A",
+                highlight: "#FF5A5E",
+                label: "In-Progress"
+            }
+        ]
+
+        var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+        var lineChart = new Chart(ctxl).Line(data);
+
+        var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+        var pieChart = new Chart(ctxp).Pie(pdata);
+    </script>
+    <!-- Google analytics script-->
+    <script type="text/javascript">
+        if(document.location.hostname == 'pratikborsadiya.in') {
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-72504830-1', 'auto');
+            ga('send', 'pageview');
+        }
+    </script>
+
+    <div th:replace="commons/aside::modal"></div>
+
+</body>
+
+<script th:inline="javascript">
+    // var students = /*[[${students}]]*/ '';
+    // var boyNum = 0;
+    // var girlNum = 0;
+    // var sum = 0;
+    // for (var i = 0; i < students.length; i++) {
+    //     if (students[i].sex === "男"){
+    //         boyNum++;
+    //     }
+    //     else {
+    //         girlNum++;
+    //     }
+    //     sum+=students[i].totalGrade;
+    // }
+    // $("#boy").append(boyNum);
+    // $("#girl").append(girlNum);
+    // $("#avg").append(Math.round(sum/students.length * 100) / 100);
+</script>
+<script th:inline="javascript">
+    var belonging = $("#belonging").val();
+
+    function test(id) {
+        $.post("findOneStudent?belonging="+belonging, {id: id}, function (student) {
+            var model = '';
+            model += '<div><div class="col-lg-4" align="right">姓名 : </div><div class="col-lg-8" align="left"><input value="'+student.name+'" disabled></div></div>'
+                    +'<div><div class="col-lg-4" align="right">性别 : </div><div class="col-lg-8" align="left"><input value="'+student.sex+'" disabled></div></div>'
+                +'<div><div class="col-lg-4" align="right">民族 : </div><div class="col-lg-8" align="left"><input value="'+student.nation+'" disabled></div></div>'
+                +'<div><div class="col-lg-4" align="right">身份证 : </div><div class="col-lg-8" align="left"><input value="'+student.idCard+'" disabled></div></div>'
+                +'<div><div class="col-lg-4" align="right">编班类型 : </div><div class="col-lg-8" align="left"><input value="'+student.type+'" disabled></div></div>'
+                +'<div><div class="col-lg-4" align="right">出生年月 : </div><div class="col-lg-8" align="left"><input value="" disabled></div></div>'
+                +'<div><div class="col-lg-4" align="right">籍贯 : </div><div class="col-lg-8" align="left"><input value="'+student.nativePlace+'" disabled></div></div>'
+                +'<div><div class="col-lg-4" align="right">家庭住址 : </div><div class="col-lg-8" align="left"><input value="'+student.address+'" disabled></div></div>'
+                +'<div><div class="col-lg-4" align="right">联系电话 : </div><div class="col-lg-8" align="left"><input value="" disabled></div></div>'
+                +'<div><div class="col-lg-4" align="right">监护人姓名 : </div><div class="col-lg-8" align="left"><input value="'+student.patriarch+'" disabled></div></div>'
+                +'<div><div class="col-lg-4" align="right">监护人电话 : </div><div class="col-lg-8" align="left"><input value="'+student.phone+'" disabled></div></div>'
+                +'<div><div class="col-lg-4" align="right">总分 : </div><div class="col-lg-8" align="left"><input value="'+student.totalGrade+'" disabled></div></div>'
+                +'<input type="hidden" id="studentId" value="'+student.id+'">';
+            $("#model").html(model);
+        })
+
+    }
+
+    function updateStudent() {
+        var id = $("#studentId").val();
+        var className = $("#cName option:selected").val();
+        $.post("/updateStudent?belonging="+belonging,{id:id,className:className},function (data) {
+
+        });
+        location.replace(document.referrer);
+    }
+
+    var classId = $("#classId").val();
+    $(function () {
+        $.get("/findAll?belonging="+belonging, {classId:classId}, function (students) {
+            var boyNum = 0;
+            var girlNum = 0;
+            var sum = 0;
+            for (var i = 0; i < students.length; i++) {
+                if (students[i].sex === "男"){
+                    boyNum++;
+                }
+                else {
+                    girlNum++;
+                }
+                sum+=students[i].totalGrade;
+            }
+
+            $("#sum").append(students.length);
+            $("#boy").append(boyNum);
+            $("#girl").append(girlNum);
+            $("#avg").append(Math.round(sum/students.length * 100) / 100);
+        })
+    })
+
+    $(function () {
+        var currentPage = $("#currentPage").val();
+        var totalPages = $("#totalPages").val();
+        var li = '';
+        var beforePage = currentPage - 1;
+        if (beforePage <= 0){
+            beforePage = 1;
+        }
+        if (currentPage != 1){
+            li += '<li>\n' +
+                '                        <a class="page-link" href="/showStudent?page=1&classId='+classId+'&belonging='+belonging+'" aria-label="Previous">\n' +
+                '                            <span aria-hidden="true">首页</span>\n' +
+                '                        </a>\n' +
+                '                    </li>';
+
+            li += '<li>\n' +
+                '                        <a class="page-link" href="/showStudent?page='+beforePage+'&classId='+classId+'&belonging='+belonging+'" aria-label="Previous">\n' +
+                '                            <span aria-hidden="true">上一页</span>\n' +
+                '                        </a>\n' +
+                '                    </li>';
+        }
+        else {
+            li += '<li class="page-link">\n' +
+                '      <span>\n' +
+                '        <span aria-hidden="true">首页</span>\n' +
+                '      </span>\n' +
+                '    </li>';
+
+            li += '<li class="page-link">\n' +
+                '      <span>\n' +
+                '        <span aria-hidden="true">上一页</span>\n' +
+                '      </span>\n' +
+                '    </li>';
+        }
+
+        var begin;
+        var end;
+
+        if (totalPages < 10){
+            begin = 1;
+            end = totalPages;
+        }
+        else {
+            begin = currentPage - 5;
+            end = currentPage + 4;
+            //如果前边不够5个，后边补齐10个
+            if(begin < 1){
+                begin = 1;
+                end = begin + 9;
+            }
+            //如果后边不足4个，前边补齐10个
+            if(end > totalPages){
+                end = totalPages;
+                begin = end - 9 ;
+            }
+        }
+        for (var i = begin; i <= end; i++) {
+            if (currentPage == i){
+                li += '<li style="background: #66fff3" class="page-link" aria-controls="sampleTable">\n' +
+                    '      <span>'+i+'</span>\n' +
+                    '    </li>';
+            }
+            else {
+                li += '<li><a class="page-link" href="/showStudent?page='+i+'&classId='+classId+'&belonging='+belonging+'">'+i+'</a></li>';
+            }
+
+        }
+        var nextPage = parseInt(currentPage) + 1;
+        if (nextPage > totalPages){
+            nextPage = nextPage - 1;
+        }
+        if (currentPage == totalPages){
+            li += '<li class="page-link">\n' +
+                '      <span>\n' +
+                '        <span aria-hidden="true">下一页</span>\n' +
+                '      </span>\n' +
+                '    </li>';
+
+            li += '<li class="page-link">\n' +
+                '      <span>\n' +
+                '        <span aria-hidden="true">尾页</span>\n' +
+                '      </span>\n' +
+                '    </li>';
+        }
+        else {
+            li += '<li>\n' +
+                '                        <a class="page-link" href="/showStudent?page='+nextPage+'&classId='+classId+'&belonging='+belonging+'" aria-label="Next">\n' +
+                '                            <span aria-hidden="true">下一页</span>\n' +
+                '                        </a>\n' +
+                '                    </li>';
+            li += '<li>\n' +
+                '                        <a class="page-link" href="/showStudent?page='+totalPages+'&classId='+classId+'&belonging='+belonging+'" aria-label="Next">\n' +
+                '                            <span aria-hidden="true">尾页</span>\n' +
+                '                        </a>\n' +
+                '                    </li>';
+        }
+        $(".pagination").html(li);
+    })
+</script>
+<script type="text/javascript" src="../static/js/updatePassword.js" th:src="@{js/updatePassword.js}"></script>
+</html>

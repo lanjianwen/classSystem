@@ -39,7 +39,7 @@ public class ClassController extends  BaseController {
         List<Student> students = studentService.findStudentType();
         model.addAttribute("students", students);
         model.addAttribute("belonging", belonging);
-        return "devideClass";
+        return belonging + "/devideClass";
     }
 
     @GetMapping("/showClass")
@@ -48,7 +48,7 @@ public class ClassController extends  BaseController {
         List<Class> classes = classService.findAll(belonging);
         model.addAttribute("classes", classes);
         model.addAttribute("belonging", belonging);
-        return "showClass";
+        return belonging + "/showClass";
     }
 
     @GetMapping("/findClassByClassType")
@@ -68,7 +68,7 @@ public class ClassController extends  BaseController {
     @GetMapping("/addClass")
     public String editClass(String belonging, Model model){
         model.addAttribute("belonging", belonging);
-        return "editClass";
+        return belonging + "/editClass";
     }
 
 }

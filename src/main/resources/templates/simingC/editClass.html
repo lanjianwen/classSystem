@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" th:href="@{bootstrap/css/bootstrap.css}">-->
+    <!--<link rel="stylesheet" href="../static/css/dashboard.css" th:href="@{css/dashboard.css}">-->
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{css/main.css}">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--<script src="../static/js/jquery-3.3.1.js" th:src="@{js/jquery-3.3.1.js}"></script>-->
+
+    <style>
+        body{
+            background-color: #d9edf7;
+        }
+        /*.main{*/
+            /*padding: 50px 100px;*/
+        /*}*/
+        /*button{*/
+            /*margin: 20px;*/
+            /*margin-left: 34%;*/
+        /*}*/
+        /*.add{*/
+            /*padding-left: 1px;*/
+        /*}*/
+    </style>
+
+</head>
+
+<body class="app sidebar-mini">
+<!-- Navbar-->
+<div th:replace="commons/header::header"></div>
+<!-- Sidebar menu-->
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+<div th:replace="commons/aside::aside(activeUri='editClass')"></div>
+<main class="app-content">
+    <div class="col-lg-12 col-lg-offset-2 main">
+        <div style="color: #2b669a" class="row">
+            <ul class="add">
+                <li>
+                    <h4><b>添加 &nbsp<select id="classType"><!-- class="form-control"-->
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    </select>&nbsp 类班级</b></h4>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <form th:action="@{/editClass}" method="post">
+                <input type="hidden" value="1" name="typeNum" id="typeNum">
+                <input hidden th:value="${belonging}" name="belonging" id="belonging">
+                <div id="classNum" style="color: #2b669a" class="row">
+                    <div class="col-md-3">
+                        <div class="tile" style="min-width: 240px">
+                            <div>第一类班级类型：<br><input type="text" name="className" style="min-width: 200px"></div>
+                            <div>第一类班级个数：<br><input type="number" name="num" style="min-width: 200px"></div>
+                            <div>每个班最大人数：<br><input type="number" name="maxNum" style="min-width: 200px"></div>
+                            <!--<div>优先级别：<br>-->
+                                <!--<select style="min-width: 200px">-->
+                                    <!--<option value="1">一级</option>-->
+                                    <!--<option value="2">二级</option>-->
+                                    <!--<option value="3">三级</option>-->
+                                    <!--<option value="4">四级</option>-->
+                                    <!--<option value="5">五级</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+                <!--input type="submit"-->
+                <button sec:authorize="hasAnyAuthority('addClass-simingC')" type="submit" name="button" class="btn btn-primary">提交</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Essential javascripts for application to work-->
+<script src="../static/js/jquery-3.3.1.min.js" th:src="@{js/jquery-3.3.1.min.js}"></script>
+<script src="../static/js/popper.min.js" th:src="@{js/popper.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<script src="../static/js/main.js" th:src="@{js/main.js}"></script>
+<!-- The javascript plugin to display page loading on top-->
+<script src="../static/js/plugins/pace.min.js" th:src="@{js/plugins/pace.min.js}"></script>
+<!-- Page specific javascripts-->
+<script type="text/javascript" src="../static/js/plugins/chart.js" th:src="@{js/plugins/chart.js}"></script>
+
+<script type="text/javascript">
+    var data = {
+        labels: ["January", "February", "March", "April", "May"],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 80, 81, 56]
+            },
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [28, 48, 40, 19, 86]
+            }
+        ]
+    };
+    var pdata = [
+        {
+            value: 300,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Complete"
+        },
+        {
+            value: 50,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: "In-Progress"
+        }
+    ]
+
+    var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+    var lineChart = new Chart(ctxl).Line(data);
+
+    var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+    var pieChart = new Chart(ctxp).Pie(pdata);
+</script>
+<!-- Google analytics script-->
+<script type="text/javascript">
+    if(document.location.hostname == 'pratikborsadiya.in') {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-72504830-1', 'auto');
+        ga('send', 'pageview');
+    }
+</script>
+
+
+<div th:replace="commons/aside::modal"></div>
+</body>
+
+<script>
+    $("#classType").change(function(){
+        var typeNum = $("#classType option:selected").val();
+        $("#typeNum").val(typeNum);
+        var code = '';
+        for (var i = 1; i <= typeNum; i++) {
+            code +='<div class="col-md-3">\n' +
+                '                        <div class="tile" style="min-width: 240px">\n' +
+                '                            <div>第'+i+'类班级类型：<br><input type="text" name="className" style="min-width: 200px"></div>\n' +
+                '                            <div>第'+i+'类班级个数：<br><input type="number" name="num" style="min-width: 200px"></div>\n' +
+                '                            <div>每个班最大人数：<br><input type="number" name="maxNum" style="min-width: 200px"></div>\n' +
+                // '                            <div>优先级别：<br>\n' +
+                // '                                <select style="min-width: 200px">\n' +
+                // '                                    <option value="1">一级</option>\n' +
+                // '                                    <option value="2">二级</option>\n' +
+                // '                                    <option value="3">三级</option>\n' +
+                // '                                    <option value="4">四级</option>\n' +
+                // '                                    <option value="5">五级</option>\n' +
+                // '                                </select>\n' +
+                // '                            </div>\n' +
+                '                        </div>\n' +
+                '                    </div>';
+
+
+            // code +='第'+i+'类班级类型： &nbsp<input type="text" name="className">\n' +
+            //     '                    &nbsp &nbsp第'+i+'类班级个数： &nbsp<input type="number" name="num">\n' +
+            //     '                    &nbsp &nbsp每个班最大人数： &nbsp<input type="number" name="maxNum">' +
+            //     '                    &nbsp &nbsp优先级别： &nbsp<select>\n' +
+            //     '                    <option value="1">一级</option>\n' +
+            //     '                    <option value="2">二级</option>\n' +
+            //     '                    <option value="3">三级</option>\n' +
+            //     '                    <option value="4">四级</option>\n' +
+            //     '                    <option value="5">五级</option>\n' +
+            //     '                </select><br><br>';
+        }
+        $("#classNum").html(code);
+    });
+</script>
+<script type="text/javascript" src="../static/js/updatePassword.js" th:src="@{js/updatePassword.js}"></script>
+</html>

@@ -61,6 +61,7 @@ public interface StudentRepository extends JpaRepository<Student,Integer>, JpaSp
 
     Page<Student> findByClassIdAndBelonging(Integer classId, String belonging, Pageable pageable);
 
+    @Transactional
     @Modifying
     @Query(value = "delete from student where belonging= :belonging",nativeQuery = true)
     void deleteAllByBelonging(String belonging);

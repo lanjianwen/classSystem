@@ -58,7 +58,7 @@ public class StudentController extends  BaseController {
         model.addAttribute("totalPages", students.getTotalPages());
         model.addAttribute("currentPage", students.getNumber()+1);
         model.addAttribute("belonging", belonging);
-        return "roster";
+        return belonging + "/roster";
     }
 
     @GetMapping("/showStudent")
@@ -75,7 +75,7 @@ public class StudentController extends  BaseController {
         model.addAttribute("classes", classes);
         model.addAttribute("c", c);
         model.addAttribute("belonging", belonging);
-        return "showStudent";
+        return belonging + "/showStudent";
     }
 
     @GetMapping("/deleteAll")
@@ -100,7 +100,7 @@ public class StudentController extends  BaseController {
         model.addAttribute("totalPages", students.getTotalPages());
         model.addAttribute("currentPage", students.getNumber()+1);
         model.addAttribute("belonging", belonging);
-        return "qualityStudents";
+        return belonging + "/qualityStudents";
     }
 
     @PostMapping("/addQualityStudent")

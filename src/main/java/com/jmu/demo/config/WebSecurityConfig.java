@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.util.List;
+import java.util.*;
 
 
 @Configuration
@@ -68,8 +68,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests();
 
         List<Permission> permissions = permissionRepository.findAll();
+        Map<String,Set<String>> map = new HashMap<>();
+        Set<String> setUrl = new HashSet<>();
+
         for (Permission permission : permissions){
-            authorizeRequests.antMatchers(permission.getUrl()).hasAnyAuthority(permission.getName());
+            setUrl.add(permission.getUrl());
+//            map.put(permission.getName(),setName);
+//            authorizeRequests.antMatchers(permission.getUrl()).hasAnyAuthority(permission.getName());
+        }
+        for (String s : setUrl){
+            List<String> list = permissionRepository.findByUrl(s);
+            String[] str = new String[list.size()];
+
+            authorizeRequests.antMatchers(s).hasAnyAuthority(list.toArray(str));
         }
 
         authorizeRequests.antMatchers("/login","/css/**","/js/**","/img/**","/bootstrap/**","/main").permitAll()
