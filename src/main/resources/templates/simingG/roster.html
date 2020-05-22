@@ -41,9 +41,9 @@
                         <input hidden id="belonging" name="belonging" th:value="${belonging}">
                         <input type="hidden" name="isQualityStudents" value="0">
                     </form>
-                     <button sec:authorize="hasAnyAuthority('importFile-simingG')" type="button" class="btn btn-info" onclick="importFile()">导入</button>
+                     <button sec:authorize="hasAnyAuthority('importFile-simingG')" type="button" class="simingG-isLock btn btn-info" onclick="importFile()">导入</button>
                     <!--<button type="button" class="btn btn-info" onclick="downloadExcel()">导出</button>-->
-                     <a sec:authorize="hasAnyAuthority('deleteAll-simingG')" type="button" class="btn btn-info" th:href="'/deleteAll?belonging='+${belonging}">清空</a>
+                     <a sec:authorize="hasAnyAuthority('deleteAll-simingG')" type="button" class="simingG-isLock btn btn-info" th:href="'/deleteAll?belonging='+${belonging}">清空</a>
                 </div>
             </div>
 

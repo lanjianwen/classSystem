@@ -19,3 +19,14 @@ function subData() {
         location.reload()
     })
 }
+
+$(function () {
+   $.get("/getLockTable",function (data) {
+       for (var i = 0; i < data.length; i++) {
+           if (data[i].isLock == 1){
+               // '.' + data[i].dsc + 'isLock'
+               $('.' + data[i].dsc + '-isLock').attr("disabled",true).removeAttr('href');
+           }
+       }
+   }) 
+});

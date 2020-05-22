@@ -45,7 +45,8 @@
                     <tr th:each="role:${roles}">
                         <td th:text="${role.id}">2</td>
                         <td th:text="${role.name}">2</td>
-                        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#updateRole" th:onclick="setValue([[${role}]])">修改</button> <button type="button" class="btn btn-info" onclick="">删除</button></td>
+                        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#updateRole" th:onclick="setValue([[${role}]])">修改</button>
+                            <button type="button" class="btn btn-info" th:onclick="deleteRole([[${role.id}]])">删除</button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -217,20 +218,23 @@
     function addRole() {
         var data = $(".combtree").data();
         var name = $("#name").val();
-        var permissionId = data.val;
+        if (data.val != undefined){
+            var permissionId = data.val;
+        }
+        else {
+            var permissionId = "";
+        }
 
         $.post("/addRole",{"name": name, "permission": ""+permissionId},function (data) {
             location.href="/findAllRoles";
         })
     }
 
-    // var time = 1;
     function setValue(role) {
         $("#updateName").val(role.name);
         $("#roleId").val(role.id);
         $.get("/findRoleById",{"id": role.id}, function (r) {
 
-            // if (time == 1){
                 var zNodes = [];
                 $.get("/findAllPermissions",function (data) {
 
@@ -255,18 +259,22 @@
                     $("#select").click(function(){
                         console.log(tree.value());
                     });
-                    time = time + 1;
                 });
-            // }
         });
     }
     
     function updateRole() {
+        console.log($("#update_combtree").data());
         var data = $("#update_combtree").data();
         var name = $("#updateName").val();
         var id = $("#roleId").val();
-        var permissionId = data.val;
-        alert(permissionId);
+        if (data.val != undefined){
+            var permissionId = data.val;
+        }
+        else {
+            var permissionId = "";
+        }
+        // alert(permissionId);
         $.post("/updateRole",{"id": id, "name": name, "permission": ""+permissionId},function (data) {
             location.href="/findAllRoles";
         })
@@ -276,4 +284,12 @@
 <div th:replace="commons/aside::modal"></div>
 
 </body>
+<script>
+    function deleteRole(id) {
+        $.post("/deleteRole/"+id+"",function (msg) {
+            alert(msg);
+            location.href="findAllRoles";
+        })
+    }
+</script>
 </html>

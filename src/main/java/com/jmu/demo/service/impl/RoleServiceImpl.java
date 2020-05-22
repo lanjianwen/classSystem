@@ -55,15 +55,21 @@ public class RoleServiceImpl implements RoleService {
         Role r = roleRepository.findById(role.getId()).get();
         r.setName(role.getName());
         r.getPermissions().clear();
+
         for (int i = 0; i < permissionId.size() ; i++) {
             Permission permission = permissionRepository.findById(Integer.parseInt(permissionId.get(i))).get();
             r.getPermissions().add(permission);
             if (permission.getPId() != 0) {
                 Permission p = permissionRepository.findById(permission.getPId()).get();
                 r.getPermissions().add(p);
+
             }
         }
-
         roleRepository.save(r);
+    }
+
+    @Override
+    public void deleteRole (Integer id){
+        roleRepository.deleteById(id);
     }
 }

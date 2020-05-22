@@ -15320,7 +15320,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .treeview-item.active, .treeview-item:hover, .treeview-item:focus {
-  background: #0d1214;
+  background: #007d71;
   text-decoration: none;
   color: #fff;
 }

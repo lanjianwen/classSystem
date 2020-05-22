@@ -28,7 +28,7 @@
     <div th:replace="commons/header::header"></div>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-    <div th:replace="commons/aside::aside(activeUri='roster')"></div>
+    <div th:replace="commons/aside::aside(activeUri='simingC')"></div>
     <main class="app-content">
         <form th:action="@{/distribute}" method="post" th:unless="${classes.size() == 0}">
             <input hidden id="belonging" name="belonging" th:value="${belonging}">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <br><button sec:authorize="hasAnyAuthority('devideClass-simingC')" type="submit" name="button" class="btn btn-primary">提交</button>
+            <br><button sec:authorize="hasAnyAuthority('devideClass-simingC')" type="submit" name="button" class="simingC-isLock btn btn-primary">提交</button>
         </form>
     </main>
 

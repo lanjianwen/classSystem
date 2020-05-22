@@ -23,12 +23,12 @@
     <div th:replace="commons/header::header"></div>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-    <div th:replace="commons/aside::aside(activeUri='showClass')"></div>
+    <div th:replace="commons/aside::aside(activeUri='simingC')"></div>
     <main class="app-content">
         <input hidden th:value="${belonging}" name="belonging" id="belonging">
         <div class="row">
             <div class="col-md-12 tile">
-                <button sec:authorize="hasAnyAuthority('deleteClass-simingC')" type="button" class="btn btn-info" onclick="deleteAll()">清空班级列表</button>
+                <button sec:authorize="hasAnyAuthority('deleteClass-simingC')" type="button" class="simingC-isLock btn btn-info" onclick="deleteAll()">清空班级列表</button>
             </div>
         </div>
         <div class="row">

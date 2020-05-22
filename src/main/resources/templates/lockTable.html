@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{css/main.css}">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-switch.min.css" th:href="@{bootstrap/css/bootstrap-switch.min.css}">
+
+
+
+    <style>
+        body{
+            background-color: #d9edf7;
+        }
+    </style>
+
+
+</head>
+
+
+<body class="app sidebar-mini">
+<!-- Navbar-->
+<div th:replace="commons/header::header"></div>
+<!-- Sidebar menu-->
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+<div th:replace="commons/aside::aside(activeUri='roster')"></div>
+<main class="app-content">
+    <div class="tile">
+
+        <input hidden id="belonging" name="belonging" th:value="${belonging}">
+
+
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover">
+                <thead style="background-color: skyblue">
+                <tr style="color: #2b669a">
+                    <th>序号</th>
+                    <th>类别</th>
+                    <th>是否锁定</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="lockTable:${lockTables}">
+                    <!--<td th:text="${operaRecords.indexOf(operaRecord)+1}"></td>-->
+                    <td th:text="${lockTable.id}"></td>
+                    <td th:text="${lockTable.type}"> </td>
+                    <td ><input class="lock" th:value="${lockTable.id}" th:id="'lock'+${lockTable.id}" type="checkbox" data-size="small"></td>
+                </tr>
+                
+                </tbody>
+            </table>
+        </div>
+
+
+        <!--Model-->
+      
+    </div>
+</main>
+
+<!-- Essential javascripts for application to work-->
+<script src="../static/js/jquery-3.3.1.min.js" th:src="@{js/jquery-3.3.1.min.js}"></script>
+<script src="../static/js/popper.min.js" th:src="@{js/popper.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<script src="../static/js/main.js" th:src="@{js/main.js}"></script>
+<!-- The javascript plugin to display page loading on top-->
+<script src="../static/js/plugins/pace.min.js" th:src="@{js/plugins/pace.min.js}"></script>
+<!-- Page specific javascripts-->
+<script type="text/javascript" src="../static/js/plugins/chart.js" th:src="@{js/plugins/chart.js}"></script>
+
+<script type="text/javascript" src="../static/js/plugins/jquery.dataTables.min.js" th:src="@{js/plugins/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" src="../static/js/plugins/dataTables.bootstrap.min.js" th:src="@{js/plugins/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript">$('#sampleTable').DataTable();</script>
+<script type="text/javascript" src="../static/js/updatePassword.js" th:src="@{js/updatePassword.js}"></script>
+
+<script src="../static/bootstrap/js/bootstrap-switch.min.js" th:src="@{bootstrap/js/bootstrap-switch.min.js}"></script>
+<script type="text/javascript">
+    var data = {
+        labels: ["January", "February", "March", "April", "May"],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 80, 81, 56]
+            },
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [28, 48, 40, 19, 86]
+            }
+        ]
+    };
+    var pdata = [
+        {
+            value: 300,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Complete"
+        },
+        {
+            value: 50,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: "In-Progress"
+        }
+    ]
+
+    var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+    var lineChart = new Chart(ctxl).Line(data);
+
+    var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+    var pieChart = new Chart(ctxp).Pie(pdata);
+</script>
+<!-- Google analytics script-->
+<script type="text/javascript">
+    if(document.location.hostname == 'pratikborsadiya.in') {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-72504830-1', 'auto');
+        ga('send', 'pageview');
+    }
+</script>
+
+<div th:replace="commons/aside::modal"></div>
+</body>
+
+<script th:inline="javascript">
+</script>
+
+<script th:inline="javascript">
+    var lockTables = /*[[${lockTables}]]*/ '';
+
+    for (var i = 0; i < lockTables.length; i++) {
+        $('#lock'+lockTables[i].id).bootstrapSwitch({
+            onText: "开启",
+            offText: "锁定",
+            onColor: "success",
+            offColor: "danger",
+            size: "small",
+            onSwitchChange: function (event, state) {
+                var isLock = 0;
+                if (state == true){
+                    isLock = 0;
+                }
+                else {
+                    isLock = 1;
+                }
+                $.post("/updateLockState",{"id":event.currentTarget.value, "isLock": isLock},function (data) {
+                    location.reload()
+                });
+                console.log(event.currentTarget.value);
+                if (state == true) {
+                    console.log('已打开');
+                } else {
+                    console.log('已关闭');
+                }
+            }
+        });
+    }
+
+    for (var i = 0; i < lockTables.length; i++) {
+        if (lockTables[i].isLock == 0){
+            $('#lock'+lockTables[i].id).bootstrapSwitch('state',true,true);
+        }
+        else {
+            $('#lock'+lockTables[i].id).bootstrapSwitch('state',false,true);
+        }
+    }
+
+    // $('#lock3').bootstrapSwitch('state',true,true);
+</script>
+
+</html>

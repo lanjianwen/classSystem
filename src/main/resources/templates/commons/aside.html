@@ -29,6 +29,11 @@
                 <li sec:authorize="hasAnyAuthority('findAllRoles')"><a class="treeview-item" href="/findAllRoles"><i class="icon fa fa-circle-o"></i> 角色管理</a></li>
             </ul>
         </li>
+        <li sec:authorize="hasAnyAuthority('toLockTable')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">锁定管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a class="treeview-item" href="/toLockTable?belonging=simingG"><i class="icon fa fa-circle-o"></i> 锁定表格</a></li>
+            </ul>
+        </li>
         <li sec:authorize="hasAnyAuthority('log')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">日志管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item" href="/operaRecords?belonging=simingG"><i class="icon fa fa-circle-o"></i> 日志（思明高中）</a></li>
@@ -38,7 +43,7 @@
             </ul>
         </li>
         <!--<li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>-->
-        <li sec:authorize="hasAnyAuthority('simingG')" class="treeview is-expanded" ><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">思明校区高中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('simingG')" class="treeview is-expanded" th:class="${activeUri=='simingG'?'treeview is-expanded':'treeview'}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">思明校区高中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li sec:authorize="hasAnyAuthority('showStudents-simingG')"><a class="treeview-item" href="/showStudents?belonging=simingG" onclick="say('simingG')"><i class="icon fa fa-circle-o"></i>花名册</a></li>
                 <li sec:authorize="hasAnyAuthority('addClass-simingG')" class="" th:class="${activeUri=='simingG'?'active':''}"><a class="treeview-item" href="/addClass?belonging=simingG"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
@@ -47,7 +52,7 @@
                 <li sec:authorize="hasAnyAuthority('showQualityStudents-simingG')"><a class="treeview-item" href="/showQualityStudents?belonging=simingG"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
             </ul>
         </li>
-        <li sec:authorize="hasAnyAuthority('simingC')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">思明校区初中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('simingC')" class="treeview is-expanded" th:class="${activeUri=='simingC'?'treeview is-expanded':'treeview'}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">思明校区初中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li sec:authorize="hasAnyAuthority('showStudents-simingC')" th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=simingC"><i class="icon fa fa-circle-o"></i>花名册</a></li>
                 <li sec:authorize="hasAnyAuthority('addClass-simingC')" th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass?belonging=simingC"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
@@ -56,7 +61,7 @@
                 <li sec:authorize="hasAnyAuthority('showQualityStudents-simingC')" ><a class="treeview-item" href="/showQualityStudents?belonging=simingC"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
             </ul>
         </li>
-        <li sec:authorize="hasAnyAuthority('xianganG')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">翔安校区高中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('xianganG')" class="treeview is-expanded" th:class="${activeUri=='xianganG'?'treeview is-expanded':'treeview'}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">翔安校区高中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li sec:authorize="hasAnyAuthority('showStudents-xianganG')" th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=xianganG"><i class="icon fa fa-circle-o"></i>花名册</a></li>
                 <li sec:authorize="hasAnyAuthority('addClass-xianganG')" th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass?belonging=xianganG"><i class="icon fa fa-circle-o"></i>创建班级</a></li>
@@ -65,7 +70,7 @@
                 <li sec:authorize="hasAnyAuthority('showQualityStudents-xianganG')"><a class="treeview-item" href="/showQualityStudents?belonging=xianganG"><i class="icon fa fa-circle-o"></i>优质生源</a></li>
             </ul>
         </li>
-        <li sec:authorize="hasAnyAuthority('xianganC')" class="treeview is-expanded"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">翔安校区初中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li sec:authorize="hasAnyAuthority('xianganC')" class="treeview is-expanded" th:class="${activeUri=='xianganC'?'treeview is-expanded':'treeview'}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">翔安校区初中</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li sec:authorize="hasAnyAuthority('showStudents-xianganC')" th:class="${activeUri=='roster'?'active':''}"><a class="treeview-item" href="/showStudents?belonging=xianganC"><i class="icon fa fa-circle-o"></i>花名册</a></li>
                 <li sec:authorize="hasAnyAuthority('addClass-xianganC')" th:class="${activeUri=='editClass'?'active':''}"><a class="treeview-item" href="/addClass?belonging=xianganC"><i class="icon fa fa-circle-o"></i>创建班级</a></li>

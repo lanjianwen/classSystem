@@ -20,7 +20,7 @@
     <div th:replace="commons/header::header"></div>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-    <div th:replace="commons/aside::aside(activeUri='roster')"></div>
+    <div th:replace="commons/aside::aside(activeUri='xianganG')"></div>
     <main class="app-content">
        <div class="tile">
            <div class="row">
@@ -80,7 +80,7 @@
                        <td th:text="${student.phone}"> </td>
                        <td th:text="${student.totalGrade}"></td>
                        <input type="hidden" id="studentID" th:value="${student.id}">
-                       <td sec:authorize="hasAnyAuthority('updateStudent-xianganG')" ><button type="button"  class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" th:onclick="'test('+${student.id}+')'">调整班级</button></td>
+                       <td sec:authorize="hasAnyAuthority('updateStudent-xianganG')" ><button type="button"  class="xianganG-isLock btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" th:onclick="'test('+${student.id}+')'">调整班级</button></td>
                    </tr>
                    </tbody>
                </table>

@@ -5,11 +5,7 @@ import com.jmu.demo.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,5 +44,16 @@ public class RoleController extends  BaseController {
     public @ResponseBody String updateRole(Role role, @RequestParam("permission") List<String> permission){
         roleService.updateRole(role,permission);
         return "";
+    }
+
+    @PostMapping("/deleteRole/{id}")
+    @ResponseBody
+    public String deleteRole(@PathVariable("id") Integer id){
+        try {
+            roleService.deleteRole(id);
+        } catch (Exception e) {
+            return "删除失败，请先删除相关的用户";
+        }
+        return "删除成功";
     }
 }

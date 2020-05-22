@@ -34,7 +34,7 @@
     <div th:replace="commons/header::header"></div>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-    <div th:replace="commons/aside::aside(activeUri='roster')"></div>
+    <div th:replace="commons/aside::aside(activeUri='xianganG')"></div>
     <main class="app-content">
         <div class="row">
             <div>
@@ -43,8 +43,8 @@
                     <input type="hidden" name="isQualityStudents" value="1">
                     <input hidden name="belonging" id="belonging" th:value="${belonging}">
                 </form>
-                <button type="button" class="btn btn-info" onclick="importFile()">批量导入</button>
-                <button type="button" class="btn btn-info" onclick="" data-toggle="modal" data-target="#myModal">手动添加</button>
+                <button type="button" class="xianganG-isLock btn btn-info" onclick="importFile()">批量导入</button>
+                <button type="button" class="xianganG-isLock btn btn-info" onclick="" data-toggle="modal" data-target="#myModal">手动添加</button>
                 <!--<a type="button" class="btn btn-info" href="#">清空</a>-->
             </div>
         </div>

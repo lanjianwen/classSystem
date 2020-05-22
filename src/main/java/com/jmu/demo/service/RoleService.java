@@ -14,4 +14,6 @@ public interface RoleService {
     void addRole(Role role, List<String> permissionId);
 
     void updateRole(Role role, List<String> permission);
+
+    void deleteRole(Integer id);
 }
