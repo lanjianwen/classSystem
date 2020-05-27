@@ -74,7 +74,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="student:${students}" th:class="${student.priority==1?'danger':'success'}">
-                        <td th:text="${students.indexOf(student)+1}"></td>
+                        <td th:text="${students.indexOf(student)+1+studentIndex}"></td>
                         <td th:text="${student.name}"> </td>
                         <td th:text="${student.sex}"> </td>
                         <td th:text="${student.nation}"> </td>

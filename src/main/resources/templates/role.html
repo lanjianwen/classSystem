@@ -90,7 +90,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" >
-                    <h5 class="modal-title" id="updateRoleLabel" >添加角色</h5>
+                    <h5 class="modal-title" id="updateRoleLabel" >修改角色</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -226,7 +226,13 @@
         }
 
         $.post("/addRole",{"name": name, "permission": ""+permissionId},function (data) {
-            location.href="/findAllRoles";
+            if (data == "添加成功"){
+                alert(data);
+                location.href="/findAllRoles";
+            }
+            else {
+                alert(data);
+            }
         })
     }
 
@@ -286,10 +292,12 @@
 </body>
 <script>
     function deleteRole(id) {
-        $.post("/deleteRole/"+id+"",function (msg) {
-            alert(msg);
-            location.href="findAllRoles";
-        })
+        if (confirm("确认删除？")){
+            $.post("/deleteRole/"+id+"",function (msg) {
+                alert(msg);
+                location.href="findAllRoles";
+            })
+        }
     }
 </script>
 </html>

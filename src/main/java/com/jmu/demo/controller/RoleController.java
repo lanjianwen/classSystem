@@ -5,8 +5,11 @@ import com.jmu.demo.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -35,9 +38,14 @@ public class RoleController extends  BaseController {
     }
 
     @PostMapping("/addRole")
-    public @ResponseBody String addRole(Role role, @RequestParam("permission") List<String> permission){
-        roleService.addRole(role, permission);
-        return "添加成功";
+    public @ResponseBody String addRole(@Valid Role role, BindingResult bindingResult, @RequestParam("permission") List<String> permission){
+        if (bindingResult.hasErrors()){
+            return bindingResult.getFieldError().getDefaultMessage();
+        }
+        else {
+            roleService.addRole(role, permission);
+            return "添加成功";
+        }
     }
 
     @PostMapping("/updateRole")

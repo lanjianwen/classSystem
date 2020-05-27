@@ -1,7 +1,7 @@
 function updatePassword(user) {
 
     $("#ud_username").val(user.username)
-    $("#ud_rolename").val(user.roles.name)
+    $("#ud_rolename").val(user.roles[0].name)
     $("#ud_id").val(user.id)
 
 }

@@ -5,8 +5,10 @@ import com.jmu.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -35,10 +37,12 @@ public class UserController extends  BaseController {
 //    }
 
     @PostMapping("/addUser")
-    public String addUser(User user, String roleName, Model model){
+    public @ResponseBody String addUser(@Valid User user, BindingResult bindingResult, String roleName, Model model){
+        if (bindingResult.hasErrors()){
+            return bindingResult.getFieldError().getDefaultMessage();
+        }
         String msg = userService.addUser(user, roleName);
-        model.addAttribute("msg", msg);
-        return "redirect:/findAllUsers";
+        return "添加成功";
     }
 
     @GetMapping("/findAllUsers")

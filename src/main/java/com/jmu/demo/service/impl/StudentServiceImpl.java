@@ -327,7 +327,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Page<Student> findAllQualityStudents(String belonging, Integer begin) {
-        Pageable pageable = PageRequest.of(begin,10);
+        Pageable pageable = PageRequest.of(begin,12);
         Page<Student> page = studentRepository.findAllQualityStudentsByBelonging(belonging, pageable);
         return page;
     }

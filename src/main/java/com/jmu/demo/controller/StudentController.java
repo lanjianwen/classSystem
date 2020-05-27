@@ -57,6 +57,7 @@ public class StudentController extends  BaseController {
         model.addAttribute("total", students.getTotalElements());
         model.addAttribute("totalPages", students.getTotalPages());
         model.addAttribute("currentPage", students.getNumber()+1);
+        model.addAttribute("studentIndex",students.getNumber()*12);
         model.addAttribute("belonging", belonging);
         return belonging + "/roster";
     }
@@ -99,6 +100,7 @@ public class StudentController extends  BaseController {
         model.addAttribute("students", students.getContent());
         model.addAttribute("totalPages", students.getTotalPages());
         model.addAttribute("currentPage", students.getNumber()+1);
+        model.addAttribute("studentIndex",students.getNumber()*12);
         model.addAttribute("belonging", belonging);
         return belonging + "/qualityStudents";
     }
