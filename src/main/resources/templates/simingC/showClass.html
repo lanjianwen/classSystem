@@ -29,6 +29,7 @@
         <div class="row">
             <div class="col-md-12 tile">
                 <button sec:authorize="hasAnyAuthority('deleteClass-simingC')" type="button" class="simingC-isLock btn btn-info" onclick="deleteAll()">清空班级列表</button>
+                <a type="button" class="btn btn-info" th:href="@{'/downloadExcel?belonging='+${belonging}}">导出所有学生</a>
             </div>
         </div>
         <div class="row">
@@ -123,11 +124,13 @@
 <script>
     function deleteAll() {
         var belonging = $("#belonging").val();
-        $.get("/deleteClass?belonging="+belonging,function (data) {
-            if (data == 1){
-                location.href="showClass?belonging="+belonging
-            }
-        })
+        if (confirm("确认清空所有班级?")) {
+            $.get("/deleteClass?belonging="+belonging,function (data) {
+                if (data == 1){
+                    location.href="showClass?belonging="+belonging
+                }
+            })
+        }
     }
 </script>
 </html>

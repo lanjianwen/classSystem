@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Id;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -180,20 +181,22 @@ public class ExcelUtil {
         }
 
         //在表中存放查询到的数据放入对应的列
-        for (Student student : studentList) {
-            HSSFRow row1 = sheet.createRow(rowNum);
-            row1.createCell(0).setCellValue(student.getName());
-            row1.createCell(1).setCellValue(student.getIdCard());
-            row1.createCell(2).setCellValue(student.getSex());
-            row1.createCell(3).setCellValue(student.getTotalGrade());
-            row1.createCell(4).setCellValue(student.getType());
-            row1.createCell(5).setCellValue(student.getNation());
-            row1.createCell(6).setCellValue(student.getNativePlace());
-            row1.createCell(7).setCellValue(student.getPatriarch());
-            row1.createCell(8).setCellValue(student.getPhone());
-            row1.createCell(9).setCellValue(student.getAddress());
-            row1.createCell(10).setCellValue(student.getClassId());
-            rowNum++;
+        if (studentList != null){
+            for (Student student : studentList) {
+                HSSFRow row1 = sheet.createRow(rowNum);
+                row1.createCell(0).setCellValue(student.getName());
+                row1.createCell(1).setCellValue(student.getIdCard());
+                row1.createCell(2).setCellValue(student.getSex());
+                row1.createCell(3).setCellValue(student.getTotalGrade());
+                row1.createCell(4).setCellValue(student.getType());
+                row1.createCell(5).setCellValue(student.getNation());
+                row1.createCell(6).setCellValue(student.getNativePlace());
+                row1.createCell(7).setCellValue(student.getPatriarch());
+                row1.createCell(8).setCellValue(student.getPhone());
+                row1.createCell(9).setCellValue(student.getAddress());
+                row1.createCell(10).setCellValue(student.getClazz().getName());
+                rowNum++;
+            }
         }
 
         workbook.setSheetName(0,"学生名单");
@@ -211,5 +214,41 @@ public class ExcelUtil {
 //        response.setHeader("Content-disposition", "attachment;filename=" + fileName);
 //        response.flushBuffer();
 //        workbook.write(response.getOutputStream());
+    }
+
+    public void downloadBlankExcel(OutputStream out){
+        //创建工作簿
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        //创建Excel工作簿对象
+        HSSFSheet sheet = workbook.createSheet("学生名单");
+
+
+        String fileName = "userinf"  + ".xls";//设置要导出的文件的名字
+        //新增数据行，并且设置单元格数据
+
+        int rowNum = 1;
+
+        String[] headers = { "姓名", "身份证号码", "性别", "总分", "编班类型", "民族", "籍贯",
+                "监护人姓名", "联系电话", "家庭住址", "优先级(越小优先级越高，优质生源为1，其它从2开始)"};
+        //headers表示excel表中第一行的表头
+
+        HSSFRow row = sheet.createRow(0);
+        //在excel表中添加表头
+
+        for(int i=0;i<headers.length;i++){
+            HSSFCell cell = row.createCell(i);
+            HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+            cell.setCellValue(text);
+        }
+
+        try
+        {
+            // 8.将Excel写入到输出流里面
+            workbook.write(out);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

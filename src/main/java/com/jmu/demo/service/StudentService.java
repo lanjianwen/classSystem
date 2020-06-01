@@ -1,9 +1,11 @@
 package com.jmu.demo.service;
 
+import com.jmu.demo.dto.StudentDTO;
 import com.jmu.demo.entity.Student;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudentService {
     List<Student> findAll(String belonging);
@@ -31,4 +33,8 @@ public interface StudentService {
     void distribute(String classType, List<String> studentType, String belonging, String type);
 
     void distributeAtRand(String classType, List<String> studentType, String belonging);
+
+    List<Map<String,Integer>> getUnfinishStudents(String belonging);
+
+    List<Map<String,Integer>> getFinishedStudents(String belonging);
 }

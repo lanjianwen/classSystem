@@ -1,5 +1,6 @@
 package com.jmu.demo.service.impl;
 
+import com.jmu.demo.dto.StudentDTO;
 import com.jmu.demo.entity.Class;
 import com.jmu.demo.entity.Student;
 import com.jmu.demo.repository.ClassRepository;
@@ -12,10 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -280,6 +278,16 @@ public class StudentServiceImpl implements StudentService {
         classRepository.saveAll(classes);
         boys.addAll(girls);
         updateClassId(boys);
+    }
+
+    @Override
+    public List<Map<String,Integer>> getUnfinishStudents(String belonging) {
+        return studentRepository.getUnfinishStudents(belonging);
+    }
+
+    @Override
+    public List<Map<String,Integer>> getFinishedStudents(String belonging){
+        return studentRepository.getFinishedStudents(belonging);
     }
 
     //调整

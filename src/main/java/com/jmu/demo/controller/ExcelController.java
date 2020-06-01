@@ -41,7 +41,13 @@ public class ExcelController extends  BaseController {
      */
     @GetMapping("/downloadExcel")
     public void downloadExcel(Integer id, String belonging, HttpServletResponse response){
-        String fileName = classService.findClass(id).getName();
+        String fileName = "";
+        if (id != null){
+            fileName = classService.findClass(id).getName();
+        }
+        else {
+            fileName = "学生名单(已分班)";
+        }
         try {
             this.saveOperaRecord("花名册","下载excel",belonging);
             response.setHeader("Content-type","application/vnd.ms-excel");
@@ -50,6 +56,38 @@ public class ExcelController extends  BaseController {
             response.setHeader("Content-Disposition","attachment;filename="+new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+".xls");
             // 模板导出Excel
             excelService.downloadExcel(response.getOutputStream(), id, belonging);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping("/downloadBlankExcel")
+    public void downloadBlankExcel(String belonging, HttpServletResponse response){
+        String area = "";
+        switch (belonging){
+            case "simingG":
+                area = "思明高中";
+                break;
+            case "simingC":
+                area = "思明初中";
+                break;
+            case "xianganG":
+                area = "翔安高中";
+                break;
+            case "xianganC":
+                area = "翔安初中";
+                break;
+             default:
+                 break;
+        }
+        try {
+            String fileName = area+"学生名单模板(空表)";
+            response.setHeader("Content-type","application/vnd.ms-excel");
+            // 解决导出文件名中文乱码
+            response.setCharacterEncoding("UTF-8");
+            response.setHeader("Content-Disposition","attachment;filename="+new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+".xls");
+            // 模板导出Excel
+            excelService.downloadBlankExcel(response.getOutputStream(), belonging);
         } catch (IOException e) {
             e.printStackTrace();
         }

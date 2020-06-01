@@ -49,6 +49,10 @@
                         </select><br></h4>
                 </div>
 
+                <div>
+                    <button sec:authorize="hasAnyAuthority('devideClass-simingC')" type="submit" name="button" class="simingC-isLock btn btn-primary">提交</button>
+                </div>
+
             </div>
             <div class="row tile">
                 <div class="row">
@@ -60,7 +64,20 @@
                     </div>
                 </div>
             </div>
-            <br><button sec:authorize="hasAnyAuthority('devideClass-simingC')" type="submit" name="button" class="simingC-isLock btn btn-primary">提交</button>
+
+            <div class="row tile">
+                <div class="offset-2 col-md-3">
+                    <table class="table" id="unfinishStudents">
+
+                    </table>
+                </div>
+                <div class="offset-2 col-md-3">
+                    <table class="table" id="finishStudents">
+
+                    </table>
+                </div>
+            </div>
+
         </form>
     </main>
 
@@ -147,4 +164,5 @@
         $("#classType").val(classType);
     });
 </script>
+<script src="../../static/js/suspend.js" th:src="@{js/suspend.js}"></script>
 </html>

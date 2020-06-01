@@ -56,13 +56,19 @@ public class ExcelServiceImpl implements ExcelService {
     public void downloadExcel(ServletOutputStream outputStream, Integer id, String belonging) {
         List<Student> students = new ArrayList<Student>();
         if (id == null || id == 0){
-            students = studentRepository.findByBelonging(belonging);
+            students = studentRepository.findByBelongingAndFinished(belonging);
         }
         else {
             students = studentRepository.findByClassIdAndBelonging(id, belonging);
         }
         ExcelUtil excel = new ExcelUtil();
         excel.downloadExcel(outputStream, students);
+    }
+
+    @Override
+    public void downloadBlankExcel(ServletOutputStream outputStream, String belonging) {
+        ExcelUtil excel = new ExcelUtil();
+        excel.downloadBlankExcel(outputStream);
     }
 
 

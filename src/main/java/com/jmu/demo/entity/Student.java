@@ -1,12 +1,19 @@
 package com.jmu.demo.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.sql.Update;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "student")
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Student {
     @Id
     @Column(name = "id")
@@ -38,4 +45,8 @@ public class Student {
     private Integer priority;
     @Column(name = "belonging")
     private String belonging;
+
+    @OneToOne()
+    @JoinColumn(name = "class_id", referencedColumnName = "id",insertable = false, updatable = false)
+    private Class clazz;
 }

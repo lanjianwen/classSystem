@@ -1,5 +1,6 @@
 package com.jmu.demo.controller;
 
+import com.jmu.demo.dto.StudentDTO;
 import com.jmu.demo.entity.Class;
 import com.jmu.demo.entity.Student;
 import com.jmu.demo.service.ClassService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class StudentController extends  BaseController {
@@ -120,5 +122,17 @@ public class StudentController extends  BaseController {
     @GetMapping("/main")
     public String toMain(){
         return "main";
+    }
+
+    @GetMapping("/getUnfinishStudents")
+    public @ResponseBody List<Map<String,Integer>> getUnfinishStudents(String belonging){
+        List<Map<String,Integer>>  list = studentService.getUnfinishStudents(belonging);
+        return list;
+    }
+
+    @GetMapping("/getFinishedStudents")
+    public @ResponseBody List<Map<String,Integer>> getFinishedStudents(String belonging){
+        List<Map<String,Integer>> list = studentService.getFinishedStudents(belonging);
+        return list;
     }
 }

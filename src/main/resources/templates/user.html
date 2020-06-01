@@ -263,7 +263,7 @@
 
     function resetPassword(id) {
         var id = id;
-        if (confirm("确定重置密码？")){
+        if (confirm("确定重置密码？\n初始密码为:123456")){
             $.post("/updatePassword",{"id": id,
                 "password": "123456",
                 "lastPassword": "123456"},function (data) {

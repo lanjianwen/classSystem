@@ -1,0 +1,36 @@
+body{
+  position: relative;
+}
+#inform{
+    /*position: absolute;*/
+    /*top: 20px;*/
+    /*width: 350px;*/
+    /*max-height: 250px;           !* 设置最大高度，当高度达到此值时出现滚动条 *!*/
+    /*z-index: 10;*/
+    /*background-color: #E0E5E5;*/
+    overflow: auto;              /* 自动添加滚动条 */
+    /*box-shadow:0px 0px 10px #000;   !* 外阴影 *!*/
+    display: none;   /* 默认隐藏 */
+}
+#informTable{
+    table-layout:fixed;         /* 用于实现表格td自动换行的部分代码*/
+    /*width: 325px;*/
+}
+
+#informTable tr td{
+    /*width: 325px;*/
+    /*height:30px;*/
+    /*font-size: 16px;*/
+    /*font-family: Georgia;*/
+    /*color: #555555;*/
+    word-wrap:break-word;   /*自动换行*/
+    /*padding: 0 0 0 0;*/
+}
+#informTable tr td:hover{
+    /*background-color: #D9D9D9;*/
+}
+#inform hr{
+    /*border:1;*/
+    /*width: 325px;*/
+    /*margin-bottom: 0px;*/
+}

@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{css/main.css}">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="../../static/css/suspend.css" th:href="@{css/suspend.css}">
+
 
     <style>
         body{
@@ -20,7 +22,8 @@
         }
     </style>
 
-</head>
+
+    </head>
 
 <body class="app sidebar-mini">
     <!-- Navbar-->
@@ -31,6 +34,7 @@
     <main class="app-content">
         <form th:action="@{/distribute}" method="post" th:unless="${classes.size() == 0}">
             <input hidden id="belonging" name="belonging" th:value="${belonging}">
+
             <div class="row tile">
                 <div style="margin:10px 20px;">
                     <input type="hidden" value="" name="classType" id="classType" th:value="${classes.get(0).type}" th:if="${classes.size() != 0}">
@@ -48,7 +52,34 @@
                         </select><br></h4>
                 </div>
 
+                <!--<div>-->
+                    <!--<button class="btn btn-warning" onMouseOver="javascript:showInform();"  onMouseOut="hiddenInform()">已分班</button>-->
+                <!--</div>-->
+
+                <!--<div>-->
+                    <!--<button class="btn btn-info">未分班</button>-->
+                <!--</div>-->
+
+                <div>
+                    <button sec:authorize="hasAnyAuthority('devideClass-simingG')" type="submit" name="button" class="simingG-isLock btn btn-primary">提交</button>
+                </div>
+
             </div>
+
+            <!--<div class="offset-3 col-md-6 row" id="inform"  onMouseOver="javascript:showInform();" onMouseOut="hiddenInform(event)">-->
+                <!--<table id="informTable" class="table">-->
+                    <!--<tr>-->
+                        <!--<td>-->
+                            <!-- 编号5005车辆发车间隔异常-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!-- 编号5005车辆发车间隔异常-->
+                        <!--</td>-->
+                    <!--</tr>-->
+
+                <!--</table>-->
+            <!--</div>-->
+
             <div class="row tile">
                 <div class="row">
                     <h4><b>请选择学生类型(可多选)</b></h4>
@@ -60,8 +91,21 @@
                 </div>
             </div>
 
-            <br><button sec:authorize="hasAnyAuthority('devideClass-simingG')" type="submit" name="button" class="simingG-isLock btn btn-primary">提交</button>
+            <div class="row tile">
+                <div class="offset-2 col-md-3">
+                    <table class="table" id="unfinishStudents">
+
+                    </table>
+                </div>
+                <div class="offset-2 col-md-3">
+                    <table class="table" id="finishStudents">
+
+                    </table>
+                </div>
+            </div>
+
         </form>
+
     </main>
 
     <!-- Essential javascripts for application to work-->
@@ -147,4 +191,6 @@
         $("#classType").val(classType);
     });
 </script>
+    <script src="../../static/js/suspend.js" th:src="@{js/suspend.js}"></script>
+
 </html>

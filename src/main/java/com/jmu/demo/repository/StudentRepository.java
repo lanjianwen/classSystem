@@ -1,5 +1,6 @@
 package com.jmu.demo.repository;
 
+import com.jmu.demo.dto.StudentDTO;
 import com.jmu.demo.entity.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student,Integer>, JpaSpecificationExecutor<Integer> {
@@ -68,4 +70,13 @@ public interface StudentRepository extends JpaRepository<Student,Integer>, JpaSp
 
     @Query(value = "SELECT * FROM student WHERE priority=1 and belonging= :belonging", nativeQuery = true)
     Page<Student> findAllQualityStudentsByBelonging(String belonging, Pageable pageable);
+
+    @Query(value = "SELECT type,COUNT(*) as num FROM student WHERE belonging= :belonging and class_id is null GROUP BY type", nativeQuery = true)
+    List<Map<String,Integer>> getUnfinishStudents(String belonging);
+
+    @Query(value = "SELECT type,COUNT(*) as num FROM student WHERE belonging= :belonging and class_id is not null GROUP BY type", nativeQuery = true)
+    List<Map<String,Integer>> getFinishedStudents(String belonging);
+
+    @Query(value = "SELECT * FROM student WHERE belonging= :belonging and class_id is not null", nativeQuery = true)
+    List<Student> findByBelongingAndFinished(String belonging);
 }

@@ -43,7 +43,8 @@
                     </form>
                      <button sec:authorize="hasAnyAuthority('importFile-xianganG')" type="button" class="xianganG-isLock btn btn-info" onclick="importFile()">导入</button>
                     <!--<button type="button" class="btn btn-info" onclick="downloadExcel()">导出</button>-->
-                     <a sec:authorize="hasAnyAuthority('deleteAll-xianganG')" type="button" class="xianganG-isLock btn btn-info" th:href="'/deleteAll?belonging='+${belonging}">清空</a>
+                     <a sec:authorize="hasAnyAuthority('deleteAll-xianganG')" type="button" class="xianganG-isLock btn btn-info" th:href="'/deleteAll?belonging='+${belonging}" onclick="deleteAllStudents()">清空</a>
+                    <a type="button" class="btn btn-info" th:href="@{'/downloadBlankExcel?belonging='+${belonging}}">空表下载</a>
                 </div>
             </div>
 
@@ -348,6 +349,11 @@
         $(".pagination").html(li);
     })
 
+    function deleteAllStudents() {
+        if (!confirm("确认清空所有学生?")) {
+            window.event.returnValue = false;
+        }
+    }
 
 </script>
 

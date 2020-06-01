@@ -39,6 +39,7 @@
     <div th:replace="commons/aside::aside(activeUri='xianganC')"></div>
     <main class="app-content">
         <form th:action="@{/distribute}" method="post" th:unless="${classes.size() == 0}">
+            <input hidden id="belonging" name="belonging" th:value="${belonging}">
 
             <div class="row tile">
                 <div style="margin:10px 20px;">
@@ -47,6 +48,7 @@
                         <select id="cType">
                             <option th:each="class:${classes}" th:text="${class.type}" th:value="${class.type}" th:if="${classes.size() != 0}"></option>
                         </select><br></h4>
+
                 </div>
                 <div style="margin:10px 20px;">
                     <input type="hidden" value="" name="type" id="type" th:value="${type}">
@@ -55,6 +57,10 @@
                             <option value="socre"th:select="${type == 'socre' ? 'selected':''}">成绩</option>
                             <option value="rand" th:select="${type == 'rand' ? 'selected':''}">随机</option>
                         </select><br></h4>
+                </div>
+
+                <div>
+                    <button sec:authorize="hasAnyAuthority('devideClass-xianganC')" type="submit" name="button" class="xianganC-isLock btn btn-primary">提交</button>
                 </div>
 
             </div>
@@ -69,7 +75,19 @@
                 </div>
             </div>
 
-            <br><button sec:authorize="hasAnyAuthority('devideClass-xianganC')" type="submit" name="button" class="xianganC-isLock btn btn-primary">提交</button>
+            <div class="row tile">
+                <div class="offset-2 col-md-3">
+                    <table class="table" id="unfinishStudents">
+
+                    </table>
+                </div>
+                <div class="offset-2 col-md-3">
+                    <table class="table" id="finishStudents">
+
+                    </table>
+                </div>
+            </div>
+
         </form>
     </main>
 
@@ -156,4 +174,5 @@
         $("#classType").val(classType);
     });
 </script>
+<script src="../../static/js/suspend.js" th:src="@{js/suspend.js}"></script>
 </html>
